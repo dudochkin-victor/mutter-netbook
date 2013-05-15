@@ -1,0 +1,114 @@
+<!-- ##### SECTION Title ##### -->
+MplContentPane
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplContentPane ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### ARG MplContentPane:child ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplContentPane:header-actor ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplContentPane:title ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT MplContentPaneClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mpl_content_pane_new ##### -->
+<para>
+
+</para>
+
+@title: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_get_title ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_set_title ##### -->
+<para>
+
+</para>
+
+@self: 
+@title: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_get_header_actor ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_set_header_actor ##### -->
+<para>
+
+</para>
+
+@self: 
+@actor: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_get_child ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_content_pane_set_child ##### -->
+<para>
+
+</para>
+
+@self: 
+@child: 
+
+

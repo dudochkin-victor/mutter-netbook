@@ -1,0 +1,116 @@
+<!-- ##### SECTION Title ##### -->
+MplEntry
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplEntry ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL MplEntry::button-clicked ##### -->
+<para>
+
+</para>
+
+@mplentry: the object which received the signal.
+
+<!-- ##### SIGNAL MplEntry::text-changed ##### -->
+<para>
+
+</para>
+
+@mplentry: the object which received the signal.
+
+<!-- ##### ARG MplEntry:label ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplEntry:text ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT MplEntryClass ##### -->
+<para>
+
+</para>
+
+@button_clicked: 
+@text_changed: 
+
+<!-- ##### FUNCTION mpl_entry_new ##### -->
+<para>
+
+</para>
+
+@label: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_entry_get_label ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_entry_set_label ##### -->
+<para>
+
+</para>
+
+@self: 
+@label: 
+
+
+<!-- ##### FUNCTION mpl_entry_get_text ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_entry_set_text ##### -->
+<para>
+
+</para>
+
+@self: 
+@text: 
+
+
+<!-- ##### FUNCTION mpl_entry_get_mx_entry ##### -->
+<para>
+
+</para>
+
+@self: 
+@Returns: 
+
+

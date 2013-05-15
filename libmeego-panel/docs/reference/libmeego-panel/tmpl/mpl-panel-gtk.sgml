@@ -1,0 +1,74 @@
+<!-- ##### SECTION Title ##### -->
+MplPanelGtk
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplPanelGtk ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT MplPanelGtkClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO MPL_PANEL_GTK_INIT ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### FUNCTION mpl_panel_gtk_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@tooltip: 
+@stylesheet: 
+@button_style: 
+@with_toolbar_service: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_gtk_get_window ##### -->
+<para>
+
+</para>
+
+@panel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_gtk_set_child ##### -->
+<para>
+
+</para>
+
+@panel: 
+@child: 
+
+

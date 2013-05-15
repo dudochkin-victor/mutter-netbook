@@ -1,0 +1,162 @@
+MxLabel {
+  font-family: "Droid Sans";
+  font-size: 12px;
+}
+
+/* date and time */
+MxLabel#date-label {
+  color: #31c2ee;
+  font-size: 12px;
+}
+
+MxLabel#time-label {
+  color: #31c2ee;
+  font-size: 18pt;
+  font-weight: bold;
+}
+
+MxLabel#button-label {
+  font-size: 14pt;
+  color: #505050;
+}
+
+MxLabel#error-message {
+  font-size: 14pt;
+  color: #4b4b4b;
+  padding: 10 0 0 0;
+}
+
+MxLabel#available-panels {
+  font-size: 16pt;
+  font-weight: bold;
+  color: #4c4e4b;
+}
+
+MxFrame#content-header {
+  border-image: url("capplet/content-header.png") 6 6 6 6;
+  padding: 10 0 10 10;
+}
+
+MxButton#save-button {
+  font-size: 14pt;
+}
+
+MtpJar {
+  background-color: #f8f8f800;
+  padding: 2 2 2 2;
+  border-image: url("capplet/content-background.png") 6 6 6 6;
+}
+
+MxBoxLayout#message-box {
+ padding: 5 20 5 20;
+}
+
+MxBoxLayout#panel-area, MxBoxLayout#applet-area {
+ padding: 4 0 9 0;
+}
+
+MtpBin {
+  padding: 0 7 7 7;
+  background-color: #f3f3f3;
+  border-image: url("capplet/capplet-background.png") 0;
+}
+
+MtpBin#frameless {
+  padding: 0 7 7 7;
+  background-color: #f3f3f3;
+  border-image: url("capplet/capplet-background.png") 0;
+}
+
+MtpToolbar, MtpToolbar:hover {
+  border-image: url("capplet/toolbar-background.png") 0 200 0 200;
+}
+
+MtpToolbarButton {
+  padding: 0;
+  background-color: #fff0;
+}
+
+MtpToolbarButton#in-jar {
+  padding: 5;
+  background-color: #bbb0;
+}
+
+MnbToolbarButton {
+  padding: 0;
+  border-image: url("capplet/button-background.png") 12;
+}
+
+MnbToolbarButton:hover {
+  padding: 0;
+  border-image: url("capplet/button-background.png") 12;
+}
+
+MnbToolbarButton#applications-button {
+  background-image: url("panel/apps-coloured.png");
+}
+
+MnbToolbarButton#internet-button {
+  background-image: url("panel/internet-coloured.png");
+}
+
+MnbToolbarButton#media-button {
+  background-image: url("panel/media-coloured.png");
+}
+
+MnbToolbarButton#myzone-button {
+  background-image: url("panel/myzone-coloured.png");
+}
+
+MnbToolbarButton#pasteboard-button {
+  background-image: url("panel/pasteboard-coloured.png");
+}
+
+MnbToolbarButton#people-button {
+  background-image: url("panel/people-coloured.png");
+}
+
+MnbToolbarButton#zones-button {
+  background-image: url("panel/spaces-coloured.png");
+}
+
+MnbToolbarButton#status-button {
+  background-image: url("panel/status-coloured.png");
+}
+
+MnbToolbarButton#network-button {
+  background-image: url("panel/network-coloured.png");
+}
+
+MnbToolbarButton#bluetooth-button {
+  background-image: url("panel/bluetooth-coloured.png");
+}
+
+MnbToolbarButton#devices-button {
+  background-image: url("panel/devices-coloured.png");
+}
+
+MxButton#close-button {
+  background-image: url("capplet/close-icon.png");
+  border-image:none;
+}
+
+MxButton#close-button:hover {
+  background-image: url("capplet/close-icon-hover.png");
+  border-image:none;
+}
+
+MtpSpace {
+  padding: 0 0 0 0;
+  border-image: url("capplet/button-background.png") 12;
+}
+
+MtpSpace#in-jar {
+  padding: 0 0 0 0;
+  border-image: url("capplet/drop-target-area.png") 12;
+}
+
+MtpClock {
+  border-image: url("capplet/button-background.png") 12;
+  background-image: none;
+  padding: 0 0 0 0;
+}

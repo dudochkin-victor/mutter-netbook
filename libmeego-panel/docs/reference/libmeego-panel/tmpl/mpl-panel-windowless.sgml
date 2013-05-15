@@ -1,0 +1,49 @@
+<!-- ##### SECTION Title ##### -->
+MplPanelWindowless
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplPanelWindowless ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT MplPanelWindowlessClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mpl_panel_windowless_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@tooltip: 
+@stylesheet: 
+@button_style: 
+@with_toolbar_service: 
+@Returns: 
+
+

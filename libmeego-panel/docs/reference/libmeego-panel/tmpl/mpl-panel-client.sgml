@@ -1,0 +1,486 @@
+<!-- ##### SECTION Title ##### -->
+MplPanelClient
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplPanelClient ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL MplPanelClient::hide ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::hide-begin ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::hide-end ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::ready ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::request-button-state ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MplPanelClient::request-button-style ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MplPanelClient::request-focus ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::request-modality ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MplPanelClient::request-tooltip ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+
+<!-- ##### SIGNAL MplPanelClient::set-position ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL MplPanelClient::set-size ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL MplPanelClient::show ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::show-begin ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::show-end ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### SIGNAL MplPanelClient::unload ##### -->
+<para>
+
+</para>
+
+@mplpanelclient: the object which received the signal.
+
+<!-- ##### ARG MplPanelClient:button-style ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:delayed-ready ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:name ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:stylesheet ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:toolbar-service ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:tooltip ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:windowless ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG MplPanelClient:xid ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT MplPanelClientClass ##### -->
+<para>
+
+</para>
+
+@unload: 
+@set_size: 
+@set_position: 
+@show: 
+@show_begin: 
+@show_end: 
+@hide: 
+@hide_begin: 
+@hide_end: 
+
+<!-- ##### FUNCTION mpl_panel_client_show ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_hide ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_set_height_request ##### -->
+<para>
+
+</para>
+
+@panel: 
+@height: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_get_height_request ##### -->
+<para>
+
+</para>
+
+@panel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_request_focus ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_request_button_style ##### -->
+<para>
+
+</para>
+
+@panel: 
+@style: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_request_tooltip ##### -->
+<para>
+
+</para>
+
+@panel: 
+@tooltip: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_request_button_state ##### -->
+<para>
+
+</para>
+
+@panel: 
+@state: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_request_modality ##### -->
+<para>
+
+</para>
+
+@panel: 
+@modal: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_unload ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_launch_application ##### -->
+<para>
+
+</para>
+
+@panel: 
+@commandline: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_launch_application_from_desktop_file ##### -->
+<para>
+
+</para>
+
+@panel: 
+@desktop: 
+@files: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_launch_default_application_for_uri ##### -->
+<para>
+
+</para>
+
+@panel: 
+@uri: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_get_xid ##### -->
+<para>
+
+</para>
+
+@panel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_ready ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_set_delayed_ready ##### -->
+<para>
+
+</para>
+
+@panel: 
+@delayed: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_client_is_windowless ##### -->
+<para>
+
+</para>
+
+@panel: 
+@Returns: 
+
+
+<!-- ##### ENUM MnbButtonState ##### -->
+<para>
+
+</para>
+
+@MNB_BUTTON_NORMAL: 
+@MNB_BUTTON_HIDDEN: 
+@MNB_BUTTON_INSENSITIVE: 
+
+<!-- ##### MACRO MPL_PANEL_DBUS_NAME_PREFIX ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_DBUS_PATH_PREFIX ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_DBUS_INTERFACE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_TOOLBAR_DBUS_PATH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_TOOLBAR_DBUS_NAME ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_TOOLBAR_DBUS_INTERFACE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_MYZONE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_STATUS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_ZONES ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_INTERNET ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_MEDIA ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_APPLICATIONS ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_PEOPLE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_PASTEBOARD ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_NETWORK ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_BLUETOOTH ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_POWER ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MPL_PANEL_TEST ##### -->
+<para>
+
+</para>
+
+
+

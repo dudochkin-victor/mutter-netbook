@@ -1,0 +1,354 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplEntry</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelwidgets.html" title="Panel Widgets">
+<link rel="prev" href="MplContentPane.html" title="MplContentPane">
+<link rel="next" href="meegopanelutility.html" title="Miscellaneous">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="MplContentPane.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelwidgets.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="meegopanelutility.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplEntry.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplEntry.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplEntry.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#MplEntry.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                   | 
+                  <a href="#MplEntry.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#MplEntry.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplEntry">
+<a name="MplEntry"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplEntry.top_of_page"></a>MplEntry</span></h2>
+<p>MplEntry — Entry widget.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplEntry.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplEntry.html#MplEntry-struct" title="MplEntry">MplEntry</a>;
+                    <a class="link" href="MplEntry.html#MplEntryClass" title="MplEntryClass">MplEntryClass</a>;
+<span class="returnvalue">MxWidget</span> *          <a class="link" href="MplEntry.html#mpl-entry-new" title="mpl_entry_new ()">mpl_entry_new</a>                       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *label</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="MplEntry.html#mpl-entry-get-label" title="mpl_entry_get_label ()">mpl_entry_get_label</a>                 (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplEntry.html#mpl-entry-set-label" title="mpl_entry_set_label ()">mpl_entry_set_label</a>                 (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *label</code></em>);
+const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       <a class="link" href="MplEntry.html#mpl-entry-get-text" title="mpl_entry_get_text ()">mpl_entry_get_text</a>                  (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplEntry.html#mpl-entry-set-text" title="mpl_entry_set_text ()">mpl_entry_set_text</a>                  (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>);
+<span class="returnvalue">MxWidget</span> *          <a class="link" href="MplEntry.html#mpl-entry-get-mx-entry" title="mpl_entry_get_mx_entry ()">mpl_entry_get_mx_entry</a>              (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplEntry.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GInitiallyUnowned">GInitiallyUnowned</a>
+         +----<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html">ClutterActor</a>
+               +----MxWidget
+                     +----MxBin
+                           +----MxFrame
+                                 +----MplEntry
+</pre>
+</div>
+<div class="refsect1" title="Implemented Interfaces">
+<a name="MplEntry.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+MplEntry implements
+ <a href="/usr/share/gtk-doc/html/clutter/ClutterScriptable.html">ClutterScriptable</a>,  <a href="/usr/share/gtk-doc/html/clutter/ClutterAnimatable.html">ClutterAnimatable</a>,  AtkImplementorIface,  MxStylable,  <a href="/usr/share/gtk-doc/html/clutter/ClutterContainer.html">ClutterContainer</a> and  MxFocusable.</p>
+</div>
+<div class="refsect1" title="Properties">
+<a name="MplEntry.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplEntry.html#MplEntry--label" title='The "label" property'>label</a>"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
+  "<a class="link" href="MplEntry.html#MplEntry--text" title='The "text" property'>text</a>"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="MplEntry.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplEntry.html#MplEntry-button-clicked" title='The "button-clicked" signal'>button-clicked</a>"                                 : Run Last
+  "<a class="link" href="MplEntry.html#MplEntry-text-changed" title='The "text-changed" signal'>text-changed</a>"                                   : Run Last
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplEntry.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> is an entry widget for Panels.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplEntry.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplEntry">
+<a name="MplEntry-struct"></a><h3>MplEntry</h3>
+<pre class="programlisting">typedef struct _MplEntry MplEntry;</pre>
+<p>
+Entry widget.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplEntryClass">
+<a name="MplEntryClass"></a><h3>MplEntryClass</h3>
+<pre class="programlisting">typedef struct {
+  /* Signals. */
+  void (* button_clicked) (MplEntry *self);
+  void (* text_changed)   (MplEntry *self);
+} MplEntryClass;
+</pre>
+<p>
+Class struct for <a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplEntryClass.button-clicked"></a>button_clicked</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplEntry.html#MplEntry-button-clicked" title='The "button-clicked" signal'><span class="type">"button-clicked"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplEntryClass.text-changed"></a>text_changed</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplEntry.html#MplEntry-text-changed" title='The "text-changed" signal'><span class="type">"text-changed"</span></a> signal
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_new ()">
+<a name="mpl-entry-new"></a><h3>mpl_entry_new ()</h3>
+<pre class="programlisting"><span class="returnvalue">MxWidget</span> *          mpl_entry_new                       (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *label</code></em>);</pre>
+<p>
+Creates an instance of <a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>label</code></em> :</span></p></td>
+<td>entry prompt
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <span class="type">MxWidget</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_get_label ()">
+<a name="mpl-entry-get-label"></a><h3>mpl_entry_get_label ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mpl_entry_get_label                 (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);</pre>
+<p>
+Retrieves the text of the entry prompt.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> pointer to string holding the label; the string is owned by
+the entry and must not be freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_set_label ()">
+<a name="mpl-entry-set-label"></a><h3>mpl_entry_set_label ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_entry_set_label                 (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *label</code></em>);</pre>
+<p>
+Sets the text of the entry prompt.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>label</code></em> :</span></p></td>
+<td>text of the entry propmpt
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_get_text ()">
+<a name="mpl-entry-get-text"></a><h3>mpl_entry_get_text ()</h3>
+<pre class="programlisting">const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *       mpl_entry_get_text                  (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);</pre>
+<p>
+Retrieves the text of the entry.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> pointer to string holding the text; the string is owned by
+the entry and must not be freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_set_text ()">
+<a name="mpl-entry-set-text"></a><h3>mpl_entry_set_text ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_entry_set_text                  (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *text</code></em>);</pre>
+<p>
+Sets the text of the entry.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>text</code></em> :</span></p></td>
+<td>text to set the entry to
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_entry_get_mx_entry ()">
+<a name="mpl-entry-get-mx-entry"></a><h3>mpl_entry_get_mx_entry ()</h3>
+<pre class="programlisting"><span class="returnvalue">MxWidget</span> *          mpl_entry_get_mx_entry              (<em class="parameter"><code><a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *self</code></em>);</pre>
+<p>
+Returns pointer to the actual <span class="type">MxEntry</span> widget inside <a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <span class="type">MxWidget</span>; the entry widget is owned by the entry and no
+additional reference is added to it by this function.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="MplEntry.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "label" property'>
+<a name="MplEntry--label"></a><h3>The <code class="literal">"label"</code> property</h3>
+<pre class="programlisting">  "label"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct</pre>
+<p>The label inside the button.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "text" property'>
+<a name="MplEntry--text"></a><h3>The <code class="literal">"text"</code> property</h3>
+<pre class="programlisting">  "text"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct</pre>
+<p>The text inside the entry.</p>
+<p>Default value: NULL</p>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="MplEntry.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "button-clicked" signal'>
+<a name="MplEntry-button-clicked"></a><h3>The <code class="literal">"button-clicked"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *entry,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)      : Run Last</pre>
+<p>
+The ::button-clicked signal is emitted when the user clicks on the
+entry button.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>entry</code></em> :</span></p></td>
+<td>entry that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "text-changed" signal'>
+<a name="MplEntry-text-changed"></a><h3>The <code class="literal">"text-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplEntry.html" title="MplEntry"><span class="type">MplEntry</span></a> *entry,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>  user_data)      : Run Last</pre>
+<p>
+The ::text-changed signal is emitted when the text in the entry changes.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>entry</code></em> :</span></p></td>
+<td>entry that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

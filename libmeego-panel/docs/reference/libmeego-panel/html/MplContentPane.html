@@ -1,0 +1,313 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplContentPane</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelwidgets.html" title="Panel Widgets">
+<link rel="prev" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager">
+<link rel="next" href="MplEntry.html" title="MplEntry">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="MplAppBookmarkManager.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelwidgets.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="MplEntry.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplContentPane.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplContentPane.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplContentPane.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#MplContentPane.implemented-interfaces" class="shortcut">Implemented Interfaces</a>
+                   | 
+                  <a href="#MplContentPane.properties" class="shortcut">Properties</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplContentPane">
+<a name="MplContentPane"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplContentPane.top_of_page"></a>MplContentPane</span></h2>
+<p>MplContentPane — Content pane with a header.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplContentPane.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplContentPane.html#MplContentPane-struct" title="MplContentPane">MplContentPane</a>;
+                    <a class="link" href="MplContentPane.html#MplContentPaneClass" title="MplContentPaneClass">MplContentPaneClass</a>;
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      <a class="link" href="MplContentPane.html#mpl-content-pane-new" title="mpl_content_pane_new ()">mpl_content_pane_new</a>                (<em class="parameter"><code><span class="type">char</span> const *title</code></em>);
+<span class="returnvalue">char</span> const *        <a class="link" href="MplContentPane.html#mpl-content-pane-get-title" title="mpl_content_pane_get_title ()">mpl_content_pane_get_title</a>          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplContentPane.html#mpl-content-pane-set-title" title="mpl_content_pane_set_title ()">mpl_content_pane_set_title</a>          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> const *title</code></em>);
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      <a class="link" href="MplContentPane.html#mpl-content-pane-get-header-actor" title="mpl_content_pane_get_header_actor ()">mpl_content_pane_get_header_actor</a>   (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplContentPane.html#mpl-content-pane-set-header-actor" title="mpl_content_pane_set_header_actor ()">mpl_content_pane_set_header_actor</a>   (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *actor</code></em>);
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      <a class="link" href="MplContentPane.html#mpl-content-pane-get-child" title="mpl_content_pane_get_child ()">mpl_content_pane_get_child</a>          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplContentPane.html#mpl-content-pane-set-child" title="mpl_content_pane_set_child ()">mpl_content_pane_set_child</a>          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *child</code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplContentPane.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GInitiallyUnowned">GInitiallyUnowned</a>
+         +----<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html">ClutterActor</a>
+               +----MxWidget
+                     +----MxBoxLayout
+                           +----MplContentPane
+</pre>
+</div>
+<div class="refsect1" title="Implemented Interfaces">
+<a name="MplContentPane.implemented-interfaces"></a><h2>Implemented Interfaces</h2>
+<p>
+MplContentPane implements
+ <a href="/usr/share/gtk-doc/html/clutter/ClutterScriptable.html">ClutterScriptable</a>,  <a href="/usr/share/gtk-doc/html/clutter/ClutterAnimatable.html">ClutterAnimatable</a>,  AtkImplementorIface,  MxStylable,  <a href="/usr/share/gtk-doc/html/clutter/ClutterContainer.html">ClutterContainer</a>,  MxScrollable and  MxFocusable.</p>
+</div>
+<div class="refsect1" title="Properties">
+<a name="MplContentPane.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplContentPane.html#MplContentPane--child" title='The "child" property'>child</a>"                    <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>*         : Read / Write
+  "<a class="link" href="MplContentPane.html#MplContentPane--header-actor" title='The "header-actor" property'>header-actor</a>"             <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>*         : Read / Write
+  "<a class="link" href="MplContentPane.html#MplContentPane--title" title='The "title" property'>title</a>"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplContentPane.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> provides a styled content pane widget, which consists of a
+ header with a title, an optional header actor packed at the right edge of
+ the header, and a content area.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplContentPane.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplContentPane">
+<a name="MplContentPane-struct"></a><h3>MplContentPane</h3>
+<pre class="programlisting">typedef struct _MplContentPane MplContentPane;</pre>
+<p>
+A styled widget implementing a content pane with a header.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplContentPaneClass">
+<a name="MplContentPaneClass"></a><h3>MplContentPaneClass</h3>
+<pre class="programlisting">typedef struct {
+} MplContentPaneClass;
+</pre>
+<p>
+Class struct for <a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_new ()">
+<a name="mpl-content-pane-new"></a><h3>mpl_content_pane_new ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      mpl_content_pane_new                (<em class="parameter"><code><span class="type">char</span> const *title</code></em>);</pre>
+<p>
+Constructs a new <a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> with the given title.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>title</code></em> :</span></p></td>
+<td>the panel title
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_get_title ()">
+<a name="mpl-content-pane-get-title"></a><h3>mpl_content_pane_get_title ()</h3>
+<pre class="programlisting"><span class="returnvalue">char</span> const *        mpl_content_pane_get_title          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);</pre>
+<p>
+Returns the current title of the pane.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> pane title
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_set_title ()">
+<a name="mpl-content-pane-set-title"></a><h3>mpl_content_pane_set_title ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_content_pane_set_title          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><span class="type">char</span> const *title</code></em>);</pre>
+<p>
+Sets the title of the pane to the given string.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>title</code></em> :</span></p></td>
+<td>title
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_get_header_actor ()">
+<a name="mpl-content-pane-get-header-actor"></a><h3>mpl_content_pane_get_header_actor ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      mpl_content_pane_get_header_actor   (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);</pre>
+<p>
+Returns the pane header actor, if set or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_set_header_actor ()">
+<a name="mpl-content-pane-set-header-actor"></a><h3>mpl_content_pane_set_header_actor ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_content_pane_set_header_actor   (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *actor</code></em>);</pre>
+<p>
+Sets the pane header actor. The header actor is an optional actor inserted
+into the header and packed from its right edge. It can be used, for example,
+to add a close button to the pane.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>actor</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_get_child ()">
+<a name="mpl-content-pane-get-child"></a><h3>mpl_content_pane_get_child ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      mpl_content_pane_get_child          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>);</pre>
+<p>
+Returns the content child of the pane.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_content_pane_set_child ()">
+<a name="mpl-content-pane-set-child"></a><h3>mpl_content_pane_set_child ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_content_pane_set_child          (<em class="parameter"><code><a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a> *self</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *child</code></em>);</pre>
+<p>
+Sets the content child of the pane to the provided actor.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>self</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplContentPane.html" title="MplContentPane"><span class="type">MplContentPane</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="MplContentPane.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "child" property'>
+<a name="MplContentPane--child"></a><h3>The <code class="literal">"child"</code> property</h3>
+<pre class="programlisting">  "child"                    <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>*         : Read / Write</pre>
+<p>Contained actor.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "header-actor" property'>
+<a name="MplContentPane--header-actor"></a><h3>The <code class="literal">"header-actor"</code> property</h3>
+<pre class="programlisting">  "header-actor"             <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>*         : Read / Write</pre>
+<p>Right-hand header actor.</p>
+</div>
+<hr>
+<div class="refsect2" title='The "title" property'>
+<a name="MplContentPane--title"></a><h3>The <code class="literal">"title"</code> property</h3>
+<pre class="programlisting">  "title"                    <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write</pre>
+<p>Title text.</p>
+<p>Default value: ""</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

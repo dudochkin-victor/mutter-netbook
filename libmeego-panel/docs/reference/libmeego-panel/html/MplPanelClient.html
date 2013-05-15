@@ -1,0 +1,1322 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplPanelClient</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelclasses.html" title="Panel Classes">
+<link rel="prev" href="meegopanelclasses.html" title="Panel Classes">
+<link rel="next" href="MplPanelClutter.html" title="MplPanelClutter">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="meegopanelclasses.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelclasses.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="MplPanelClutter.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplPanelClient.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplPanelClient.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplPanelClient.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#MplPanelClient.properties" class="shortcut">Properties</a>
+                   | 
+                  <a href="#MplPanelClient.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplPanelClient">
+<a name="MplPanelClient"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplPanelClient.top_of_page"></a>MplPanelClient</span></h2>
+<p>MplPanelClient — Base abstract class for all panels.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplPanelClient.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplPanelClient.html#MplPanelClient-struct" title="MplPanelClient">MplPanelClient</a>;
+                    <a class="link" href="MplPanelClient.html#MplPanelClientClass" title="MplPanelClientClass">MplPanelClientClass</a>;
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-show" title="mpl_panel_client_show ()">mpl_panel_client_show</a>               (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-hide" title="mpl_panel_client_hide ()">mpl_panel_client_hide</a>               (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-set-height-request" title="mpl_panel_client_set_height_request ()">mpl_panel_client_set_height_request</a> (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               <a class="link" href="MplPanelClient.html#mpl-panel-client-get-height-request" title="mpl_panel_client_get_height_request ()">mpl_panel_client_get_height_request</a> (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-request-focus" title="mpl_panel_client_request_focus ()">mpl_panel_client_request_focus</a>      (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-request-button-style" title="mpl_panel_client_request_button_style ()">mpl_panel_client_request_button_style</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *style</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-request-tooltip" title="mpl_panel_client_request_tooltip ()">mpl_panel_client_request_tooltip</a>    (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-request-button-state" title="mpl_panel_client_request_button_state ()">mpl_panel_client_request_button_state</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="MplPanelClient.html#MnbButtonState" title="enum MnbButtonState"><span class="type">MnbButtonState</span></a> state</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-request-modality" title="mpl_panel_client_request_modality ()">mpl_panel_client_request_modality</a>   (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> modal</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-unload" title="mpl_panel_client_unload ()">mpl_panel_client_unload</a>             (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="MplPanelClient.html#mpl-panel-client-launch-application" title="mpl_panel_client_launch_application ()">mpl_panel_client_launch_application</a> (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *commandline</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="MplPanelClient.html#mpl-panel-client-launch-application-from-desktop-file" title="mpl_panel_client_launch_application_from_desktop_file ()">mpl_panel_client_launch_application_from_desktop_file</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *desktop</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *files</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="MplPanelClient.html#mpl-panel-client-launch-default-application-for-uri" title="mpl_panel_client_launch_default_application_for_uri ()">mpl_panel_client_launch_default_application_for_uri</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);
+<span class="returnvalue">Window</span>              <a class="link" href="MplPanelClient.html#mpl-panel-client-get-xid" title="mpl_panel_client_get_xid ()">mpl_panel_client_get_xid</a>            (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClient.html#mpl-panel-client-ready" title="mpl_panel_client_ready ()">mpl_panel_client_ready</a>              (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="MplPanelClient.html#mpl-panel-client-set-delayed-ready" title="mpl_panel_client_set_delayed_ready ()">mpl_panel_client_set_delayed_ready</a>  (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> delayed</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            <a class="link" href="MplPanelClient.html#mpl-panel-client-is-windowless" title="mpl_panel_client_is_windowless ()">mpl_panel_client_is_windowless</a>      (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);
+enum                <a class="link" href="MplPanelClient.html#MnbButtonState" title="enum MnbButtonState">MnbButtonState</a>;
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-DBUS-NAME-PREFIX:CAPS" title="MPL_PANEL_DBUS_NAME_PREFIX">MPL_PANEL_DBUS_NAME_PREFIX</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-DBUS-PATH-PREFIX:CAPS" title="MPL_PANEL_DBUS_PATH_PREFIX">MPL_PANEL_DBUS_PATH_PREFIX</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-DBUS-INTERFACE:CAPS" title="MPL_PANEL_DBUS_INTERFACE">MPL_PANEL_DBUS_INTERFACE</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-TOOLBAR-DBUS-PATH:CAPS" title="MPL_TOOLBAR_DBUS_PATH">MPL_TOOLBAR_DBUS_PATH</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-TOOLBAR-DBUS-NAME:CAPS" title="MPL_TOOLBAR_DBUS_NAME">MPL_TOOLBAR_DBUS_NAME</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-TOOLBAR-DBUS-INTERFACE:CAPS" title="MPL_TOOLBAR_DBUS_INTERFACE">MPL_TOOLBAR_DBUS_INTERFACE</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-MYZONE:CAPS" title="MPL_PANEL_MYZONE">MPL_PANEL_MYZONE</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-STATUS:CAPS" title="MPL_PANEL_STATUS">MPL_PANEL_STATUS</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-ZONES:CAPS" title="MPL_PANEL_ZONES">MPL_PANEL_ZONES</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-INTERNET:CAPS" title="MPL_PANEL_INTERNET">MPL_PANEL_INTERNET</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-MEDIA:CAPS" title="MPL_PANEL_MEDIA">MPL_PANEL_MEDIA</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-APPLICATIONS:CAPS" title="MPL_PANEL_APPLICATIONS">MPL_PANEL_APPLICATIONS</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-PEOPLE:CAPS" title="MPL_PANEL_PEOPLE">MPL_PANEL_PEOPLE</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-PASTEBOARD:CAPS" title="MPL_PANEL_PASTEBOARD">MPL_PANEL_PASTEBOARD</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-NETWORK:CAPS" title="MPL_PANEL_NETWORK">MPL_PANEL_NETWORK</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-BLUETOOTH:CAPS" title="MPL_PANEL_BLUETOOTH">MPL_PANEL_BLUETOOTH</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-POWER:CAPS" title="MPL_PANEL_POWER">MPL_PANEL_POWER</a>
+#define             <a class="link" href="MplPanelClient.html#MPL-PANEL-TEST:CAPS" title="MPL_PANEL_TEST">MPL_PANEL_TEST</a>
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplPanelClient.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----MplPanelClient
+         +----<a class="link" href="MplPanelClutter.html" title="MplPanelClutter">MplPanelClutter</a>
+         +----<a class="link" href="MplPanelGtk.html" title="MplPanelGtk">MplPanelGtk</a>
+         +----<a class="link" href="MplPanelWindowless.html" title="MplPanelWindowless">MplPanelWindowless</a>
+</pre>
+</div>
+<div class="refsect1" title="Properties">
+<a name="MplPanelClient.properties"></a><h2>Properties</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--button-style" title='The "button-style" property'>button-style</a>"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--delayed-ready" title='The "delayed-ready" property'>delayed-ready</a>"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--name" title='The "name" property'>name</a>"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--stylesheet" title='The "stylesheet" property'>stylesheet</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--toolbar-service" title='The "toolbar-service" property'>toolbar-service</a>"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct Only
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--tooltip" title='The "tooltip" property'>tooltip</a>"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--windowless" title='The "windowless" property'>windowless</a>"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct
+  "<a class="link" href="MplPanelClient.html#MplPanelClient--xid" title='The "xid" property'>xid</a>"                      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write / Construct
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="MplPanelClient.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-hide" title='The "hide" signal'>hide</a>"                                           : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-hide-begin" title='The "hide-begin" signal'>hide-begin</a>"                                     : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-hide-end" title='The "hide-end" signal'>hide-end</a>"                                       : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-ready" title='The "ready" signal'>ready</a>"                                          : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-request-button-state" title='The "request-button-state" signal'>request-button-state</a>"                           : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-request-button-style" title='The "request-button-style" signal'>request-button-style</a>"                           : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-request-focus" title='The "request-focus" signal'>request-focus</a>"                                  : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-request-modality" title='The "request-modality" signal'>request-modality</a>"                               : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-request-tooltip" title='The "request-tooltip" signal'>request-tooltip</a>"                                : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-set-position" title='The "set-position" signal'>set-position</a>"                                   : Run First
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-set-size" title='The "set-size" signal'>set-size</a>"                                       : Run First
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-show" title='The "show" signal'>show</a>"                                           : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-show-begin" title='The "show-begin" signal'>show-begin</a>"                                     : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-show-end" title='The "show-end" signal'>show-end</a>"                                       : Run Last
+  "<a class="link" href="MplPanelClient.html#MplPanelClient-unload" title='The "unload" signal'>unload</a>"                                         : Run Last
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplPanelClient.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> is a base abstract class for all Panels.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplPanelClient.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplPanelClient">
+<a name="MplPanelClient-struct"></a><h3>MplPanelClient</h3>
+<pre class="programlisting">typedef struct _MplPanelClient MplPanelClient;</pre>
+<p>
+Base class for panels.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplPanelClientClass">
+<a name="MplPanelClientClass"></a><h3>MplPanelClientClass</h3>
+<pre class="programlisting">typedef struct {
+  /*
+   * Public signal closures.
+   */
+  void     (*unload)         (MplPanelClient *panel);
+  void     (*set_size)       (MplPanelClient *panel, guint width, guint height);
+  void     (*set_position)   (MplPanelClient *panel, gint x, gint y);
+  void     (*show)           (MplPanelClient *panel);
+  void     (*show_begin)     (MplPanelClient *panel);
+  void     (*show_end)       (MplPanelClient *panel);
+  void     (*hide)           (MplPanelClient *panel);
+  void     (*hide_begin)     (MplPanelClient *panel);
+  void     (*hide_end)       (MplPanelClient *panel);
+} MplPanelClientClass;
+</pre>
+<p>
+Base class for panels.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.unload"></a>unload</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-unload" title='The "unload" signal'><span class="type">"unload"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.set-size"></a>set_size</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-set-size" title='The "set-size" signal'><span class="type">"set-size"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.set-position"></a>set_position</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-set-position" title='The "set-position" signal'><span class="type">"set-position"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.show"></a>show</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-show" title='The "show" signal'><span class="type">"show"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.show-begin"></a>show_begin</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-show-begin" title='The "show-begin" signal'><span class="type">"show_begin"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.show-end"></a>show_end</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-show-end" title='The "show-end" signal'><span class="type">"show_end"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.hide"></a>hide</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-hide" title='The "hide" signal'><span class="type">"hide"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.hide-begin"></a>hide_begin</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-hide-begin" title='The "hide-begin" signal'><span class="type">"hide_begin"</span></a> signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplPanelClientClass.hide-end"></a>hide_end</code></em> ()</span></p></td>
+<td>signal closure for the <a class="link" href="MplPanelClient.html#MplPanelClient-hide-end" title='The "hide-end" signal'><span class="type">"hide_end"</span></a> signal
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_show ()">
+<a name="mpl-panel-client-show"></a><h3>mpl_panel_client_show ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_show               (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Shows the given panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_hide ()">
+<a name="mpl-panel-client-hide"></a><h3>mpl_panel_client_hide ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_hide               (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Hides the given panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_set_height_request ()">
+<a name="mpl-panel-client-set-height-request"></a><h3>mpl_panel_client_set_height_request ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_set_height_request (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a> height</code></em>);</pre>
+<p>
+Sets the height request for given panel; this is the size the panel
+wishes to be. This is a request only, i.e., the panel can be smaller if the
+request cannot be honored due to screen size, etc.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>height request
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_get_height_request ()">
+<a name="mpl-panel-client-get-height-request"></a><h3>mpl_panel_client_get_height_request ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="returnvalue">guint</span></a>               mpl_panel_client_get_height_request (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Returns the height request previously set with
+<a class="link" href="MplPanelClient.html#mpl-panel-client-set-height-request" title="mpl_panel_client_set_height_request ()"><code class="function">mpl_panel_client_set_height_request()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> requested height in pixels.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_request_focus ()">
+<a name="mpl-panel-client-request-focus"></a><h3>mpl_panel_client_request_focus ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_request_focus      (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Requests that the given panel be given keyboard focus.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_request_button_style ()">
+<a name="mpl-panel-client-request-button-style"></a><h3>mpl_panel_client_request_button_style ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_request_button_style
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *style</code></em>);</pre>
+<p>
+Requests that the supplied style is applied to the Toolbar button associated
+with the given panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>style</code></em> :</span></p></td>
+<td>css id of the style.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_request_tooltip ()">
+<a name="mpl-panel-client-request-tooltip"></a><h3>mpl_panel_client_request_tooltip ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_request_tooltip    (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>);</pre>
+<p>
+Requests that the string is used as the tooltip for the Toolbar button
+associated with the given panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tooltip</code></em> :</span></p></td>
+<td>tooltip
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_request_button_state ()">
+<a name="mpl-panel-client-request-button-state"></a><h3>mpl_panel_client_request_button_state ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_request_button_state
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a class="link" href="MplPanelClient.html#MnbButtonState" title="enum MnbButtonState"><span class="type">MnbButtonState</span></a> state</code></em>);</pre>
+<p>
+Requests that the Toolbar button associated with the given panel is turned
+into the supplied state.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>state</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html#MnbButtonState" title="enum MnbButtonState"><span class="type">MnbButtonState</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_request_modality ()">
+<a name="mpl-panel-client-request-modality"></a><h3>mpl_panel_client_request_modality ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_request_modality   (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> modal</code></em>);</pre>
+<p>
+Requests that the given panel is put into a modal state; while a panel is
+in modal state, the user will not be able to close it.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>modal</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> indicating whether panel should be modal
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_unload ()">
+<a name="mpl-panel-client-unload"></a><h3>mpl_panel_client_unload ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_unload             (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Unloads the given panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_launch_application ()">
+<a name="mpl-panel-client-launch-application"></a><h3>mpl_panel_client_launch_application ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mpl_panel_client_launch_application (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *commandline</code></em>);</pre>
+<p>
+Launches the program specified by commandline with startup notification
+support.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>commandline</code></em> :</span></p></td>
+<td>commandline
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there was no error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_launch_application_from_desktop_file ()">
+<a name="mpl-panel-client-launch-application-from-desktop-file"></a><h3>mpl_panel_client_launch_application_from_desktop_file ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mpl_panel_client_launch_application_from_desktop_file
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *desktop</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> *files</code></em>);</pre>
+<p>
+Launches the program specified by desktop file.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>desktop</code></em> :</span></p></td>
+<td>path to desktop file
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>files</code></em> :</span></p></td>
+<td>
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of files to be passed as arugments, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there was no error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_launch_default_application_for_uri ()">
+<a name="mpl-panel-client-launch-default-application-for-uri"></a><h3>mpl_panel_client_launch_default_application_for_uri ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mpl_panel_client_launch_default_application_for_uri
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>
+Launches the default program handling the given uri type.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em> :</span></p></td>
+<td>path to desktop file
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there was no error.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_get_xid ()">
+<a name="mpl-panel-client-get-xid"></a><h3>mpl_panel_client_get_xid ()</h3>
+<pre class="programlisting"><span class="returnvalue">Window</span>              mpl_panel_client_get_xid            (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Returns the xid of the asociated window.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> associated window xid.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_ready ()">
+<a name="mpl-panel-client-ready"></a><h3>mpl_panel_client_ready ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_client_ready              (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Calling this function indicates to the Toolbar object that the panel is
+ready to be shown. This function should be used in conjunction with
+<a class="link" href="MplPanelClient.html#mpl-panel-client-set-delayed-ready" title="mpl_panel_client_set_delayed_ready ()"><code class="function">mpl_panel_client_set_delayed_ready()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_set_delayed_ready ()">
+<a name="mpl-panel-client-set-delayed-ready"></a><h3>mpl_panel_client_set_delayed_ready ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mpl_panel_client_set_delayed_ready  (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> delayed</code></em>);</pre>
+<p>
+Sets the value of the delayed-ready property. When this property is set to
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> the <a class="link" href="MplPanelClient.html#MplPanelClient-ready" title='The "ready" signal'><span class="type">"ready"</span></a> signal will not be emitted until the panel
+application calls <a class="link" href="MplPanelClient.html#mpl-panel-client-ready" title="mpl_panel_client_ready ()"><code class="function">mpl_panel_client_ready()</code></a>.
+</p>
+<p>
+Note: The delayed-ready property can only be set before the main loop is
+started; calling this function once the main loop has been started will
+result in a critical warning.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>a <a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>delayed</code></em> :</span></p></td>
+<td>boolean value for the delayed-ready property.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the call was successful.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_client_is_windowless ()">
+<a name="mpl-panel-client-is-windowless"></a><h3>mpl_panel_client_is_windowless ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>            mpl_panel_client_is_windowless      (<em class="parameter"><code><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel</code></em>);</pre>
+<p>
+Returns <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the associate panel is windowless (windowless panels have
+a non-interactive button on the Toolbar).
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the panel does not have a panel associated with it.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="enum MnbButtonState">
+<a name="MnbButtonState"></a><h3>enum MnbButtonState</h3>
+<pre class="programlisting">typedef enum
+{
+  MNB_BUTTON_NORMAL      = 0,
+  MNB_BUTTON_HIDDEN      = 0x1,
+  MNB_BUTTON_INSENSITIVE = 0x2
+} MnbButtonState;
+</pre>
+<p>
+State of the Toolbar button; values are or-able.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><a name="MNB-BUTTON-NORMAL:CAPS"></a><span class="term"><code class="literal">MNB_BUTTON_NORMAL</code></span></p></td>
+<td>normal (visible, interactive) button state
+</td>
+</tr>
+<tr>
+<td><p><a name="MNB-BUTTON-HIDDEN:CAPS"></a><span class="term"><code class="literal">MNB_BUTTON_HIDDEN</code></span></p></td>
+<td>button should not be visible to user
+</td>
+</tr>
+<tr>
+<td><p><a name="MNB-BUTTON-INSENSITIVE:CAPS"></a><span class="term"><code class="literal">MNB_BUTTON_INSENSITIVE</code></span></p></td>
+<td>button should be insensitive to user actions
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_DBUS_NAME_PREFIX">
+<a name="MPL-PANEL-DBUS-NAME-PREFIX:CAPS"></a><h3>MPL_PANEL_DBUS_NAME_PREFIX</h3>
+<pre class="programlisting">#define MPL_PANEL_DBUS_NAME_PREFIX "com.meego.UX.Shell.Panels."
+</pre>
+<p>
+Common prefix used by Panel dbus service names. For example, service for
+panel 'foo' will have the name MPL_PANEL_DBUS_NAME_PREFIX + 'foo'.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_DBUS_PATH_PREFIX">
+<a name="MPL-PANEL-DBUS-PATH-PREFIX:CAPS"></a><h3>MPL_PANEL_DBUS_PATH_PREFIX</h3>
+<pre class="programlisting">#define MPL_PANEL_DBUS_PATH_PREFIX "/com/meego/UX/Shell/Panels/"
+</pre>
+<p>
+Common prefix used by Panel dbus object paths. For example, the dbus object
+for panel 'foo' will be found at MPL_PANEL_DBUS_PATH_PREFIX + 'foo'.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_DBUS_INTERFACE">
+<a name="MPL-PANEL-DBUS-INTERFACE:CAPS"></a><h3>MPL_PANEL_DBUS_INTERFACE</h3>
+<pre class="programlisting">#define MPL_PANEL_DBUS_INTERFACE   "com.meego.UX.Shell.Panel"
+</pre>
+<p>
+Dbus interface for Panel functionality.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_TOOLBAR_DBUS_PATH">
+<a name="MPL-TOOLBAR-DBUS-PATH:CAPS"></a><h3>MPL_TOOLBAR_DBUS_PATH</h3>
+<pre class="programlisting">#define MPL_TOOLBAR_DBUS_PATH      "/com/meego/UX/Shell/Toolbar"
+</pre>
+<p>
+Path for the Toolbar dbus object.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_TOOLBAR_DBUS_NAME">
+<a name="MPL-TOOLBAR-DBUS-NAME:CAPS"></a><h3>MPL_TOOLBAR_DBUS_NAME</h3>
+<pre class="programlisting">#define MPL_TOOLBAR_DBUS_NAME      "com.meego.UX.Shell.Toolbar"
+</pre>
+<p>
+Name of the dbus Toolbar service.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_TOOLBAR_DBUS_INTERFACE">
+<a name="MPL-TOOLBAR-DBUS-INTERFACE:CAPS"></a><h3>MPL_TOOLBAR_DBUS_INTERFACE</h3>
+<pre class="programlisting">#define MPL_TOOLBAR_DBUS_INTERFACE "com.meego.UX.Shell.Toolbar"
+</pre>
+<p>
+Dbus interface for Toolbar functionality.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_MYZONE">
+<a name="MPL-PANEL-MYZONE:CAPS"></a><h3>MPL_PANEL_MYZONE</h3>
+<pre class="programlisting">#define MPL_PANEL_MYZONE       "myzone"
+</pre>
+<p>
+Canonical name of the myzone panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_STATUS">
+<a name="MPL-PANEL-STATUS:CAPS"></a><h3>MPL_PANEL_STATUS</h3>
+<pre class="programlisting">#define MPL_PANEL_STATUS       "status"
+</pre>
+<p>
+Canonical name of the status panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_ZONES">
+<a name="MPL-PANEL-ZONES:CAPS"></a><h3>MPL_PANEL_ZONES</h3>
+<pre class="programlisting">#define MPL_PANEL_ZONES        "zones"
+</pre>
+<p>
+Canonical name of the zones panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_INTERNET">
+<a name="MPL-PANEL-INTERNET:CAPS"></a><h3>MPL_PANEL_INTERNET</h3>
+<pre class="programlisting">#define MPL_PANEL_INTERNET     "internet"
+</pre>
+<p>
+Canonical name of the internet panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_MEDIA">
+<a name="MPL-PANEL-MEDIA:CAPS"></a><h3>MPL_PANEL_MEDIA</h3>
+<pre class="programlisting">#define MPL_PANEL_MEDIA        "media"
+</pre>
+<p>
+Canonical name of the media panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_APPLICATIONS">
+<a name="MPL-PANEL-APPLICATIONS:CAPS"></a><h3>MPL_PANEL_APPLICATIONS</h3>
+<pre class="programlisting">#define MPL_PANEL_APPLICATIONS "applications"
+</pre>
+<p>
+Canonical name of the applications panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_PEOPLE">
+<a name="MPL-PANEL-PEOPLE:CAPS"></a><h3>MPL_PANEL_PEOPLE</h3>
+<pre class="programlisting">#define MPL_PANEL_PEOPLE       "people"
+</pre>
+<p>
+Canonical name of the people panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_PASTEBOARD">
+<a name="MPL-PANEL-PASTEBOARD:CAPS"></a><h3>MPL_PANEL_PASTEBOARD</h3>
+<pre class="programlisting">#define MPL_PANEL_PASTEBOARD   "pasteboard"
+</pre>
+<p>
+Canonical name of the pasteboard panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_NETWORK">
+<a name="MPL-PANEL-NETWORK:CAPS"></a><h3>MPL_PANEL_NETWORK</h3>
+<pre class="programlisting">#define MPL_PANEL_NETWORK      "network"
+</pre>
+<p>
+Canonical name of the network panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_BLUETOOTH">
+<a name="MPL-PANEL-BLUETOOTH:CAPS"></a><h3>MPL_PANEL_BLUETOOTH</h3>
+<pre class="programlisting">#define MPL_PANEL_BLUETOOTH    "bluetooth"
+</pre>
+<p>
+Canonical name of the bluetooth panel.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_POWER">
+<a name="MPL-PANEL-POWER:CAPS"></a><h3>MPL_PANEL_POWER</h3>
+<pre class="programlisting">#define MPL_PANEL_POWER        "power"
+</pre>
+<p>
+Canonical name of the power icon.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_TEST">
+<a name="MPL-PANEL-TEST:CAPS"></a><h3>MPL_PANEL_TEST</h3>
+<pre class="programlisting">#define MPL_PANEL_TEST         "test"
+</pre>
+<p>
+Canonical name for a test panel.
+</p>
+</div>
+</div>
+<div class="refsect1" title="Property Details">
+<a name="MplPanelClient.property-details"></a><h2>Property Details</h2>
+<div class="refsect2" title='The "button-style" property'>
+<a name="MplPanelClient--button-style"></a><h3>The <code class="literal">"button-style"</code> property</h3>
+<pre class="programlisting">  "button-style"             <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct</pre>
+<p>Button style.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "delayed-ready" property'>
+<a name="MplPanelClient--delayed-ready"></a><h3>The <code class="literal">"delayed-ready"</code> property</h3>
+<pre class="programlisting">  "delayed-ready"            <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct</pre>
+<p>Whether emission of 'ready' signal should be delayed until later.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" title='The "name" property'>
+<a name="MplPanelClient--name"></a><h3>The <code class="literal">"name"</code> property</h3>
+<pre class="programlisting">  "name"                     <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
+<p>Name.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "stylesheet" property'>
+<a name="MplPanelClient--stylesheet"></a><h3>The <code class="literal">"stylesheet"</code> property</h3>
+<pre class="programlisting">  "stylesheet"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct Only</pre>
+<p>Stylesheet.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "toolbar-service" property'>
+<a name="MplPanelClient--toolbar-service"></a><h3>The <code class="literal">"toolbar-service"</code> property</h3>
+<pre class="programlisting">  "toolbar-service"          <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct Only</pre>
+<p>Whether toobar service should be enabled.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" title='The "tooltip" property'>
+<a name="MplPanelClient--tooltip"></a><h3>The <code class="literal">"tooltip"</code> property</h3>
+<pre class="programlisting">  "tooltip"                  <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>*                : Read / Write / Construct</pre>
+<p>Tooltip.</p>
+<p>Default value: NULL</p>
+</div>
+<hr>
+<div class="refsect2" title='The "windowless" property'>
+<a name="MplPanelClient--windowless"></a><h3>The <code class="literal">"windowless"</code> property</h3>
+<pre class="programlisting">  "windowless"               <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>              : Read / Write / Construct</pre>
+<p>Panel without window.</p>
+<p>Default value: FALSE</p>
+</div>
+<hr>
+<div class="refsect2" title='The "xid" property'>
+<a name="MplPanelClient--xid"></a><h3>The <code class="literal">"xid"</code> property</h3>
+<pre class="programlisting">  "xid"                      <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>                 : Read / Write / Construct</pre>
+<p>XID.</p>
+<p>Default value: 0</p>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="MplPanelClient.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "hide" signal'>
+<a name="MplPanelClient-hide"></a><h3>The <code class="literal">"hide"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::show signal is emitted when the panel is about to be hidden; the
+actual hiding is implemented by the signal closure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "hide-begin" signal'>
+<a name="MplPanelClient-hide-begin"></a><h3>The <code class="literal">"hide-begin"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::hide-begin signal is emitted when the Toolbar is about to start the
+panel hide animation.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "hide-end" signal'>
+<a name="MplPanelClient-hide-end"></a><h3>The <code class="literal">"hide-end"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::hide-end signal is emitted when the panel hide animation has
+finished.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "ready" signal'>
+<a name="MplPanelClient-ready"></a><h3>The <code class="literal">"ready"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "request-button-state" signal'>
+<a name="MplPanelClient-request-button-state"></a><h3>The <code class="literal">"request-button-state"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>            arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "request-button-style" signal'>
+<a name="MplPanelClient-request-button-style"></a><h3>The <code class="literal">"request-button-style"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>          *arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "request-focus" signal'>
+<a name="MplPanelClient-request-focus"></a><h3>The <code class="literal">"request-focus"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "request-modality" signal'>
+<a name="MplPanelClient-request-modality"></a><h3>The <code class="literal">"request-modality"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a>        arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "request-tooltip" signal'>
+<a name="MplPanelClient-request-tooltip"></a><h3>The <code class="literal">"request-tooltip"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *mplpanelclient,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a>          *arg1,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)           : Run Last</pre>
+<p>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>mplpanelclient</code></em> :</span></p></td>
+<td>the object which received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>arg1</code></em> :</span></p></td>
+<td>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "set-position" signal'>
+<a name="MplPanelClient-set-position"></a><h3>The <code class="literal">"set-position"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>            x,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a>            y,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run First</pre>
+<p>
+The ::set-position signal is emitted when the panel is being moved; the
+actual moving of the panel is implemented by the signal closure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>x</code></em> :</span></p></td>
+<td>new x coordinate of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>y</code></em> :</span></p></td>
+<td>new y coordinate of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "set-size" signal'>
+<a name="MplPanelClient-set-size"></a><h3>The <code class="literal">"set-size"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>           width,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#guint"><span class="type">guint</span></a>           height,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run First</pre>
+<p>
+The ::set-size signal is emitted when the panel is being resized; the
+actual resizing is implemented by the signal closure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>width</code></em> :</span></p></td>
+<td>new width of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>height</code></em> :</span></p></td>
+<td>new height of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "show" signal'>
+<a name="MplPanelClient-show"></a><h3>The <code class="literal">"show"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::show signal is emitted when the panel is about to be shown; the
+actual showing is implemented by the signal closure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "show-begin" signal'>
+<a name="MplPanelClient-show-begin"></a><h3>The <code class="literal">"show-begin"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::show-begin signal is emitted when the Toolbar is about to start the
+panel show animation.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "show-end" signal'>
+<a name="MplPanelClient-show-end"></a><h3>The <code class="literal">"show-end"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::show-end signal is emitted when the panel show animation has
+finished.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title='The "unload" signal'>
+<a name="MplPanelClient-unload"></a><h3>The <code class="literal">"unload"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> *panel,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>        user_data)      : Run Last</pre>
+<p>
+The ::unload signal is emitted when the panel is being unloaded from
+memory; the actual unloading is done by the signal closure.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>panel that received the signal.
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

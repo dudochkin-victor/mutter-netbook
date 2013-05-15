@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplAppBookmarkManager</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelwidgets.html" title="Panel Widgets">
+<link rel="prev" href="meegopanelwidgets.html" title="Panel Widgets">
+<link rel="next" href="MplContentPane.html" title="MplContentPane">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="meegopanelwidgets.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelwidgets.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="MplContentPane.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplAppBookmarkManager.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplAppBookmarkManager.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplAppBookmarkManager.object-hierarchy" class="shortcut">Object Hierarchy</a>
+                   | 
+                  <a href="#MplAppBookmarkManager.signals" class="shortcut">Signals</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplAppBookmarkManager">
+<a name="MplAppBookmarkManager"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplAppBookmarkManager.top_of_page"></a>MplAppBookmarkManager</span></h2>
+<p>MplAppBookmarkManager — Application bookmark manager.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplAppBookmarkManager.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplAppBookmarkManager.html#MplAppBookmarkManager-struct" title="MplAppBookmarkManager">MplAppBookmarkManager</a>;
+                    <a class="link" href="MplAppBookmarkManager.html#MplAppBookmarkManagerClass" title="MplAppBookmarkManagerClass">MplAppBookmarkManagerClass</a>;
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="returnvalue">MplAppBookmarkManager</span></a> * <a class="link" href="MplAppBookmarkManager.html#mpl-app-bookmark-manager-get-default" title="mpl_app_bookmark_manager_get_default ()">mpl_app_bookmark_manager_get_default</a>
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplAppBookmarkManager.html#mpl-app-bookmark-manager-add-uri" title="mpl_app_bookmark_manager_add_uri ()">mpl_app_bookmark_manager_add_uri</a>    (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplAppBookmarkManager.html#mpl-app-bookmark-manager-remove-uri" title="mpl_app_bookmark_manager_remove_uri ()">mpl_app_bookmark_manager_remove_uri</a> (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplAppBookmarkManager.html#mpl-app-bookmark-manager-save" title="mpl_app_bookmark_manager_save ()">mpl_app_bookmark_manager_save</a>       (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             <a class="link" href="MplAppBookmarkManager.html#mpl-app-bookmark-manager-get-bookmarks" title="mpl_app_bookmark_manager_get_bookmarks ()">mpl_app_bookmark_manager_get_bookmarks</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplAppBookmarkManager.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----MplAppBookmarkManager
+</pre>
+</div>
+<div class="refsect1" title="Signals">
+<a name="MplAppBookmarkManager.signals"></a><h2>Signals</h2>
+<pre class="synopsis">
+  "<a class="link" href="MplAppBookmarkManager.html#MplAppBookmarkManager-bookmarks-changed" title='The "bookmarks-changed" signal'>bookmarks-changed</a>"                              : Run First
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplAppBookmarkManager.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> manages user-bookmarked applications, as shown, for
+ example, in the myzone and applications panels. The ::bookmarks-changed
+ signal is emitted when the bookmarks have changed.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplAppBookmarkManager.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplAppBookmarkManager">
+<a name="MplAppBookmarkManager-struct"></a><h3>MplAppBookmarkManager</h3>
+<pre class="programlisting">typedef struct _MplAppBookmarkManager MplAppBookmarkManager;</pre>
+<p>
+Manager for application bookmarks.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplAppBookmarkManagerClass">
+<a name="MplAppBookmarkManagerClass"></a><h3>MplAppBookmarkManagerClass</h3>
+<pre class="programlisting">typedef struct {
+  void (*bookmarks_changed)(MplAppBookmarkManager *manager);
+} MplAppBookmarkManagerClass;
+</pre>
+<p>
+Class struct for <a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="structfield"><code><a name="MplAppBookmarkManagerClass.bookmarks-changed"></a>bookmarks_changed</code></em> ()</span></p></td>
+<td>singnal closure for the
+MplAppBookmarkManager::bookmarks-changed signal.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_app_bookmark_manager_get_default ()">
+<a name="mpl-app-bookmark-manager-get-default"></a><h3>mpl_app_bookmark_manager_get_default ()</h3>
+<pre class="programlisting"><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="returnvalue">MplAppBookmarkManager</span></a> * mpl_app_bookmark_manager_get_default
+                                                        (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Returns an instance of <a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>; the caller holds a reference to the
+object, and should release it using <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref"><code class="function">g_object_unref()</code></a> when no longer needed.
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_app_bookmark_manager_add_uri ()">
+<a name="mpl-app-bookmark-manager-add-uri"></a><h3>mpl_app_bookmark_manager_add_uri ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_app_bookmark_manager_add_uri    (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>
+Adds bookmark identified by uri to the manager, and schedules the new
+bookmark list to be save in the next idle cycle.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em> :</span></p></td>
+<td>the bookmark to add
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_app_bookmark_manager_remove_uri ()">
+<a name="mpl-app-bookmark-manager-remove-uri"></a><h3>mpl_app_bookmark_manager_remove_uri ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_app_bookmark_manager_remove_uri (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>
+Removes bookmark identified by uri from the manager, and schedules the new
+bookmark list to be saved when idle.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em> :</span></p></td>
+<td>the bookmark to remove
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_app_bookmark_manager_save ()">
+<a name="mpl-app-bookmark-manager-save"></a><h3>mpl_app_bookmark_manager_save ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_app_bookmark_manager_save       (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>);</pre>
+<p>
+Saves current bookmarks to disk.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_app_bookmark_manager_get_bookmarks ()">
+<a name="mpl-app-bookmark-manager-get-bookmarks"></a><h3>mpl_app_bookmark_manager_get_bookmarks ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="returnvalue">GList</span></a> *             mpl_app_bookmark_manager_get_bookmarks
+                                                        (<em class="parameter"><code><a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager</code></em>);</pre>
+<p>
+Obtains list of current bookmarks.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> current bookmarks as a <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#GList"><span class="type">GList</span></a> of constant strings; the list is
+owned by the caller and must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Doubly-Linked-Lists.html#g-list-free"><code class="function">g_list_free()</code></a> when no longer
+needed, however, the list data is owned by the manager and must not be freed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+<div class="refsect1" title="Signal Details">
+<a name="MplAppBookmarkManager.signal-details"></a><h2>Signal Details</h2>
+<div class="refsect2" title='The "bookmarks-changed" signal'>
+<a name="MplAppBookmarkManager-bookmarks-changed"></a><h3>The <code class="literal">"bookmarks-changed"</code> signal</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                user_function                      (<a class="link" href="MplAppBookmarkManager.html" title="MplAppBookmarkManager"><span class="type">MplAppBookmarkManager</span></a> *manager,
+                                                        <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>               user_data)      : Run First</pre>
+<p>
+The ::bookmarks-changed signal is emitted when user changes their
+bookmarked applications.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>manager</code></em> :</span></p></td>
+<td>manager that received the signal
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>user_data</code></em> :</span></p></td>
+<td>user data set when the signal handler was connected.</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

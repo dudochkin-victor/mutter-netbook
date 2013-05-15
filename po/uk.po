@@ -1,0 +1,187 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Roman Tuz <tuzr@yandex.ru>, 2009.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: mutter-meego\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-20 23:58+0000\n"
+"PO-Revision-Date: 2010-11-21 20:31+0300\n"
+"Last-Translator: Ignat Kizenko <darkfoton@ukr.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Language-Team: Ukrainian <trans-uk@lists.fedoraproject.org>\n"
+
+#: ../capplet/data/meego-toolbar-properties.desktop.in.h:1
+msgid "Set your toolbar preferences"
+msgstr "Налаштуйте ваш тулбар"
+
+#: ../capplet/data/meego-toolbar-properties.desktop.in.h:2
+msgid "Toolbar settings"
+msgstr "Налаштування тулбару"
+
+#: ../capplet/src/mtp-bin.c:362
+msgid "Save toolbar"
+msgstr "Зберегти тулбар"
+
+#: ../capplet/src/mtp-bin.c:367
+msgid "Sorry, you'll have to remove a panel before you can add a new one."
+msgstr "Вибачте, ви маєте видалити одну панель перед тим, як додати іншу."
+
+#: ../capplet/src/mtp-bin.c:369
+msgid "You can add, remove, and reorder many of the panels in your toolbar."
+msgstr "Ви можете додавати, видаляти та переміщати панелі на вашому тулбарі"
+
+#: ../capplet/src/mtp-jar.c:110
+msgid "Available panels"
+msgstr "Доступні панелі"
+
+#. translators: translate this to a suitable 24 hourt time format for
+#. * your locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#.
+#: ../capplet/src/mtp-clock.c:217
+#: ../src/mnb-toolbar-clock.c:125
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. translators: translate this to a suitable time format for your
+#. * locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#.
+#. translators: translate this to a suitable default time format for
+#. * your locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#.
+#: ../capplet/src/mtp-clock.c:227
+#: ../src/mnb-toolbar-clock.c:134
+msgid "%l:%M %P"
+msgstr "%l:%M %P"
+
+#. translators: translate this to a suitable date format for your locale.
+#. * For availabe format specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#.
+#: ../capplet/src/mtp-clock.c:249
+#: ../src/mnb-toolbar-clock.c:155
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+#: ../capplet/src/mtp-cc-panel.c:118
+msgid "Toolbar"
+msgstr "Тулбар"
+
+#: ../capplet/data/system-tray-properties.desktop.in.h:1
+msgid "Set your system-tray preferences"
+msgstr "Налаштуйте ваш системний трей"
+
+#: ../capplet/data/system-tray-properties.desktop.in.h:2
+#: ../capplet/src/syst-cc-panel.c:241
+msgid "System Tray"
+msgstr "Системний Трей"
+
+#: ../capplet/src/syst-cc-panel.c:174
+msgid "Show system tray"
+msgstr "Показувати системний трей"
+
+#: ../capplet/src/syst-cc-panel.c:195
+msgid "The system tray is a concept used by some older applications to let you know when something happens or to stay running when you close them."
+msgstr "Системний трей - це засіб, що використовується деякими старими програмами аби повідомляти вам, що щось трапилось, або, що програма продовжує працювати, після закриття її вікна."
+
+#: ../data/mutter-meego.schemas.in.h:1
+msgid "Always use small screen mode"
+msgstr "Завжди використовувати режим малого екрану"
+
+#: ../data/mutter-meego.schemas.in.h:2
+msgid "Determines the order of panels on the toolbar."
+msgstr "Встановлює порядок розміщення панелей на тулбарі."
+
+#: ../data/mutter-meego.schemas.in.h:3
+msgid "Forces small screen mode to be used even if display size would normally imply bigger screen mode."
+msgstr "Встановлює використання режиму малого екрану, навіть, якщо розмір дисплею дозволяє режим більшого екрану."
+
+#: ../data/mutter-meego.schemas.in.h:4
+msgid "Order of panels on toolbar"
+msgstr "Порядок панелей на тулбарі"
+
+#: ../src/meego-netbook.c:829
+msgid "Meego Netbook Effects"
+msgstr "Ефекти Meego Netbook"
+
+#: ../src/meego-netbook.c:833
+msgid "Effects for Meego Netbooks"
+msgstr "Ефекти для Meego Netbooks"
+
+#: ../src/mnb-toolbar.c:1007
+#, c-format
+msgid "Sorry, %s is broken"
+msgstr "Вибачте, %s зіпсовано"
+
+#: ../src/notifications/ntf-notification.c:234
+msgid "Dismiss"
+msgstr "Відхилити"
+
+#: ../src/notifications/ntf-tray.c:308
+msgid "Dismiss All"
+msgstr "Відхилити все"
+
+#: ../src/notifications/ntf-tray.c:481
+#: ../src/notifications/ntf-tray.c:557
+#, c-format
+msgid "%i pending messages"
+msgstr "%i непрочитаних повідомлень"
+
+#: ../src/notifications/ntf-tray.c:535
+msgid "1 pending message"
+msgstr "1 непрочитане повідомлення"
+
+#: ../src/notifications/ntf-wm.c:103
+msgid "Unknown window"
+msgstr "Невідоме вікно"
+
+#: ../src/notifications/ntf-wm.c:107
+msgid "is asking for your attention."
+msgstr "потребує вашої уваги."
+
+#: ../src/notifications/ntf-wm.c:115
+msgid "Activate"
+msgstr "Активувати"
+
+#: ../libmeego-panel/meego-panel/gdkapplaunchcontext-x11.c:320
+#, c-format
+msgid "Starting %s"
+msgstr "Запускається %s"
+
+#: ../libmeego-panel/meego-panel/gdkapplaunchcontext-x11.c:322
+#, c-format
+msgid "Opening %s"
+msgstr "Відкривається %s"
+
+#: ../libmeego-panel/meego-panel/gdkapplaunchcontext-x11.c:325
+#, c-format
+msgid "Opening %d Item"
+msgid_plural "Opening %d Items"
+msgstr[0] "Відкривається %d елемент"
+msgstr[1] "Відкриваються %d елементи"
+msgstr[2] "Відкриваються %d елементів"
+
+#~ msgid "zones"
+#~ msgstr "зони"
+#~ msgid "No Zones yet"
+#~ msgstr "Ще немає зон"
+#~ msgid ""
+#~ "Applications you’re using will show up here. You will be able to switch "
+#~ "and organize them to your heart's content."
+#~ msgstr ""
+#~ "Програми, що ви їх використовуєте, показані тут. Ви можете "
+#~ "переключатисьміж ними, організовувати на свій смак."
+#~ msgid "No applications on this zone"
+#~ msgstr "Немає програм в цій зоні"
+

@@ -1,0 +1,88 @@
+<!-- ##### SECTION Title ##### -->
+MplAppBookmarkManager
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplAppBookmarkManager ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL MplAppBookmarkManager::bookmarks-changed ##### -->
+<para>
+
+</para>
+
+@mplappbookmarkmanager: the object which received the signal.
+
+<!-- ##### STRUCT MplAppBookmarkManagerClass ##### -->
+<para>
+
+</para>
+
+@bookmarks_changed: 
+
+<!-- ##### FUNCTION mpl_app_bookmark_manager_get_default ##### -->
+<para>
+
+</para>
+
+@void: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_app_bookmark_manager_add_uri ##### -->
+<para>
+
+</para>
+
+@manager: 
+@uri: 
+
+
+<!-- ##### FUNCTION mpl_app_bookmark_manager_remove_uri ##### -->
+<para>
+
+</para>
+
+@manager: 
+@uri: 
+
+
+<!-- ##### FUNCTION mpl_app_bookmark_manager_save ##### -->
+<para>
+
+</para>
+
+@manager: 
+
+
+<!-- ##### FUNCTION mpl_app_bookmark_manager_get_bookmarks ##### -->
+<para>
+
+</para>
+
+@manager: 
+@Returns: 
+
+

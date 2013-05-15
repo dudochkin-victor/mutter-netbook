@@ -1,0 +1,416 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplPanelGtk</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelclasses.html" title="Panel Classes">
+<link rel="prev" href="MplPanelClutter.html" title="MplPanelClutter">
+<link rel="next" href="MplPanelWindowless.html" title="MplPanelWindowless">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="MplPanelClutter.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelclasses.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="MplPanelWindowless.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplPanelGtk.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplPanelGtk.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplPanelGtk.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplPanelGtk">
+<a name="MplPanelGtk"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplPanelGtk.top_of_page"></a>MplPanelGtk</span></h2>
+<p>MplPanelGtk — Class for panels using Gtk</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplPanelGtk.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplPanelGtk.html#MplPanelGtk-struct" title="MplPanelGtk">MplPanelGtk</a>;
+                    <a class="link" href="MplPanelGtk.html#MplPanelGtkClass" title="MplPanelGtkClass">MplPanelGtkClass</a>;
+#define             <a class="link" href="MplPanelGtk.html#MPL-PANEL-GTK-INIT:CAPS" title="MPL_PANEL_GTK_INIT">MPL_PANEL_GTK_INIT</a>
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="returnvalue">MplPanelClient</span></a> *    <a class="link" href="MplPanelGtk.html#mpl-panel-gtk-new" title="mpl_panel_gtk_new ()">mpl_panel_gtk_new</a>                   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *stylesheet</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *button_style</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> with_toolbar_service</code></em>);
+<a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *         <a class="link" href="MplPanelGtk.html#mpl-panel-gtk-get-window" title="mpl_panel_gtk_get_window ()">mpl_panel_gtk_get_window</a>            (<em class="parameter"><code><a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelGtk.html#mpl-panel-gtk-set-child" title="mpl_panel_gtk_set_child ()">mpl_panel_gtk_set_child</a>             (<em class="parameter"><code><a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="type">GtkWidget</span></a> *child</code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplPanelGtk.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="MplPanelClient.html" title="MplPanelClient">MplPanelClient</a>
+         +----MplPanelGtk
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplPanelGtk.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> is a class for all Panels that implement their UI using Gtk+. A
+minimal Panel implementation using <a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> would look as follows:
+</p>
+<p>
+</p>
+<pre class="programlisting">
+  #include &lt;meego-panel/mpl-panel-gtk.h&gt;
+
+  int
+  main (int argc, char **argv)
+  {
+    MplPanelClient *client;
+    GtkWidget      *contents;
+
+    gtk_init (&amp;argc, &amp;argv);
+
+    client = mpl_panel_gtk_new ("mypanel",
+                                "this is mypanel",
+                                "somewhere/mypanel-button.css",
+                                "mypanel-button",
+                                FALSE);
+
+    / * create the content actor for your panel * /
+    contents = make_my_panel_conents ();
+
+    mpl_panel_gtk_set_child (MPL_PANEL_GTK (client), contents);
+
+    gtk_main ();
+
+    return 0;
+  }
+</pre>
+<p> */
+</p>
+<p>
+G_DEFINE_TYPE (MplPanelGtk, mpl_panel_gtk, MPL_TYPE_PANEL_CLIENT)
+</p>
+<p>
+#define MPL_PANEL_GTK_GET_PRIVATE(o) \
+  (G_TYPE_INSTANCE_GET_PRIVATE ((o), MPL_TYPE_PANEL_GTK, MplPanelGtkPrivate))
+</p>
+<p>
+static void mpl_panel_gtk_constructed (GObject *self);
+</p>
+<p>
+enum
+{
+  PROP_0,
+};
+</p>
+<p>
+struct _MplPanelGtkPrivate
+{
+  GtkWidget *window;
+  GtkWidget *child;
+};
+</p>
+<p>
+static void
+mpl_panel_gtk_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
+{
+  switch (property_id)
+    {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
+{
+  switch (property_id)
+    {
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_dispose (GObject *self)
+{
+  G_OBJECT_CLASS (mpl_panel_gtk_parent_class)-&gt;dispose (self);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_finalize (GObject *object)
+{
+  G_OBJECT_CLASS (mpl_panel_gtk_parent_class)-&gt;finalize (object);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_set_size (MplPanelClient *self, guint width, guint height)
+{
+  MplPanelGtkPrivate  *priv = MPL_PANEL_GTK (self)-&gt;priv;
+  MplPanelClientClass *p_class;
+</p>
+<p>
+  p_class = MPL_PANEL_CLIENT_CLASS (mpl_panel_gtk_parent_class);
+</p>
+<p>
+  gtk_widget_set_size_request (priv-&gt;window, width, height);
+  gtk_window_resize (GTK_WINDOW (priv-&gt;window), width, height);
+</p>
+<p>
+  if (p_class-&gt;set_size)
+    p_class-&gt;set_size (self, width, height);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_set_position (MplPanelClient *self, gint x, gint y)
+{
+  MplPanelGtkPrivate  *priv = MPL_PANEL_GTK (self)-&gt;priv;
+  MplPanelClientClass *p_class;
+</p>
+<p>
+  p_class = MPL_PANEL_CLIENT_CLASS (mpl_panel_gtk_parent_class);
+</p>
+<p>
+  gtk_window_move (GTK_WINDOW (priv-&gt;window), x, y);
+</p>
+<p>
+  if (p_class-&gt;set_position)
+    p_class-&gt;set_position (self, x, y);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_show (MplPanelClient *self)
+{
+  MplPanelGtkPrivate *priv = MPL_PANEL_GTK (self)-&gt;priv;
+</p>
+<p>
+  gtk_widget_show (priv-&gt;window);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_hide (MplPanelClient *self)
+{
+  MplPanelGtkPrivate *priv = MPL_PANEL_GTK (self)-&gt;priv;
+</p>
+<p>
+  gtk_widget_hide (priv-&gt;window);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_unload (MplPanelClient *panel)
+{
+  <a href="/usr/share/gtk-doc/html/gtk/gtk-General.html#gtk-main-quit"><code class="function">gtk_main_quit()</code></a>;
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_class_init (MplPanelGtkClass *klass)
+{
+  GObjectClass        *object_class = G_OBJECT_CLASS (klass);
+  MplPanelClientClass *client_class = MPL_PANEL_CLIENT_CLASS (klass);
+</p>
+<p>
+  g_type_class_add_private (klass, sizeof (MplPanelGtkPrivate));
+</p>
+<p>
+  object_class-&gt;get_property     = mpl_panel_gtk_get_property;
+  object_class-&gt;set_property     = mpl_panel_gtk_set_property;
+  object_class-&gt;dispose          = mpl_panel_gtk_dispose;
+  object_class-&gt;finalize         = mpl_panel_gtk_finalize;
+  object_class-&gt;constructed      = mpl_panel_gtk_constructed;
+</p>
+<p>
+  client_class-&gt;set_position     = mpl_panel_gtk_set_position;
+  client_class-&gt;set_size         = mpl_panel_gtk_set_size;
+  client_class-&gt;show             = mpl_panel_gtk_show;
+  client_class-&gt;hide             = mpl_panel_gtk_hide;
+  client_class-&gt;unload           = mpl_panel_gtk_unload;
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_init (MplPanelGtk *self)
+{
+  MplPanelGtkPrivate *priv;
+</p>
+<p>
+  priv = self-&gt;priv = MPL_PANEL_GTK_GET_PRIVATE (self);
+}
+</p>
+<p>
+static void
+mpl_panel_gtk_constructed (GObject *self)
+{
+  MplPanelGtkPrivate *priv = MPL_PANEL_GTK (self)-&gt;priv;
+  GtkWidget *window;
+</p>
+<p>
+  if (G_OBJECT_CLASS (mpl_panel_gtk_parent_class)-&gt;constructed)
+    G_OBJECT_CLASS (mpl_panel_gtk_parent_class)-&gt;constructed (self);
+</p>
+<p>
+  priv-&gt;window = window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
+  gtk_widget_set_name (priv-&gt;window, "MplPanelGtk");
+  gtk_window_set_type_hint (GTK_WINDOW (window), GDK_WINDOW_TYPE_HINT_DOCK);
+  gtk_window_stick (GTK_WINDOW (window));
+</p>
+<p>
+  /*
+Realize the window so we can get the xid.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplPanelGtk.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplPanelGtk">
+<a name="MplPanelGtk-struct"></a><h3>MplPanelGtk</h3>
+<pre class="programlisting">typedef struct _MplPanelGtk MplPanelGtk;</pre>
+<p>
+Panel object for Gtk+-based panels.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplPanelGtkClass">
+<a name="MplPanelGtkClass"></a><h3>MplPanelGtkClass</h3>
+<pre class="programlisting">typedef struct {
+} MplPanelGtkClass;
+</pre>
+<p>
+Panel object for Gtk+-based panels.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MPL_PANEL_GTK_INIT">
+<a name="MPL-PANEL-GTK-INIT:CAPS"></a><h3>MPL_PANEL_GTK_INIT</h3>
+<pre class="programlisting">#define MPL_PANEL_GTK_INIT MPL_PANEL_GTK_INIT__is_replaced_with__gtk_init
+</pre>
+<p>
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_gtk_new ()">
+<a name="mpl-panel-gtk-new"></a><h3>mpl_panel_gtk_new ()</h3>
+<pre class="programlisting"><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="returnvalue">MplPanelClient</span></a> *    mpl_panel_gtk_new                   (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *stylesheet</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *button_style</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> with_toolbar_service</code></em>);</pre>
+<p>
+Constructs a new <a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>canonical name of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tooltip</code></em> :</span></p></td>
+<td>tooltip for the associated Toolbar button
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stylesheet</code></em> :</span></p></td>
+<td>stylesheet for the associated Toolbar button
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>button_style</code></em> :</span></p></td>
+<td>css style id for the button style
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>with_toolbar_service</code></em> :</span></p></td>
+<td>whether the panel will be using any Toolbar services
+(e.g., the launching API)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> new <a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> object.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_gtk_get_window ()">
+<a name="mpl-panel-gtk-get-window"></a><h3>mpl_panel_gtk_get_window ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="returnvalue">GtkWidget</span></a> *         mpl_panel_gtk_get_window            (<em class="parameter"><code><a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> *panel</code></em>);</pre>
+<p>
+Returns the top level window of the panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> top level <a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="type">GtkWidget</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_gtk_set_child ()">
+<a name="mpl-panel-gtk-set-child"></a><h3>mpl_panel_gtk_set_child ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_gtk_set_child             (<em class="parameter"><code><a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="type">GtkWidget</span></a> *child</code></em>);</pre>
+<p>
+Set's the content widget of the panel to be the provided child widget.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>MplPanelGtk
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/gtk/GtkWidget.html"><span class="type">GtkWidget</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

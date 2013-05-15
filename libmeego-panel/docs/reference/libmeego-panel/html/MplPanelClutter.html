@@ -1,0 +1,383 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>MplPanelClutter</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelclasses.html" title="Panel Classes">
+<link rel="prev" href="MplPanelClient.html" title="MplPanelClient">
+<link rel="next" href="MplPanelGtk.html" title="MplPanelGtk">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="MplPanelClient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelclasses.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="MplPanelGtk.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#MplPanelClutter.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#MplPanelClutter.description" class="shortcut">Description</a>
+                   | 
+                  <a href="#MplPanelClutter.object-hierarchy" class="shortcut">Object Hierarchy</a>
+</td></tr>
+</table>
+<div class="refentry" title="MplPanelClutter">
+<a name="MplPanelClutter"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="MplPanelClutter.top_of_page"></a>MplPanelClutter</span></h2>
+<p>MplPanelClutter — Class for panels using Clutter</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="MplPanelClutter.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis">                    <a class="link" href="MplPanelClutter.html#MplPanelClutter-struct" title="MplPanelClutter">MplPanelClutter</a>;
+                    <a class="link" href="MplPanelClutter.html#MplPanelClutterClass" title="MplPanelClutterClass">MplPanelClutterClass</a>;
+<a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="returnvalue">MplPanelClient</span></a> *    <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-new" title="mpl_panel_clutter_new ()">mpl_panel_clutter_new</a>               (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *stylesheet</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *button_style</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> with_toolbar_service</code></em>);
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-get-stage" title="mpl_panel_clutter_get_stage ()">mpl_panel_clutter_get_stage</a>         (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-track-actor-height" title="mpl_panel_clutter_track_actor_height ()">mpl_panel_clutter_track_actor_height</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *actor</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-load-base-style" title="mpl_panel_clutter_load_base_style ()">mpl_panel_clutter_load_base_style</a>   (<em class="parameter"><code><span class="type">void</span></code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-lib" title="mpl_panel_clutter_init_lib ()">mpl_panel_clutter_init_lib</a>          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *argc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> ***argv</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-with-gtk" title="mpl_panel_clutter_init_with_gtk ()">mpl_panel_clutter_init_with_gtk</a>     (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *argc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> ***argv</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-setup-events-with-gtk" title="mpl_panel_clutter_setup_events_with_gtk ()">mpl_panel_clutter_setup_events_with_gtk</a>
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-setup-events-with-gtk-for-xid" title="mpl_panel_clutter_setup_events_with_gtk_for_xid ()">mpl_panel_clutter_setup_events_with_gtk_for_xid</a>
+                                                        (<em class="parameter"><code><span class="type">Window</span> xid</code></em>);
+<span class="returnvalue">void</span>                <a class="link" href="MplPanelClutter.html#mpl-panel-clutter-set-child" title="mpl_panel_clutter_set_child ()">mpl_panel_clutter_set_child</a>         (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *child</code></em>);
+</pre>
+</div>
+<div class="refsect1" title="Object Hierarchy">
+<a name="MplPanelClutter.object-hierarchy"></a><h2>Object Hierarchy</h2>
+<pre class="synopsis">
+  <a href="http://library.gnome.org/devel/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+   +----<a class="link" href="MplPanelClient.html" title="MplPanelClient">MplPanelClient</a>
+         +----MplPanelClutter
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="MplPanelClutter.description"></a><h2>Description</h2>
+<p>
+<a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> is a class for all Panels that implement their UI using
+Clutter. A minimal Panel implementation using <a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> would look
+as follows:
+</p>
+<p>
+</p>
+<pre class="programlisting">
+  #include &lt;meego-panel/mpl-panel-clutter.h&gt;
+
+  int
+  main (int argc, char **argv)
+  {
+    MplPanelClient *client;
+    ClutterActor   *contents;
+
+    mpl_panel_clutter_init_lib (&amp;argc, &amp;argv);
+
+    client = mpl_panel_clutter_new ("mypanel",
+                                    "this is mypanel",
+                                    "somewhere/mypanel-button.css",
+                                    "mypanel-button",
+                                    FALSE);
+
+    / * create the content actor for your panel * /
+    contents = make_my_panel_conents ();
+
+    mpl_panel_clutter_set_child (MPL_PANEL_CLUTTER (client), contents);
+
+    clutter_main ();
+
+    return 0;
+  }
+</pre>
+<p>
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="MplPanelClutter.details"></a><h2>Details</h2>
+<div class="refsect2" title="MplPanelClutter">
+<a name="MplPanelClutter-struct"></a><h3>MplPanelClutter</h3>
+<pre class="programlisting">typedef struct _MplPanelClutter MplPanelClutter;</pre>
+<p>
+Panel object for Clutter-based panels.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MplPanelClutterClass">
+<a name="MplPanelClutterClass"></a><h3>MplPanelClutterClass</h3>
+<pre class="programlisting">typedef struct {
+} MplPanelClutterClass;
+</pre>
+<p>
+Class struct for <a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a>.
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_new ()">
+<a name="mpl-panel-clutter-new"></a><h3>mpl_panel_clutter_new ()</h3>
+<pre class="programlisting"><a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="returnvalue">MplPanelClient</span></a> *    mpl_panel_clutter_new               (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *name</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *tooltip</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *stylesheet</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *button_style</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> with_toolbar_service</code></em>);</pre>
+<p>
+Constructs a new <a class="link" href="MplPanelGtk.html" title="MplPanelGtk"><span class="type">MplPanelGtk</span></a> object.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>name</code></em> :</span></p></td>
+<td>canonical name of the panel
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>tooltip</code></em> :</span></p></td>
+<td>tooltip for the associated Toolbar button
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>stylesheet</code></em> :</span></p></td>
+<td>stylesheet for the associated Toolbar button
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>button_style</code></em> :</span></p></td>
+<td>css style id for the button style
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>with_toolbar_service</code></em> :</span></p></td>
+<td>whether the panel will be using any Toolbar services
+(e.g., the launching API)
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> new <a class="link" href="MplPanelClient.html" title="MplPanelClient"><span class="type">MplPanelClient</span></a> object.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_get_stage ()">
+<a name="mpl-panel-clutter-get-stage"></a><h3>mpl_panel_clutter_get_stage ()</h3>
+<pre class="programlisting"><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="returnvalue">ClutterActor</span></a> *      mpl_panel_clutter_get_stage         (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>);</pre>
+<p>
+Returns the top-level <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> of the panel.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_track_actor_height ()">
+<a name="mpl-panel-clutter-track-actor-height"></a><h3>mpl_panel_clutter_track_actor_height ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_track_actor_height
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *actor</code></em>);</pre>
+<p>
+Sets up the panel for dynamically matching its height to that of the
+supplied actor (e.g., the top-level panel widget).
+</p>
+<p>
+Passing NULL for actor on a subsequent call we terminated the height
+tracking.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>actor</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_load_base_style ()">
+<a name="mpl-panel-clutter-load-base-style"></a><h3>mpl_panel_clutter_load_base_style ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_load_base_style   (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
+<p>
+Loads the base css style for the Panel. This function is called automatically
+when the panel is constructed, so it is rarely necessary to call this from
+the panel application. Calling this function mutliple times is safe (nop).
+</p>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_init_lib ()">
+<a name="mpl-panel-clutter-init-lib"></a><h3>mpl_panel_clutter_init_lib ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_init_lib          (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *argc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> ***argv</code></em>);</pre>
+<p>
+Initialializes the libmeego-panel library when used in a Clutter-based
+panel that do not use Gtk (panels that also use Gtk should use
+<a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-with-gtk" title="mpl_panel_clutter_init_with_gtk ()"><code class="function">mpl_panel_clutter_init_with_gtk()</code></a> instead).
+</p>
+<p>
+This function calls <a href="/usr/share/gtk-doc/html/clutter/clutter-General.html#clutter-init"><code class="function">clutter_init()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argc</code></em> :</span></p></td>
+<td> a pointer to the number of command line arguments. <span class="annotation">[<a href="http://foldoc.org/inout"><span class="acronym">inout</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> a pointer to the array
+  of command line arguments. <span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> length=argc][<a href="http://foldoc.org/inout"><span class="acronym">inout</span></a> length=argc][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a> length=argc]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_init_with_gtk ()">
+<a name="mpl-panel-clutter-init-with-gtk"></a><h3>mpl_panel_clutter_init_with_gtk ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_init_with_gtk     (<em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> *argc</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> ***argv</code></em>);</pre>
+<p>
+Initialializes the libmeego-panel library when used in a Clutter-based
+panel that also use Gtk (panels that only use Clutter should use
+<a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-lib" title="mpl_panel_clutter_init_lib ()"><code class="function">mpl_panel_clutter_init_lib()</code></a> instead).
+</p>
+<p>
+This function calls <a href="/usr/share/gtk-doc/html/gtk/gtk-General.html#gtk-init"><code class="function">gtk_init()</code></a> and <a href="/usr/share/gtk-doc/html/clutter/clutter-General.html#clutter-init"><code class="function">clutter_init()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argc</code></em> :</span></p></td>
+<td> a pointer to the number of command line arguments. <span class="annotation">[<a href="http://foldoc.org/inout"><span class="acronym">inout</span></a>]</span>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>argv</code></em> :</span></p></td>
+<td> a pointer to the array
+  of command line arguments. <span class="annotation">[<a href="http://foldoc.org/array"><span class="acronym">array</span></a> length=argc][<a href="http://foldoc.org/inout"><span class="acronym">inout</span></a> length=argc][<a href="http://foldoc.org/allow-none"><span class="acronym">allow-none</span></a> length=argc]</span>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_setup_events_with_gtk ()">
+<a name="mpl-panel-clutter-setup-events-with-gtk"></a><h3>mpl_panel_clutter_setup_events_with_gtk ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_setup_events_with_gtk
+                                                        (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>);</pre>
+<p>
+Sets up X event handling in panels that use both Clutter and Gtk; for such
+panel the library needs to be initialized with
+<a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-with-gtk" title="mpl_panel_clutter_init_with_gtk ()"><code class="function">mpl_panel_clutter_init_with_gtk()</code></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a>
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_setup_events_with_gtk_for_xid ()">
+<a name="mpl-panel-clutter-setup-events-with-gtk-for-xid"></a><h3>mpl_panel_clutter_setup_events_with_gtk_for_xid ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_setup_events_with_gtk_for_xid
+                                                        (<em class="parameter"><code><span class="type">Window</span> xid</code></em>);</pre>
+<p>
+Sets up X event handling in panels that use both Clutter and Gtk; for such
+panel the library needs to be initialized with
+<a class="link" href="MplPanelClutter.html#mpl-panel-clutter-init-with-gtk" title="mpl_panel_clutter_init_with_gtk ()"><code class="function">mpl_panel_clutter_init_with_gtk()</code></a>.
+</p>
+<p>
+This is a convenience function for panels that implement stanalone mode
+(i.e., without mutter-meego and the associate panel machinery) for ease
+of developement and testing. In normal mode, use
+<a class="link" href="MplPanelClutter.html#mpl-panel-clutter-setup-events-with-gtk" title="mpl_panel_clutter_setup_events_with_gtk ()"><code class="function">mpl_panel_clutter_setup_events_with_gtk()</code></a> instead.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody><tr>
+<td><p><span class="term"><em class="parameter"><code>xid</code></em> :</span></p></td>
+<td>the stage window
+</td>
+</tr></tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_panel_clutter_set_child ()">
+<a name="mpl-panel-clutter-set-child"></a><h3>mpl_panel_clutter_set_child ()</h3>
+<pre class="programlisting"><span class="returnvalue">void</span>                mpl_panel_clutter_set_child         (<em class="parameter"><code><a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a> *panel</code></em>,
+                                                         <em class="parameter"><code><a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a> *child</code></em>);</pre>
+<p>
+Sets child as the top-level <a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>panel</code></em> :</span></p></td>
+<td>
+<a class="link" href="MplPanelClutter.html" title="MplPanelClutter"><span class="type">MplPanelClutter</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>child</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/clutter/ClutterActor.html"><span class="type">ClutterActor</span></a>
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

@@ -1,0 +1,375 @@
+/* generic classes */
+
+* {
+  font-size:13px;
+}
+
+MxEntry:indeterminate {
+  color: gray;
+}
+
+MxScrollView {
+  xthickness: 26;
+  ythickness: 26;
+}
+
+MxScrollBar {
+  background-color: #e7ebee;
+  padding: 3;
+}
+
+MxScrollBar > *#backward-stepper {
+  border-image: url("generic/vscroll-backward.png") 2 4 2 2;
+}
+
+MxScrollBar > *#backward-stepper:active {
+  border-image: url("generic/vscroll-backward-hover.png") 2 4 2 2;
+}
+
+MxScrollBar > *#forward-stepper {
+  border-image: url("generic/vscroll-forward.png") 2 4 2 2;
+}
+
+MxScrollBar > *#forward-stepper:active {
+  border-image: url("generic/vscroll-forward-hover.png") 2 4 2 2;
+}
+
+MxScrollBar *#handle {
+  border-image: url("generic/vscroll-handle.png") 2 4 2 2;
+}
+
+MxTable {
+  background-color: #f000;
+}
+
+MxLabel#time-label {
+  color: #31c2ee;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+MxLabel#date-label {
+  color: #31c2ee;
+  font-size: 12px;
+}
+
+MnbToolbar {
+  border-image: url("panel/panel-background.png") 0 200 0 200;
+}
+
+MnbToolbarButton {
+  -mx-border-image-transition-duration: 0;
+  background-color: #fff0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+}
+
+MnbToolbarButton:hover, MnbToolbarButton:active {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+}
+
+MnbToolbarButton:checked {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-active.png") 12;
+}
+
+MnbToolbarClock {
+  -mx-border-image-transition-duration: 0;
+  background-color: #fff0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+  background-image: none;
+  padding: 0 0 0 0;
+}
+
+MnbToolbarClock:checked {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-active.png") 12;
+  background-image: none;
+  padding: 0 0 0 0;
+}
+
+MnbToolbarClock:hover, MnbToolbarClock:active {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+  background-image: none;
+  padding: 0 0 0 0;
+}
+
+MnbToolbarApplet {
+  -mx-border-image-transition-duration: 0;
+  background-color: #fff0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+  padding: 0 0 0 0;
+}
+
+MnbToolbarApplet:checked {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-active.png") 12;
+  background-image: none;
+  padding: 0 0 0 0;
+}
+
+MnbToolbarApplet:hover, MnbToolbarApplet:active {
+  -mx-border-image-transition-duration: 0;
+  border-image: url("panel/toolbar-button-normal.png") 12;
+  padding: 0 0 0 0;
+}
+
+/* applications button */
+MnbToolbarButton#applications-button, MnbToolbarButton#applications-button:active, MnbToolbarButton#applications-button:checked {
+  background-image: url("panel/apps-normal.png");
+}
+MnbToolbarButton#applications-button:hover  {
+  background-image: url("panel/apps-coloured.png");
+}
+
+/* internet button */
+MnbToolbarButton#internet-button, MnbToolbarButton#internet-button:active, MnbToolbarButton#internet-button:checked {
+  background-image: url("panel/internet-normal.png");
+}
+MnbToolbarButton#internet-button:hover {
+  background-image: url("panel/internet-coloured.png");
+}
+
+/* media button */
+MnbToolbarButton#media-button, MnbToolbarButton#media-button:active, MnbToolbarButton#media-button:checked {
+  background-image: url("panel/media-normal.png");
+}
+MnbToolbarButton#media-button:hover {
+  background-image: url("panel/media-coloured.png");
+}
+
+/* myzone button */
+MnbToolbarButton#myzone-button, MnbToolbarButton#myzone-button:active, MnbToolbarButton#myzone-button:checked {
+  background-image: url("panel/myzone-normal.png");
+}
+MnbToolbarButton#myzone-button:hover {
+  background-image: url("panel/myzone-coloured.png");
+}
+
+/* pasteboard button */
+MnbToolbarButton#pasteboard-button, MnbToolbarButton#pasteboard-button:active, MnbToolbarButton#pasteboard-button:checked {
+  background-image: url("panel/pasteboard-normal.png");
+}
+MnbToolbarButton#pasteboard-button:hover {
+  background-image: url("panel/pasteboard-coloured.png");
+}
+
+/* people button */
+MnbToolbarButton#people-button, MnbToolbarButton#people-button:active, MnbToolbarButton#people-button:checked  {
+  background-image: url("panel/people-normal.png");
+}
+MnbToolbarButton#people-button:hover{
+  background-image: url("panel/people-coloured.png");
+}
+
+MnbToolbarButton#people-button-active, MnbToolbarButton#people-button-active:active, MnbToolbarButton#people-button-active:checked {
+  background-image: url("panel/people-active-normal.png");
+}
+MnbToolbarButton#people-button-active:hover {
+  background-image: url("panel/people-active-coloured.png");
+}
+
+/* spaces button */
+MnbToolbarButton#zones-button, MnbToolbarButton#zones-button:active, MnbToolbarButton#zones-button:checked {
+  background-image: url("panel/spaces-normal.png");
+}
+MnbToolbarButton#zones-button:hover {
+  background-image: url("panel/spaces-coloured.png");
+}
+
+/* status button */
+MnbToolbarButton#status-button, MnbToolbarButton#status-button:active, MnbToolbarButton#status-button:checked {
+  background-image: url("panel/status-normal.png");
+}
+MnbToolbarButton#status-button:hover {
+  background-image: url("panel/status-coloured.png");
+}
+
+/* network button */
+MnbToolbarButton#network-button, MnbToolbarButton#network-button:active, MnbToolbarButton#network-button:checked {
+  background-image: url("panel/network-coloured.png");
+}
+MnbToolbarButton#network-button:hover {
+  background-image: url("panel/network-coloured.png");
+}
+
+/* devices button */
+MnbToolbarButton#devices-button, MnbToolbarButton#devices-button:active, MnbToolbarButton#devices-button:checked {
+  background-image: url("panel/devices-normal.png");
+}
+MnbToolbarButton#devices-button:hover {
+  background-image: url("panel/devices-coloured.png");
+}
+
+MnbToolbarButton#devices-button-active, MnbToolbarButton#devices-button-active:active, MnbToolbarButton#devices-button-active:checked {
+  background-image: url("panel/devices-active-normal.png");
+}
+MnbToolbarButton#devices-button-active:hover {
+  background-image: url("panel/devices-active-coloured.png");
+}
+
+MnbToolbarIcon, MnbToolbarIcon:hover, MnbToolbarIcon:active {
+  border-image: none;
+}
+
+/* tooltips */
+MxTooltip {
+  color: white;
+  padding: 4 10 12 10;
+  background-image: url('generic/tooltip-arrow.png');
+  border-image: url('generic/tooltip-background.png') 4 11 12 11;
+  font-size: 15px;
+}
+
+MxTooltip.alttab {
+  background-image: none;
+}
+
+MnbAlttabOverlay {
+  background-color: #44444444;
+  padding: 10;
+}
+
+/* switcher overlay */
+MnbAlttabOverlayApp {
+  background-color: #fff0;
+  padding: 6;
+  border-image: url('alttab/application-normal.png') 6;
+}
+
+MnbAlttabOverlayApp:active {
+  background-color: #fff0;
+  padding: 6;
+  border-image: url('alttab/application-active.png') 6;
+}
+
+/* Must be identical to the style defintion for MplPanelBackground */
+MnbPanelFrame {
+  border-image: url("drop-down/panel_shadow.png") 4 9 473 9;
+  padding: 4 4 12 4;
+}
+
+/* Must be identical to the style defintion for MplPanelBackground */
+MnbPanelFrame#too-small, MxFrame#panel-stub {
+  border-image: url("drop-down/panel_stub_shadow.png") 4 9 14 9;
+  padding: 4 4 12 4;
+}
+
+MnbEntry {
+  border-image: url('generic/search-entry-bg.png') 5 5 6 5;
+  padding: 7 10 7 10;
+}
+
+MnbEntry > *.MnbEntryEntry {
+  border-image: none;
+  font-size: 15;
+}
+
+MnbEntry *.MnbEntryButton {
+  border-image: url('generic/search-entry-separator.png') 0 0 0 3;
+  font-size: 13;
+  padding: 0 2 0 10;
+}
+
+MnbEntry *.MnbEntryClearButton {
+  background-image: url('generic/search-entry-clear.png');
+  border-image: none;
+}
+
+MnbEntry *.MnbEntryClearButton:hover {
+  background-image: url('generic/search-entry-clear-hover.png');
+}
+
+
+MplEntry {
+  border-image: url('generic/search-entry-bg.png') 5 5 6 5;
+  padding: 7 10 7 10;
+}
+
+MplEntry > *.MplEntryEntry {
+  border-image: none;
+  font-size: 15;
+}
+
+MplEntry *.MplEntryButton {
+  border-image: url('generic/search-entry-separator.png') 0 0 0 3;
+  font-size: 13;
+  padding: 0 2 0 10;
+}
+
+MplEntry *.MplEntryClearButton {
+  background-image: url('generic/search-entry-clear.png');
+  border-image: none;
+}
+
+MplEntry *.MplEntryClearButton:hover {
+  background-image: url('generic/search-entry-clear-hover.png');
+}
+
+MxLabel
+{
+  font-family: "Droid Sans";
+  font-size: 12px;
+}
+
+/* date and time */
+MxLabel.date-label {
+  font-family: "Droid Sans";
+  font-size: 15px;
+}
+
+NtfNotification
+{
+  border-image: url('notifiers/notification-bg.png') 10 21 33 22;
+  padding: 15 26 38 27;
+  font-size: 12px;
+}
+
+NtfTray *.notification-control
+{
+  border-image: url('notifiers/notification-bg.png') 10 21 33 22;
+  padding: 15 26 38 27;
+}
+
+*.NotificationSummary
+{
+    font-family: "Droid Sans Bold";
+    font-size: 16px;
+    color: #009bceff;
+}
+
+*.NotificationSummaryUrgent
+{
+    font-family: "Droid Sans Bold";
+    font-size: 16px;
+    color: #e73035ff;
+}
+
+
+NtfNotification > *.NotificationBody
+{
+    font-family: "Droid Sans";
+    font-size: 13px;
+    color: #333;
+}
+
+/* zone switching effect */
+MnbFancyBin {
+  padding: 6 6 7 6;
+  curve-radius: 2;
+  border-image: url("effects/bin-border-image.png") 8 8 9 8;
+}
+
+MnbZonesPreview {
+  spacing: 16;
+  border-image: url("effects/zone-switch-background.png") 0;
+}
+
+MnbSpinner {
+  background-color: #0000;
+
+  /* The background image is a strip of spinner frames; individual frames */
+  /* must be square. */
+  background-image: url("generic/spinner.png");
+}

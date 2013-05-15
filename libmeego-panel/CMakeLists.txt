@@ -1,0 +1,17 @@
+FIND_PACKAGE(ZLIB REQUIRED)
+
+SET(VERSION_MAJOR 0)
+SET(VERSION_MINOR 0)
+SET(VERSION_PATCH 0)
+
+ADD_SUBDIRECTORY(meego-panel)
+#ADD_SUBDIRECTORY(theme)
+#ADD_SUBDIRECTORY(tests)
+#ADD_SUBDIRECTORY(docs)
+
+########### Add pkgconfig target ###############
+CONFIGURE_FILE(
+  "${CMAKE_CURRENT_SOURCE_DIR}/meego-panel.pc.in"
+  "${CMAKE_CURRENT_BINARY_DIR}/meego-panel.pc"
+  IMMEDIATE @ONLY)
+INSTALL(FILES ${CMAKE_CURRENT_BINARY_DIR}/meego-panel.pc DESTINATION lib/pkgconfig/)

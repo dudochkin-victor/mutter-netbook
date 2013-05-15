@@ -1,0 +1,1706 @@
+/* -*- mode: C; c-file-style: "gnu"; indent-tabs-mode: nil; -*- */
+
+/* mnb-panel.c */
+/*
+ * Copyright (c) 2009, 2010 Intel Corp.
+ *
+ * Author: Tomas Frydrych <tf@linux.intel.com>
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License as
+ * published by the Free Software Foundation; either version 2 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful, but
+ * WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
+ * 02111-1307, USA.
+ */
+
+#include "mnb-panel-oop.h"
+#include "mnb-toolbar.h"
+
+#include "marshal.h"
+
+#include <string.h>
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-bindings.h>
+#include <dbus/dbus-glib-lowlevel.h>
+#include <dbus/dbus.h>
+#include <gtk/gtk.h>
+#include <gdk/gdkx.h>
+#include <meego-panel/mpl-panel-common.h>
+#include <meta/display.h>
+//#include <errors.h>
+
+/*
+ * Including mutter's errors.h defines the i18n macros, so undefine them before
+ * including the glib i18n header.
+ */
+#undef _
+#undef N_
+
+/* FIME -- duplicated from MnbDropDown.c */
+#define SLIDE_DURATION 150
+
+#include <X11/Xatom.h>
+
+static void mnb_panel_iface_init (MnbPanelIface *iface);
+
+G_DEFINE_TYPE_WITH_CODE (MnbPanelOop,
+                         mnb_panel_oop,
+                         G_TYPE_OBJECT,
+                         G_IMPLEMENT_INTERFACE (MNB_TYPE_PANEL,
+                                                mnb_panel_iface_init));
+
+#define MNB_PANEL_OOP_GET_PRIVATE(o) \
+  (G_TYPE_INSTANCE_GET_PRIVATE ((o), MNB_TYPE_PANEL_OOP, MnbPanelOopPrivate))
+
+static void     mnb_panel_oop_constructed    (GObject  *self);
+static gboolean mnb_panel_oop_setup_proxy    (MnbPanelOop *panel);
+static void     mnb_panel_oop_init_owner     (MnbPanelOop *panel);
+static void     mnb_panel_oop_dbus_proxy_weak_notify_cb (gpointer, GObject *);
+
+static const gchar * mnb_panel_oop_get_name (MnbPanel *panel);
+static const gchar * mnb_panel_oop_get_tooltip (MnbPanel *panel);
+static const gchar * mnb_panel_oop_get_button_style (MnbPanel *panel);
+static const gchar  *mnb_panel_oop_get_stylesheet    (MnbPanel *panel);
+static void mnb_panel_oop_set_size (MnbPanel *panel, guint width, guint height);
+static void mnb_panel_oop_show (MnbPanel *panel);
+static void mnb_panel_oop_show_animate      (MnbPanelOop *panel);
+
+enum
+{
+  PROP_0,
+
+  PROP_DBUS_NAME,
+  PROP_X,
+  PROP_Y,
+  PROP_WIDTH,
+  PROP_HEIGHT,
+  PROP_MODAL
+};
+
+enum
+{
+  READY,
+  REMOTE_PROCESS_DIED,
+  DESTROY,
+
+  LAST_SIGNAL
+};
+
+static guint signals[LAST_SIGNAL] = { 0 };
+
+struct _MnbPanelOopPrivate
+{
+  DBusGConnection *dbus_conn;
+  DBusGProxy      *proxy;
+  DBusGProxy      *proxy_for_owner;
+
+  gchar           *dbus_name;
+  gchar           *dbus_path;
+
+  gchar           *name;
+  gchar           *tooltip;
+  gchar           *stylesheet;
+  gchar           *button_style_id;
+  guint            xid;
+  gchar           *child_class;
+
+  gint             x;
+  gint             y;
+  guint            width;
+  guint            height;
+
+  MetaWindowActor    *mcw;
+
+  gboolean         constructed      : 1;
+  gboolean         initialized      : 1;
+  gboolean         dead             : 1; /* Set when the remote  */
+  gboolean         ready            : 1;
+  gboolean         hide_in_progress : 1;
+
+  /*
+   * The show/hide machinery
+   */
+  gboolean         modal             : 1;
+  gboolean         auto_modal        : 1;
+  gboolean         in_show_animation : 1;
+  gboolean         in_hide_animation : 1;
+  gboolean         dont_hide_toolbar : 1;
+  gboolean         delayed_show      : 1;
+  gboolean         mapped            : 1;
+
+  MxButton      *button;
+
+  gulong           show_completed_id;
+  gulong           hide_completed_id;
+  ClutterAnimation *show_anim;
+  ClutterAnimation *hide_anim;
+
+};
+
+static void
+mnb_panel_oop_get_property (GObject    *object,
+                            guint       property_id,
+                            GValue     *value,
+                            GParamSpec *pspec)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (object)->priv;
+
+  switch (property_id)
+    {
+    case PROP_DBUS_NAME:
+      g_value_set_string (value, priv->dbus_name);
+      break;
+    case PROP_X:
+      g_value_set_int (value, priv->x);
+      break;
+    case PROP_Y:
+      g_value_set_int (value, priv->y);
+      break;
+    case PROP_WIDTH:
+      g_value_set_uint (value, priv->width);
+      break;
+    case PROP_MODAL:
+      {
+        gboolean modal = priv->modal || priv->auto_modal;
+
+        g_value_set_boolean (value, modal);
+      }
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+}
+
+static void
+mnb_panel_oop_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (object)->priv;
+
+  switch (property_id)
+    {
+    case PROP_DBUS_NAME:
+      g_free (priv->dbus_name);
+      priv->dbus_name = g_value_dup_string (value);
+      break;
+    case PROP_X:
+      priv->x = g_value_get_int (value);
+      break;
+    case PROP_Y:
+      priv->y = g_value_get_int (value);
+      break;
+    case PROP_WIDTH:
+      priv->width = g_value_get_uint (value);
+      break;
+    case PROP_HEIGHT:
+      priv->height = g_value_get_uint (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+    }
+}
+
+void
+mnb_panel_oop_focus (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  if (priv->hide_in_progress)
+    return;
+
+  if (!priv->hide_in_progress && priv->mcw)
+    meego_netbook_activate_mutter_window (priv->mcw);
+}
+
+/*
+ * Callbacks for the request signals exposed by the panels.
+ */
+static void
+mnb_panel_oop_request_focus_cb (DBusGProxy *proxy, MnbPanelOop *panel)
+{
+  if (!mnb_panel_is_mapped ((MnbPanel*)panel))
+    {
+      g_warning ("Panel %s requested focus while not visible !!!",
+                 mnb_panel_oop_get_name ((MnbPanel*)panel));
+      return;
+    }
+
+  mnb_panel_oop_focus (panel);
+}
+
+static void
+mnb_panel_oop_request_button_style_cb (DBusGProxy  *proxy,
+                                       const gchar *style_id,
+                                       MnbPanelOop    *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  g_free (priv->button_style_id);
+  priv->button_style_id = g_strdup (style_id);
+
+  g_signal_emit_by_name (panel, "request-button-style", style_id);
+}
+
+static void
+mnb_panel_oop_request_button_state_cb (DBusGProxy     *proxy,
+                                       MnbButtonState  state,
+                                       MnbPanelOop    *panel)
+{
+  g_signal_emit_by_name (panel, "request-button-state", state);
+}
+
+static void
+mnb_panel_oop_request_modality_cb (DBusGProxy     *proxy,
+                                   gboolean        modal,
+                                   MnbPanelOop    *panel)
+{
+  MnbPanelOopPrivate *priv      = panel->priv;
+  gboolean            not_modal = !priv->modal;
+
+  if (not_modal != !modal)
+    {
+      gboolean old_not_modal = !(priv->modal || priv->auto_modal);
+      gboolean new_not_modal = !(modal || priv->auto_modal);
+
+      priv->modal = modal;
+      g_signal_emit_by_name (panel, "request-modality", modal);
+
+      if (old_not_modal != new_not_modal)
+        g_object_notify (G_OBJECT (panel), "modal");
+    }
+}
+
+static void
+mnb_panel_oop_request_tooltip_cb (DBusGProxy  *proxy,
+                                  const gchar *tooltip,
+                                  MnbPanelOop    *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  g_free (priv->tooltip);
+  priv->tooltip = g_strdup (tooltip);
+
+  g_signal_emit_by_name (panel, "request-tooltip", tooltip);
+}
+
+static void
+mnb_panel_oop_set_size_cb (DBusGProxy  *proxy,
+                           guint        width,
+                           guint        height,
+                           MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  priv->width  = width;
+  priv->height = height;
+}
+
+static void
+mnb_panel_oop_set_position_cb (DBusGProxy  *proxy,
+                               gint         x,
+                               gint         y,
+                               MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  priv->x = x;
+  priv->y = y;
+}
+
+static void
+mnb_panel_oop_ready_cb (DBusGProxy  *proxy,
+                        MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  priv->ready = TRUE;
+
+  if (priv->initialized)
+    g_signal_emit (panel, signals[READY], 0);
+}
+
+static void
+mnb_panel_oop_dispose (GObject *self)
+{
+  MnbPanelOopPrivate *priv   = MNB_PANEL_OOP (self)->priv;
+  DBusGProxy         *proxy  = priv->proxy;
+
+  if (proxy)
+    {
+      dbus_g_proxy_disconnect_signal (proxy, "RequestFocus",
+                                   G_CALLBACK (mnb_panel_oop_request_focus_cb),
+                                   self);
+
+      dbus_g_proxy_disconnect_signal (proxy, "RequestButtonStyle",
+                             G_CALLBACK (mnb_panel_oop_request_button_style_cb),
+                             self);
+
+      dbus_g_proxy_disconnect_signal (proxy, "RequestButtonState",
+                             G_CALLBACK (mnb_panel_oop_request_button_state_cb),
+                             self);
+
+      dbus_g_proxy_disconnect_signal (proxy, "RequestModality",
+                             G_CALLBACK (mnb_panel_oop_request_modality_cb),
+                             self);
+
+      dbus_g_proxy_disconnect_signal (proxy, "RequestTooltip",
+                                  G_CALLBACK (mnb_panel_oop_request_tooltip_cb),
+                                  self);
+      g_object_unref (proxy);
+      priv->proxy = NULL;
+    }
+
+  if (priv->proxy_for_owner)
+    g_object_weak_unref (G_OBJECT (priv->proxy_for_owner),
+                         mnb_panel_oop_dbus_proxy_weak_notify_cb, self);
+
+  if (priv->dbus_conn)
+    {
+      dbus_g_connection_unref (priv->dbus_conn);
+      priv->dbus_conn = NULL;
+    }
+
+  if (priv->button)
+    {
+      priv->button = NULL;
+    }
+
+  g_signal_emit (self, signals[DESTROY], 0);
+
+  G_OBJECT_CLASS (mnb_panel_oop_parent_class)->dispose (self);
+}
+
+static void
+mnb_panel_oop_finalize (GObject *object)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (object)->priv;
+
+  g_free (priv->dbus_name);
+  g_free (priv->dbus_path);
+
+  g_free (priv->name);
+  g_free (priv->tooltip);
+  g_free (priv->stylesheet);
+  g_free (priv->button_style_id);
+  g_free (priv->child_class);
+
+  G_OBJECT_CLASS (mnb_panel_oop_parent_class)->finalize (object);
+}
+
+#include "mnb-panel-dbus-bindings.h"
+
+static void
+mnb_panel_oop_class_init (MnbPanelOopClass *klass)
+{
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  g_type_class_add_private (klass, sizeof (MnbPanelOopPrivate));
+
+  object_class->get_property     = mnb_panel_oop_get_property;
+  object_class->set_property     = mnb_panel_oop_set_property;
+  object_class->dispose          = mnb_panel_oop_dispose;
+  object_class->finalize         = mnb_panel_oop_finalize;
+  object_class->constructed      = mnb_panel_oop_constructed;
+
+  g_object_class_install_property (object_class,
+                                   PROP_DBUS_NAME,
+                                   g_param_spec_string ("dbus-name",
+                                                        "Dbus name",
+                                                        "Dbus name",
+                                                        NULL,
+                                                        G_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class,
+                                   PROP_X,
+                                   g_param_spec_int ("x",
+                                                     "X coordinate",
+                                                     "X coordiante",
+                                                      0, G_MAXINT,
+                                                      0,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_Y,
+                                   g_param_spec_int ("y",
+                                                     "Y coordinate",
+                                                     "Y coordiante",
+                                                      0, G_MAXINT,
+                                                      0,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_WIDTH,
+                                   g_param_spec_uint ("width",
+                                                      "Width",
+                                                      "Width",
+                                                      0, G_MAXUINT,
+                                                      1024,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_HEIGHT,
+                                   g_param_spec_uint ("height",
+                                                      "Height",
+                                                      "Height",
+                                                      0, G_MAXUINT,
+                                                      1024,
+                                                      G_PARAM_READWRITE |
+                                                      G_PARAM_CONSTRUCT));
+
+  g_object_class_install_property (object_class,
+                                   PROP_MODAL,
+                                   g_param_spec_boolean ("modal",
+                                          "Modal",
+                                          "Whether panel has modal transients",
+                                                         FALSE,
+                                                         G_PARAM_READABLE));
+
+  signals[READY] =
+    g_signal_new ("ready",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (MnbPanelOopClass, ready),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  signals[REMOTE_PROCESS_DIED] =
+    g_signal_new ("remote-process-died",
+                  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_LAST,
+                  G_STRUCT_OFFSET (MnbPanelOopClass, remote_process_died),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  signals[DESTROY] =
+    g_signal_new ("destroy",
+		  G_TYPE_FROM_CLASS (object_class),
+                  G_SIGNAL_RUN_CLEANUP |
+                  G_SIGNAL_NO_RECURSE  |
+                  G_SIGNAL_NO_HOOKS,
+		  0,
+		  NULL, NULL,
+		  g_cclosure_marshal_VOID__VOID,
+		  G_TYPE_NONE, 0);
+
+  dbus_g_object_register_marshaller (meego_netbook_marshal_VOID__UINT_UINT,
+                                     G_TYPE_NONE,
+                                     G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
+  dbus_g_object_register_marshaller (meego_netbook_marshal_VOID__INT_INT,
+                                     G_TYPE_NONE,
+                                     G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID);
+  dbus_g_object_register_marshaller (meego_netbook_marshal_VOID__ENUM,
+                                     G_TYPE_NONE,
+                                     G_TYPE_ENUM, G_TYPE_INVALID);
+}
+
+static void
+mnb_panel_oop_init (MnbPanelOop *self)
+{
+  MnbPanelOopPrivate *priv;
+
+  priv = self->priv = MNB_PANEL_OOP_GET_PRIVATE (self);
+}
+
+/*
+ * It is not possible to pass a NULL for the reply function into the
+ * autogenerated bindings, as they do not check :/
+ */
+static void
+mnb_panel_oop_dbus_dumb_reply_cb (DBusGProxy *proxy,
+                                  GError     *error,
+                                  gpointer    data)
+{
+}
+
+/*
+ * Signal closures for show/hide related signals; we translate these into the
+ * appropriate dbus method calls.
+ */
+static void
+mnb_panel_oop_show_begin (MnbPanel *self)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (self)->priv;
+
+  com_meego_UX_Shell_Panel_show_begin_async (priv->proxy,
+                                             mnb_panel_oop_dbus_dumb_reply_cb,
+                                             NULL);
+}
+
+static void
+mnb_panel_oop_show_completed (MnbPanel *self)
+{
+  MnbPanelOopPrivate *priv  = MNB_PANEL_OOP (self)->priv;
+
+  mnb_panel_oop_focus (MNB_PANEL_OOP (self));
+
+  com_meego_UX_Shell_Panel_show_end_async (priv->proxy,
+                                           mnb_panel_oop_dbus_dumb_reply_cb,
+                                           NULL);
+}
+
+static void
+mnb_panel_oop_hide_begin (MnbPanel *self)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (self)->priv;
+
+  priv->hide_in_progress = TRUE;
+
+  if (!priv->proxy)
+    {
+      g_warning (G_STRLOC " No DBus proxy!");
+      return;
+    }
+
+  com_meego_UX_Shell_Panel_hide_begin_async (priv->proxy,
+                                             mnb_panel_oop_dbus_dumb_reply_cb,
+                                             NULL);
+}
+
+static void
+mnb_panel_oop_hide_completed (MnbPanel *self)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (self)->priv;
+
+  priv->hide_in_progress = FALSE;
+
+  if (!priv->proxy)
+    {
+      g_warning (G_STRLOC " No DBus proxy!");
+      return;
+    }
+
+  com_meego_UX_Shell_Panel_hide_end_async (priv->proxy,
+                                           mnb_panel_oop_dbus_dumb_reply_cb,
+                                           NULL);
+}
+
+static DBusGConnection *
+mnb_panel_oop_connect_to_dbus ()
+{
+  DBusGConnection *conn;
+  GError          *error = NULL;
+
+  conn = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
+  if (!conn)
+    {
+      g_warning ("Cannot connect to DBus: %s", error->message);
+      g_error_free (error);
+      return NULL;
+    }
+
+  return conn;
+}
+
+static void
+mnb_panel_oop_dbus_proxy_weak_notify_cb (gpointer data, GObject *object)
+{
+  MnbPanelOop        *panel = MNB_PANEL_OOP (data);
+  MnbPanelOopPrivate *priv  = panel->priv;
+
+  priv->proxy_for_owner = NULL;
+
+  g_object_ref (panel);
+  priv->ready = FALSE;
+  priv->dead = TRUE;
+  g_signal_emit (panel, signals[REMOTE_PROCESS_DIED], 0);
+  g_object_unref (panel);
+}
+
+static void
+mnb_panel_oop_init_panel_oop_reply_cb (DBusGProxy *proxy,
+                                       gchar      *name,
+                                       guint       xid,
+                                       gchar      *tooltip,
+                                       gchar      *stylesheet,
+                                       gchar      *button_style_id,
+                                       guint       window_width,
+                                       guint       window_height,
+                                       GError     *error,
+                                       gpointer    panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  if (error)
+    {
+      g_warning ("Could not initialize Panel %s: %s",
+                 mnb_panel_oop_get_name ((MnbPanel*)panel), error->message);
+      g_object_unref (panel);
+      return;
+    }
+
+  priv->proxy_for_owner =
+    dbus_g_proxy_new_for_name_owner (priv->dbus_conn,
+                                     priv->dbus_name,
+                                     priv->dbus_path,
+                                     MPL_PANEL_DBUS_INTERFACE,
+                                     &error);
+
+  if (error)
+    {
+      g_warning ("Could not create owner-specif proxy for %s: %s",
+                 priv->dbus_name, error->message);
+      g_clear_error (&error);
+    }
+  else
+    {
+      g_object_weak_ref (G_OBJECT (priv->proxy_for_owner),
+                         mnb_panel_oop_dbus_proxy_weak_notify_cb, panel);
+    }
+
+  /*
+   * We duplicate the return values, because we need to be able to replace them
+   * and using the originals we would need to use dbus_malloc() later on
+   * to set them afresh.
+   */
+  g_free (priv->name);
+  priv->name = g_strdup (name);
+
+  g_free (priv->tooltip);
+  priv->tooltip = g_strdup (tooltip);
+
+  g_free (priv->stylesheet);
+  priv->stylesheet = g_strdup (stylesheet);
+
+  g_free (priv->button_style_id);
+  priv->button_style_id = g_strdup (button_style_id);
+
+  priv->xid = xid;
+
+  g_free (priv->child_class);
+
+  /*
+   * Retrieve the WM_CLASS property for the child window (we have to do it the
+   * hard way, because the WM_CLASS on the MetaWindowActor is coming from mutter,
+   * not the application).
+   *
+   * (We use the wm-class to identify sub-windows.)
+   */
+  if (xid)
+    {
+      Atom r_type;
+      int  r_fmt;
+      unsigned long n_items;
+      unsigned long r_after;
+      char *r_prop;
+      MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
+      MetaDisplay *display;
+
+      display = meta_screen_get_display (mutter_plugin_get_screen (plugin));
+
+      meta_error_trap_push (display);
+
+      if (Success == XGetWindowProperty (gdk_display_get_default (), xid, XA_WM_CLASS,
+                                         0, 8192,
+                                         False, XA_STRING,
+                                         &r_type, &r_fmt, &n_items, &r_after,
+                                         (unsigned char **)&r_prop) &&
+          r_type != 0)
+        {
+          if (r_prop)
+            {
+              /*
+               * The property contains two strings separated by \0; we want the
+               * second string.
+               */
+              gint len0 = strlen (r_prop);
+
+              if (len0 == n_items)
+                len0--;
+
+              priv->child_class = g_strdup (r_prop + len0 + 1);
+
+              XFree (r_prop);
+            }
+        }
+
+      meta_error_trap_pop (display, TRUE);
+    }
+
+  priv->dead = FALSE;
+  priv->initialized = TRUE;
+
+  if (priv->ready)
+    g_signal_emit (panel, signals[READY], 0);
+
+  dbus_free (name);
+  dbus_free (tooltip);
+  dbus_free (stylesheet);
+  dbus_free (button_style_id);
+}
+
+/*
+ * Does the hard work in establishing a connection to the name owner, retrieving
+ * the require information, and constructing the socket into which we embed the
+ * panel window.
+ */
+static void
+mnb_panel_oop_init_owner (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  if (!priv->proxy)
+    {
+      g_warning (G_STRLOC " No DBus proxy!");
+      return;
+    }
+
+  /*
+   * Now call the remote init_panel_oop() method to obtain the panel name,
+   * tooltip and xid.
+   */
+  com_meego_UX_Shell_Panel_init_panel_async (priv->proxy,
+                                          priv->x,
+                                          priv->y,
+                                          priv->width, priv->height,
+                                          mnb_panel_oop_init_panel_oop_reply_cb,
+                                          panel);
+}
+
+static void
+mnb_panel_oop_proxy_owner_changed_cb (DBusGProxy *proxy,
+                                      const char *name,
+                                      const char *old,
+                                      const char *new,
+                                      gpointer    data)
+{
+  mnb_panel_oop_init_owner (MNB_PANEL_OOP (data));
+}
+
+static DBusGProxy *
+mnb_panel_oop_create_dbus_proxy (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+  DBusGProxy         *proxy;
+  gchar              *dbus_path;
+  gchar              *p;
+
+  dbus_path = g_strconcat ("/", priv->dbus_name, NULL);
+
+  p = dbus_path;
+  while (*p)
+    {
+      if (*p == '.')
+        *p = '/';
+
+      ++p;
+    }
+
+  priv->dbus_path = dbus_path;
+
+  proxy = dbus_g_proxy_new_for_name (priv->dbus_conn,
+                                     priv->dbus_name,
+                                     dbus_path,
+                                     MPL_PANEL_DBUS_INTERFACE);
+
+  return proxy;
+}
+
+static gboolean
+mnb_panel_oop_setup_proxy (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+  DBusGProxy         *proxy;
+
+  if (!priv->dbus_conn)
+    {
+      g_warning (G_STRLOC " No dbus connection, cannot connect to panel!");
+      return FALSE;
+    }
+
+  proxy = mnb_panel_oop_create_dbus_proxy (panel);
+
+  if (!proxy)
+    {
+      g_warning ("Unable to create proxy for %s (reason unknown)",
+                 priv->dbus_name);
+
+      return FALSE;
+    }
+
+  priv->proxy = proxy;
+
+  /*
+   * Hook up to the signals the interface defines.
+   */
+  dbus_g_proxy_add_signal (proxy, "RequestFocus", G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "RequestFocus",
+                               G_CALLBACK (mnb_panel_oop_request_focus_cb),
+                               panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "NameOwnerChanged",
+                           G_TYPE_STRING,
+                           G_TYPE_STRING,
+                           G_TYPE_STRING,
+                           G_TYPE_INVALID);
+
+  dbus_g_proxy_connect_signal (proxy, "NameOwnerChanged",
+                             G_CALLBACK (mnb_panel_oop_proxy_owner_changed_cb),
+                             panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "RequestButtonStyle",
+                           G_TYPE_STRING, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "RequestButtonStyle",
+                             G_CALLBACK (mnb_panel_oop_request_button_style_cb),
+                             panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "RequestButtonState",
+                           G_TYPE_ENUM, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "RequestButtonState",
+                             G_CALLBACK (mnb_panel_oop_request_button_state_cb),
+                             panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "RequestTooltip",
+                           G_TYPE_STRING, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "RequestTooltip",
+                               G_CALLBACK (mnb_panel_oop_request_tooltip_cb),
+                               panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "RequestModality",
+                           G_TYPE_BOOLEAN, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "RequestModality",
+                               G_CALLBACK (mnb_panel_oop_request_modality_cb),
+                               panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "SetSize",
+                           G_TYPE_UINT, G_TYPE_UINT, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "SetSize",
+                               G_CALLBACK (mnb_panel_oop_set_size_cb),
+                               panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "SetPosition",
+                           G_TYPE_INT, G_TYPE_INT, G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "SetPosition",
+                               G_CALLBACK (mnb_panel_oop_set_position_cb),
+                               panel, NULL);
+
+  dbus_g_proxy_add_signal (proxy, "Ready", G_TYPE_INVALID);
+  dbus_g_proxy_connect_signal (proxy, "Ready",
+                               G_CALLBACK (mnb_panel_oop_ready_cb),
+                               panel, NULL);
+
+  mnb_panel_oop_init_owner (panel);
+
+  return TRUE;
+}
+
+static void
+mnb_panel_oop_constructed (GObject *self)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (self)->priv;
+  DBusGConnection *conn;
+
+  /*
+   * Make sure our parent gets chance to do what it needs to.
+   */
+  if (G_OBJECT_CLASS (mnb_panel_oop_parent_class)->constructed)
+    G_OBJECT_CLASS (mnb_panel_oop_parent_class)->constructed (self);
+
+  if (!priv->dbus_name)
+    return;
+
+  conn = mnb_panel_oop_connect_to_dbus ();
+
+  if (!conn)
+    {
+      g_warning (G_STRLOC " Unable to connect to DBus!");
+      return;
+    }
+
+  priv->dbus_conn = conn;
+
+  if (!mnb_panel_oop_setup_proxy (MNB_PANEL_OOP (self)))
+    return;
+
+  priv->constructed = TRUE;
+}
+
+MnbPanelOop *
+mnb_panel_oop_new (const gchar  *dbus_name,
+                   gint          x,
+                   gint          y,
+                   guint         width,
+                   guint         height)
+{
+  MnbPanelOop *panel = g_object_new (MNB_TYPE_PANEL_OOP,
+                                     "dbus-name",     dbus_name,
+                                     "x",             x,
+                                     "y",             y,
+                                     "width",         width,
+                                     "height",        height,
+                                     NULL);
+
+  if (!panel->priv->constructed)
+    {
+      g_warning (G_STRLOC " Construction of Panel for %s failed.", dbus_name);
+
+      g_object_unref (panel);
+      return NULL;
+    }
+
+  return panel;
+}
+
+static const gchar *
+mnb_panel_oop_get_name (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  return priv->name;
+}
+
+const gchar *
+mnb_panel_oop_get_dbus_name (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  return priv->dbus_name;
+}
+
+static const gchar *
+mnb_panel_oop_get_tooltip (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  return priv->tooltip;
+}
+
+static const gchar *
+mnb_panel_oop_get_stylesheet (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  return priv->stylesheet;
+}
+
+static const gchar *
+mnb_panel_oop_get_button_style (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  return priv->button_style_id;
+}
+
+static void
+mnb_panel_oop_mutter_window_destroy_cb (ClutterActor *actor, gpointer data)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (data)->priv;
+
+  priv->mcw = NULL;
+  priv->mapped = FALSE;
+}
+
+void
+mnb_panel_oop_show_mutter_window (MnbPanelOop *panel, MetaWindowActor *mcw)
+{
+  MnbPanelOopPrivate *priv;
+
+  g_return_if_fail (MNB_IS_PANEL_OOP (panel));
+
+  priv = panel->priv;
+
+  if (!mcw)
+    {
+      g_warning (G_STRLOC " Asked to show panel with no MetaWindowActor !!!");
+
+      if (priv->mcw)
+        {
+          g_signal_handlers_disconnect_by_func (priv->mcw,
+                                        mnb_panel_oop_mutter_window_destroy_cb,
+                                        panel);
+
+          priv->mcw = NULL;
+          priv->mapped = FALSE;
+        }
+
+      return;
+    }
+
+  if (mcw == priv->mcw)
+    return;
+  else if (priv->mcw)
+    {
+      g_signal_handlers_disconnect_by_func (priv->mcw,
+                                        mnb_panel_oop_mutter_window_destroy_cb,
+                                        panel);
+    }
+
+  priv->mcw = mcw;
+  priv->mapped = TRUE;
+
+  g_signal_connect (mcw, "destroy",
+                    G_CALLBACK (mnb_panel_oop_mutter_window_destroy_cb),
+                    panel);
+
+  mnb_panel_oop_show_animate (panel);
+}
+
+guint
+mnb_panel_oop_get_xid (MnbPanelOop *panel)
+{
+  return panel->priv->xid;
+}
+
+gboolean
+mnb_panel_oop_is_ready (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  return (priv->ready && priv->initialized);
+}
+
+static void
+mnb_panel_oop_set_size (MnbPanel *panel, guint width, guint height)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+  gfloat w, h;
+  gboolean h_change = FALSE, w_change = FALSE;
+
+  if (priv->mcw)
+    {
+      /*
+       * Exit if no change
+       */
+      clutter_actor_get_size (CLUTTER_ACTOR (priv->mcw), &w, &h);
+
+      if ((guint)w != width)
+        w_change = TRUE;
+
+      if ((guint)h != height)
+        h_change = TRUE;
+    }
+  else
+    {
+      /*
+       * If we have no mutter window yet, just force the dbus call.
+       */
+      w_change = TRUE;
+    }
+
+  if (!w_change && !h_change)
+    return;
+
+  com_meego_UX_Shell_Panel_set_size_async (priv->proxy, width, height,
+                                           mnb_panel_oop_dbus_dumb_reply_cb,
+                                           NULL);
+}
+
+MetaWindowActor *
+mnb_panel_oop_get_mutter_window (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  return priv->mcw;
+}
+
+/*
+ * Retruns TRUE if the passed window is both distinct from the panel window,
+ * and belongs to the same window class.
+ */
+gboolean
+mnb_panel_oop_owns_window (MnbPanelOop *panel, MetaWindowActor *mcw)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+  const gchar        *wclass;
+  Window              xid;
+
+  if (!mcw)
+    return FALSE;
+
+  xid = mutter_window_get_x_window (mcw);
+
+  if (xid == priv->xid)
+    return TRUE;
+
+  wclass = meta_window_get_wm_class (mutter_window_get_meta_window (mcw));
+
+  if (priv->child_class && wclass && !strcmp (priv->child_class, wclass))
+    return TRUE;
+
+  return FALSE;
+}
+
+/*
+ * Returns TRUE if the passed window is both distinct from the panel window,
+ * and transient for it.
+ */
+gboolean
+mnb_panel_oop_is_ancestor_of_transient (MnbPanelOop *panel, MetaWindowActor *mcw)
+{
+  MetaWindowActor *pcw;
+  MetaWindow   *pmw, *mw;
+
+  if (!panel)
+    return FALSE;
+
+  pcw = mnb_panel_oop_get_mutter_window (panel);
+
+  if (!pcw || pcw == mcw)
+    return FALSE;
+
+  pmw = mutter_window_get_meta_window (pcw);
+  mw  = mutter_window_get_meta_window (mcw);
+
+  return meta_window_is_ancestor_of_transient (pmw, mw);
+}
+
+static void
+mnb_panel_oop_dbus_ping_cb (DBusGProxy *proxy, GError *error, gpointer data)
+{
+  g_free (data);
+}
+
+void
+mnb_toolbar_ping_panel_oop (DBusGConnection *dbus_conn, const gchar *dbus_name)
+{
+  DBusGProxy  *proxy;
+  const gchar *p = dbus_name;
+  gchar       *p2;
+  gchar        c;
+  gchar       *dbus_path;
+
+  g_return_if_fail (dbus_name);
+
+  /*
+   * Do sanity check on the dbus_name, otherwise dbus might abort us.
+   *
+   * Check that the object name does not use a leading digit
+   */
+  p = strrchr (p, '.');
+
+  if (p && (c = *(p+1)) >= '0' && c <='9')
+    {
+      g_warning ("panel dbus name '%s' uses digit as first character of name",
+                 dbus_name);
+      return;
+    }
+
+  /*
+   * Check we got nothing but alphanumerics and '.'
+   */
+  p = dbus_name;
+
+  while ((c = *p++))
+    {
+      if (c >= '0' && c <= '9')
+        continue;
+
+      if (c >= 'A' && c <= 'Z')
+        continue;
+
+      if (c >= 'a' && c <= 'z')
+        continue;
+
+      if (c == '.')
+        continue;
+
+      g_warning ("panel dbus name '%s' contains invalid character '%c'",
+                 dbus_name, c);
+      return;
+    }
+
+  dbus_path = g_strconcat ("/", dbus_name, NULL);
+
+  p2 = dbus_path;
+  while (*p2)
+    {
+      if (*p2 == '.')
+        *p2 = '/';
+
+      ++p2;
+    }
+
+  proxy = dbus_g_proxy_new_for_name (dbus_conn, dbus_name, dbus_path,
+                                     MPL_PANEL_DBUS_INTERFACE);
+
+  g_free (dbus_path);
+
+  if (!proxy)
+    {
+      g_warning ("Unable to create proxy for %s (reason unknown)", dbus_name);
+      return;
+    }
+
+  com_meego_UX_Shell_Panel_ping_async (proxy,
+                                       mnb_panel_oop_dbus_ping_cb,
+                                       g_strdup (dbus_name));
+
+  g_object_unref (proxy);
+}
+
+static void
+mnb_panel_oop_show_completed_cb (ClutterAnimation *anim, MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+
+  priv->in_show_animation = FALSE;
+  priv->dont_hide_toolbar = FALSE;
+  priv->show_anim = NULL;
+  priv->show_completed_id = 0;
+
+  if (priv->button)
+    {
+      if (!mx_button_get_toggled (priv->button))
+        mx_button_set_toggled (priv->button, TRUE);
+    }
+
+  g_signal_emit_by_name (panel, "show-completed");
+}
+
+static void
+mnb_toolbar_show_completed_cb (MnbToolbar *toolbar, gpointer data)
+{
+  MnbPanelOop *panel = data;
+
+  g_signal_handlers_disconnect_by_func (toolbar,
+                                        mnb_toolbar_show_completed_cb,
+                                        data);
+
+  mnb_panel_oop_show_animate (panel);
+}
+
+static void
+mnb_panel_oop_show_animate (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+  MetaPlugin    *plugin = meego_netbook_get_plugin_singleton ();
+  gfloat x, y;
+  gfloat height, width;
+  ClutterAnimation *animation;
+  ClutterActor *toolbar;
+  ClutterActor *mcw = (ClutterActor*)priv->mcw;
+
+  if (!mcw)
+    {
+      g_warning ("Trying to show panel that has no associated window");
+      return;
+    }
+
+  if (priv->in_show_animation)
+    return;
+
+  if (priv->hide_completed_id)
+    {
+      g_signal_handler_disconnect (priv->hide_anim, priv->hide_completed_id);
+      priv->hide_anim = NULL;
+      priv->hide_completed_id = 0;
+      priv->in_hide_animation = FALSE;
+    }
+
+  mnb_panel_ensure_size ((MnbPanel*)panel);
+
+  /*
+   * Check the toolbar is visible, if not show it.
+   */
+  toolbar = meego_netbook_get_toolbar (plugin);
+
+  if (!toolbar)
+    {
+      g_warning ("Cannot show Panel that is not associated with the Toolbar.");
+      return;
+    }
+
+  if (!CLUTTER_ACTOR_IS_MAPPED (toolbar))
+    {
+      /*
+       * We need to show the toolbar first, and only when it is visible
+       * to show this panel.
+       */
+      g_signal_connect (toolbar, "show-completed",
+                        G_CALLBACK (mnb_toolbar_show_completed_cb),
+                        panel);
+
+      /*
+       * Must hide the mcw, otherwise it becomes visible during the toolbar
+       * animation.
+       */
+      clutter_actor_hide (mcw);
+      mnb_toolbar_show ((MnbToolbar*)toolbar, MNB_SHOW_HIDE_BY_PANEL);
+      return;
+    }
+
+  g_signal_emit_by_name (panel, "show-begin");
+
+  /*
+   * Ensure the mcw is visible.
+   */
+  clutter_actor_show (mcw);
+
+  if (priv->delayed_show)
+    {
+      priv->in_show_animation = TRUE;
+
+      clutter_actor_set_opacity (mcw, 0);
+
+      animation = clutter_actor_animate (mcw, CLUTTER_EASE_IN_SINE,
+                                         SLIDE_DURATION,
+                                         "opacity", 0xff,
+                                         NULL);
+
+      priv->show_completed_id =
+        g_signal_connect_after (animation,
+                                "completed",
+                                G_CALLBACK (mnb_panel_oop_show_completed_cb),
+                                panel);
+      priv->show_anim = animation;
+    }
+  else
+    {
+      clutter_actor_get_position (mcw, &x, &y);
+      clutter_actor_get_size (mcw, &width, &height);
+
+      clutter_actor_set_position (mcw, x, -height);
+
+      priv->in_show_animation = TRUE;
+
+      animation = clutter_actor_animate (mcw, CLUTTER_EASE_IN_SINE,
+                                         SLIDE_DURATION,
+                                         "x", x,
+                                         "y", y,
+                                         NULL);
+
+      priv->show_completed_id =
+        g_signal_connect_after (animation,
+                                "completed",
+                                G_CALLBACK (mnb_panel_oop_show_completed_cb),
+                                panel);
+      priv->show_anim = animation;
+    }
+
+}
+
+static void
+mnb_panel_oop_show (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  if (priv->in_show_animation)
+    return;
+
+  if (priv->hide_completed_id)
+    {
+      g_signal_handler_disconnect (priv->hide_anim, priv->hide_completed_id);
+      priv->hide_anim = NULL;
+      priv->hide_completed_id = 0;
+      priv->in_hide_animation = FALSE;
+    }
+
+  com_meego_UX_Shell_Panel_show_async (priv->proxy,
+                                       mnb_panel_oop_dbus_dumb_reply_cb,
+                                       NULL);
+}
+
+static void
+mnb_panel_oop_hide_completed_cb (ClutterAnimation *anim, MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = panel->priv;
+  MetaPlugin       *plugin = meego_netbook_get_plugin_singleton ();
+
+  priv->hide_anim = NULL;
+  priv->hide_completed_id = 0;
+  priv->mapped = FALSE;
+
+  if (!priv->dont_hide_toolbar)
+    {
+      /*
+       * If the hide_toolbar flag is set, we attempt to hide the Toolbar now
+       * that the panel is hidden.
+       */
+      ClutterActor *toolbar = meego_netbook_get_toolbar (plugin);
+
+      if (toolbar)
+        mnb_toolbar_hide ((MnbToolbar*)toolbar, MNB_SHOW_HIDE_BY_PANEL);
+
+      priv->dont_hide_toolbar = FALSE;
+    }
+
+  priv->in_hide_animation = FALSE;
+  g_signal_emit_by_name (panel, "hide-completed");
+
+  mutter_plugin_destroy_completed (plugin, priv->mcw);
+}
+
+void
+mnb_panel_oop_hide_animate (MnbPanelOop *panel, MetaWindowActor *mcw)
+{
+  MnbPanelOopPrivate  *priv = panel->priv;
+  ClutterAnimation    *animation;
+  ClutterActor        *actor = CLUTTER_ACTOR (mcw);
+
+  if (priv->in_hide_animation)
+    return;
+
+  priv->mcw = mcw;
+
+  priv->in_hide_animation = TRUE;
+
+  if (priv->show_completed_id)
+    {
+      g_signal_handler_disconnect (priv->show_anim, priv->show_completed_id);
+      priv->show_anim = NULL;
+      priv->show_completed_id = 0;
+      priv->in_show_animation = FALSE;
+      priv->dont_hide_toolbar = FALSE;
+
+      if (priv->button)
+        {
+          if (mx_button_get_toggled (priv->button))
+            mx_button_set_toggled (priv->button, FALSE);
+        }
+    }
+
+  g_signal_emit_by_name (panel, "hide-begin");
+
+  /* de-activate the button */
+  if (priv->button)
+    {
+      /* hide is hooked into the notify::checked signal from the button, so
+       * make sure we don't get into a loop by checking checked first
+       */
+      if (mx_button_get_toggled (priv->button))
+        mx_button_set_toggled (priv->button, FALSE);
+    }
+
+  animation = clutter_actor_animate (actor, CLUTTER_EASE_IN_SINE,
+                                     SLIDE_DURATION,
+                                     "y", -clutter_actor_get_height (actor),
+                                     NULL);
+
+  priv->hide_completed_id =
+    g_signal_connect_after (animation,
+                            "completed",
+                            G_CALLBACK (mnb_panel_oop_hide_completed_cb),
+                            panel);
+
+  priv->hide_anim = animation;
+}
+
+static void
+mnb_panel_oop_hide (MnbPanel *panel)
+{
+  MnbPanelOopPrivate  *priv = MNB_PANEL_OOP (panel)->priv;
+
+  if (priv->in_hide_animation)
+    return;
+
+  /*
+   * Set the dont_hide_toolbar flag, since we are closing the panel internally,
+   * in response to an explicit mnb_panel_hide() call. If we want to hide
+   * both panel and toolbar internally, we use the MnbToolbar API for this.
+   *
+   * (But if the panel hid itself, e.g., because it launched an application,
+   * we hide both panel an toolbar, which is the default behaviour.)
+   */
+  priv->dont_hide_toolbar = TRUE;
+
+  priv->modal  = FALSE;
+
+  com_meego_UX_Shell_Panel_hide_async (priv->proxy,
+                                       mnb_panel_oop_dbus_dumb_reply_cb,
+                                       NULL);
+}
+
+static void
+mnb_panel_oop_get_size (MnbPanel *panel, guint *width, guint *height)
+{
+  MnbPanelOopPrivate  *priv = MNB_PANEL_OOP (panel)->priv;
+  gfloat               w = 0.0, h = 0.0;
+
+  if (priv->mcw)
+    clutter_actor_get_size (CLUTTER_ACTOR (priv->mcw), &w, &h);
+
+  if (width)
+    *width = w;
+
+  if (height)
+    *height = h;
+}
+
+static void
+mnb_panel_oop_button_weak_unref_cb (MnbPanelOop *panel, GObject *button)
+{
+  panel->priv->button = NULL;
+}
+
+static void
+mnb_panel_oop_set_button (MnbPanel *panel, MxButton *button)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+  MxButton         *old_button;
+
+  g_return_if_fail (!button || MX_IS_BUTTON (button));
+
+  old_button = priv->button;
+  priv->button = button;
+
+  if (old_button)
+    {
+      g_object_weak_unref (G_OBJECT (old_button),
+                           (GWeakNotify) mnb_panel_oop_button_weak_unref_cb,
+                           panel);
+
+    }
+
+  if (button)
+    {
+      g_object_weak_ref (G_OBJECT (button),
+                         (GWeakNotify) mnb_panel_oop_button_weak_unref_cb,
+                         panel);
+    }
+}
+
+static gboolean
+mnb_panel_oop_is_mapped (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv;
+
+  g_return_val_if_fail (MNB_IS_PANEL_OOP (panel), FALSE);
+
+  priv = MNB_PANEL_OOP (panel)->priv;
+
+  return (priv->mapped != FALSE);
+}
+
+static gboolean
+mnb_panel_oop_is_modal (MnbPanel *panel)
+{
+  MnbPanelOopPrivate *priv;
+
+  g_return_val_if_fail (MNB_IS_PANEL_OOP (panel), FALSE);
+
+  priv = MNB_PANEL_OOP (panel)->priv;
+
+  return priv->modal || priv->auto_modal;
+}
+
+static void
+mnb_panel_oop_set_position (MnbPanel *panel, gint x, gint y)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+  gfloat xf, yf;
+  gboolean x_change = FALSE, y_change = FALSE;
+
+  if (priv->mcw)
+    {
+      /*
+       * Exit if no change
+       */
+      clutter_actor_get_position (CLUTTER_ACTOR (priv->mcw), &xf, &yf);
+
+      if ((guint)xf != x)
+        x_change = TRUE;
+
+      if ((guint)yf != y)
+        y_change = TRUE;
+    }
+  else
+    {
+      /*
+       * This is the case when the position of the panel is set while it is
+       * not mapped; force the dbus call.
+       */
+      x_change = TRUE;
+    }
+
+  if (!x_change && !y_change)
+    return;
+
+  com_meego_UX_Shell_Panel_set_position_async (priv->proxy, x, y,
+                                            mnb_panel_oop_dbus_dumb_reply_cb,
+                                            NULL);
+}
+
+static void
+mnb_panel_oop_get_position (MnbPanel *panel, gint *x, gint *y)
+{
+  MnbPanelOopPrivate  *priv = MNB_PANEL_OOP (panel)->priv;
+  gfloat               xf = 0.0, yf = 0.0;
+
+  if (priv->mcw)
+    clutter_actor_get_position (CLUTTER_ACTOR (priv->mcw), &xf, &yf);
+
+  if (x)
+    *x = xf;
+
+  if (y)
+    *y = yf;
+}
+
+static void
+mnb_panel_iface_init (MnbPanelIface *iface)
+{
+  iface->show             = mnb_panel_oop_show;
+  iface->show_begin       = mnb_panel_oop_show_begin;
+  iface->show_completed   = mnb_panel_oop_show_completed;
+  iface->hide             = mnb_panel_oop_hide;
+  iface->hide_begin       = mnb_panel_oop_hide_begin;
+  iface->hide_completed   = mnb_panel_oop_hide_completed;
+
+  iface->get_name         = mnb_panel_oop_get_name;
+  iface->get_tooltip      = mnb_panel_oop_get_tooltip;
+  iface->get_button_style = mnb_panel_oop_get_button_style;
+  iface->get_stylesheet   = mnb_panel_oop_get_stylesheet;
+
+  iface->set_size         = mnb_panel_oop_set_size;
+  iface->get_size         = mnb_panel_oop_get_size;
+  iface->set_position     = mnb_panel_oop_set_position;
+  iface->get_position     = mnb_panel_oop_get_position;
+
+  iface->set_button       = mnb_panel_oop_set_button;
+
+  iface->is_mapped        = mnb_panel_oop_is_mapped;
+  iface->is_modal         = mnb_panel_oop_is_modal;
+}
+
+void
+mnb_panel_oop_unload (MnbPanelOop *panel)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  com_meego_UX_Shell_Panel_unload_async (priv->proxy,
+                                         mnb_panel_oop_dbus_dumb_reply_cb,
+                                         NULL);
+}
+
+void
+mnb_panel_oop_set_delayed_show (MnbPanelOop *panel, gboolean delayed)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+
+  priv->delayed_show = delayed;
+}
+
+void
+mnb_panel_oop_set_auto_modal (MnbPanelOop *panel, gboolean modal)
+{
+  MnbPanelOopPrivate *priv = MNB_PANEL_OOP (panel)->priv;
+  gboolean            not_modal = !priv->auto_modal;
+
+  if (not_modal != !modal)
+    {
+      gboolean old_not_modal = !(priv->modal || priv->auto_modal);
+      gboolean new_not_modal = !(priv->modal || modal);
+
+      priv->auto_modal = modal;
+
+      if (old_not_modal != new_not_modal)
+        g_object_notify (G_OBJECT (panel), "modal");
+    }
+}

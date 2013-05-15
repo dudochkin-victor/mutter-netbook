@@ -1,0 +1,118 @@
+<!-- ##### SECTION Title ##### -->
+MplPanelClutter
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### STRUCT MplPanelClutter ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### STRUCT MplPanelClutterClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_new ##### -->
+<para>
+
+</para>
+
+@name: 
+@tooltip: 
+@stylesheet: 
+@button_style: 
+@with_toolbar_service: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_get_stage ##### -->
+<para>
+
+</para>
+
+@panel: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_track_actor_height ##### -->
+<para>
+
+</para>
+
+@panel: 
+@actor: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_load_base_style ##### -->
+<para>
+
+</para>
+
+@void: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_init_lib ##### -->
+<para>
+
+</para>
+
+@argc: 
+@argv: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_init_with_gtk ##### -->
+<para>
+
+</para>
+
+@argc: 
+@argv: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_setup_events_with_gtk ##### -->
+<para>
+
+</para>
+
+@panel: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_setup_events_with_gtk_for_xid ##### -->
+<para>
+
+</para>
+
+@xid: 
+
+
+<!-- ##### FUNCTION mpl_panel_clutter_set_child ##### -->
+<para>
+
+</para>
+
+@panel: 
+@child: 
+
+

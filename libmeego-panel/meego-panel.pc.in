@@ -1,0 +1,15 @@
+prefix=@CMAKE_INSTALL_PREFIX@
+exec_prefix=${prefix}/bin
+libdir=${prefix}/lib
+includedir=${prefix}/include
+datarootdir=${prefix}/share
+datadir=${prefix}/share
+meego_panel_theme_dir=@MUTTER_MEEGO_THEME_DIR@
+meego_panel_panels_dir=@MUTTER_MEEGO_PANELS_DIR@
+
+Name: libmeego-panel
+Description: Dev framework for meego panels
+Requires: dbus-glib-1 mx-1.0 gtk+-3.0 gio-unix-2.0
+Version: @PLUGIN_VERSION@
+Libs: -L${libdir} -lmeego-panel
+Cflags: -I${includedir}/libmeego-panel

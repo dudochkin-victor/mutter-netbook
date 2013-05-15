@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
+<book xmlns="http://www.devhelp.net/book" title="Meego Panel Reference Manual" link="index.html" author="" name="meego-panel">
+  <chapters>
+    <sub name="Meego Panel Overview" link="meegopaneloverview.html"/>
+    <sub name="Reference" link="meegopanelreference.html">
+      <sub name="Panel Classes" link="meegopanelclasses.html">
+        <sub name="MplPanelClient" link="MplPanelClient.html"/>
+        <sub name="MplPanelClutter" link="MplPanelClutter.html"/>
+        <sub name="MplPanelGtk" link="MplPanelGtk.html"/>
+        <sub name="MplPanelWindowless" link="MplPanelWindowless.html"/>
+      </sub>
+      <sub name="Panel Widgets" link="meegopanelwidgets.html">
+        <sub name="MplAppBookmarkManager" link="MplAppBookmarkManager.html"/>
+        <sub name="MplContentPane" link="MplContentPane.html"/>
+        <sub name="MplEntry" link="MplEntry.html"/>
+      </sub>
+      <sub name="Miscellaneous" link="meegopanelutility.html">
+        <sub name="Utility Functions and Macros" link="meego-panel-Utility-Functions-and-Macros.html"/>
+      </sub>
+      <sub name="Panel Desktop File" link="meegopaneldesktop.html">
+        <sub name="" link="meegopaneldesktop.html#id512889"/>
+      </sub>
+      <sub name="Panel Button Stylesheet" link="meegopanelcss.html">
+        <sub name="" link="meegopanelcss.html#id537773"/>
+      </sub>
+    </sub>
+    <sub name="Index of all symbols" link="meegopanelindex.html"/>
+    <sub name="Appendices" link="appendices.html"/>
+  </chapters>
+  <functions>
+    <function name="MplPanelClient" link="MplPanelClient.html#MplPanelClient-struct"/>
+    <function name="MplPanelClientClass" link="MplPanelClient.html#MplPanelClientClass"/>
+    <function name="mpl_panel_client_show ()" link="MplPanelClient.html#mpl-panel-client-show"/>
+    <function name="mpl_panel_client_hide ()" link="MplPanelClient.html#mpl-panel-client-hide"/>
+    <function name="mpl_panel_client_set_height_request ()" link="MplPanelClient.html#mpl-panel-client-set-height-request"/>
+    <function name="mpl_panel_client_get_height_request ()" link="MplPanelClient.html#mpl-panel-client-get-height-request"/>
+    <function name="mpl_panel_client_request_focus ()" link="MplPanelClient.html#mpl-panel-client-request-focus"/>
+    <function name="mpl_panel_client_request_button_style ()" link="MplPanelClient.html#mpl-panel-client-request-button-style"/>
+    <function name="mpl_panel_client_request_tooltip ()" link="MplPanelClient.html#mpl-panel-client-request-tooltip"/>
+    <function name="mpl_panel_client_request_button_state ()" link="MplPanelClient.html#mpl-panel-client-request-button-state"/>
+    <function name="mpl_panel_client_request_modality ()" link="MplPanelClient.html#mpl-panel-client-request-modality"/>
+    <function name="mpl_panel_client_unload ()" link="MplPanelClient.html#mpl-panel-client-unload"/>
+    <function name="mpl_panel_client_launch_application ()" link="MplPanelClient.html#mpl-panel-client-launch-application"/>
+    <function name="mpl_panel_client_launch_application_from_desktop_file ()" link="MplPanelClient.html#mpl-panel-client-launch-application-from-desktop-file"/>
+    <function name="mpl_panel_client_launch_default_application_for_uri ()" link="MplPanelClient.html#mpl-panel-client-launch-default-application-for-uri"/>
+    <function name="mpl_panel_client_get_xid ()" link="MplPanelClient.html#mpl-panel-client-get-xid"/>
+    <function name="mpl_panel_client_ready ()" link="MplPanelClient.html#mpl-panel-client-ready"/>
+    <function name="mpl_panel_client_set_delayed_ready ()" link="MplPanelClient.html#mpl-panel-client-set-delayed-ready"/>
+    <function name="mpl_panel_client_is_windowless ()" link="MplPanelClient.html#mpl-panel-client-is-windowless"/>
+    <function name="enum MnbButtonState" link="MplPanelClient.html#MnbButtonState"/>
+    <function name="MPL_PANEL_DBUS_NAME_PREFIX" link="MplPanelClient.html#MPL-PANEL-DBUS-NAME-PREFIX:CAPS"/>
+    <function name="MPL_PANEL_DBUS_PATH_PREFIX" link="MplPanelClient.html#MPL-PANEL-DBUS-PATH-PREFIX:CAPS"/>
+    <function name="MPL_PANEL_DBUS_INTERFACE" link="MplPanelClient.html#MPL-PANEL-DBUS-INTERFACE:CAPS"/>
+    <function name="MPL_TOOLBAR_DBUS_PATH" link="MplPanelClient.html#MPL-TOOLBAR-DBUS-PATH:CAPS"/>
+    <function name="MPL_TOOLBAR_DBUS_NAME" link="MplPanelClient.html#MPL-TOOLBAR-DBUS-NAME:CAPS"/>
+    <function name="MPL_TOOLBAR_DBUS_INTERFACE" link="MplPanelClient.html#MPL-TOOLBAR-DBUS-INTERFACE:CAPS"/>
+    <function name="MPL_PANEL_MYZONE" link="MplPanelClient.html#MPL-PANEL-MYZONE:CAPS"/>
+    <function name="MPL_PANEL_STATUS" link="MplPanelClient.html#MPL-PANEL-STATUS:CAPS"/>
+    <function name="MPL_PANEL_ZONES" link="MplPanelClient.html#MPL-PANEL-ZONES:CAPS"/>
+    <function name="MPL_PANEL_INTERNET" link="MplPanelClient.html#MPL-PANEL-INTERNET:CAPS"/>
+    <function name="MPL_PANEL_MEDIA" link="MplPanelClient.html#MPL-PANEL-MEDIA:CAPS"/>
+    <function name="MPL_PANEL_APPLICATIONS" link="MplPanelClient.html#MPL-PANEL-APPLICATIONS:CAPS"/>
+    <function name="MPL_PANEL_PEOPLE" link="MplPanelClient.html#MPL-PANEL-PEOPLE:CAPS"/>
+    <function name="MPL_PANEL_PASTEBOARD" link="MplPanelClient.html#MPL-PANEL-PASTEBOARD:CAPS"/>
+    <function name="MPL_PANEL_NETWORK" link="MplPanelClient.html#MPL-PANEL-NETWORK:CAPS"/>
+    <function name="MPL_PANEL_BLUETOOTH" link="MplPanelClient.html#MPL-PANEL-BLUETOOTH:CAPS"/>
+    <function name="MPL_PANEL_POWER" link="MplPanelClient.html#MPL-PANEL-POWER:CAPS"/>
+    <function name="MPL_PANEL_TEST" link="MplPanelClient.html#MPL-PANEL-TEST:CAPS"/>
+    <function name="The &quot;button-style&quot; property" link="MplPanelClient.html#MplPanelClient--button-style"/>
+    <function name="The &quot;delayed-ready&quot; property" link="MplPanelClient.html#MplPanelClient--delayed-ready"/>
+    <function name="The &quot;name&quot; property" link="MplPanelClient.html#MplPanelClient--name"/>
+    <function name="The &quot;stylesheet&quot; property" link="MplPanelClient.html#MplPanelClient--stylesheet"/>
+    <function name="The &quot;toolbar-service&quot; property" link="MplPanelClient.html#MplPanelClient--toolbar-service"/>
+    <function name="The &quot;tooltip&quot; property" link="MplPanelClient.html#MplPanelClient--tooltip"/>
+    <function name="The &quot;windowless&quot; property" link="MplPanelClient.html#MplPanelClient--windowless"/>
+    <function name="The &quot;xid&quot; property" link="MplPanelClient.html#MplPanelClient--xid"/>
+    <function name="The &quot;hide&quot; signal" link="MplPanelClient.html#MplPanelClient-hide"/>
+    <function name="The &quot;hide-begin&quot; signal" link="MplPanelClient.html#MplPanelClient-hide-begin"/>
+    <function name="The &quot;hide-end&quot; signal" link="MplPanelClient.html#MplPanelClient-hide-end"/>
+    <function name="The &quot;ready&quot; signal" link="MplPanelClient.html#MplPanelClient-ready"/>
+    <function name="The &quot;request-button-state&quot; signal" link="MplPanelClient.html#MplPanelClient-request-button-state"/>
+    <function name="The &quot;request-button-style&quot; signal" link="MplPanelClient.html#MplPanelClient-request-button-style"/>
+    <function name="The &quot;request-focus&quot; signal" link="MplPanelClient.html#MplPanelClient-request-focus"/>
+    <function name="The &quot;request-modality&quot; signal" link="MplPanelClient.html#MplPanelClient-request-modality"/>
+    <function name="The &quot;request-tooltip&quot; signal" link="MplPanelClient.html#MplPanelClient-request-tooltip"/>
+    <function name="The &quot;set-position&quot; signal" link="MplPanelClient.html#MplPanelClient-set-position"/>
+    <function name="The &quot;set-size&quot; signal" link="MplPanelClient.html#MplPanelClient-set-size"/>
+    <function name="The &quot;show&quot; signal" link="MplPanelClient.html#MplPanelClient-show"/>
+    <function name="The &quot;show-begin&quot; signal" link="MplPanelClient.html#MplPanelClient-show-begin"/>
+    <function name="The &quot;show-end&quot; signal" link="MplPanelClient.html#MplPanelClient-show-end"/>
+    <function name="The &quot;unload&quot; signal" link="MplPanelClient.html#MplPanelClient-unload"/>
+    <function name="MplPanelClutter" link="MplPanelClutter.html#MplPanelClutter-struct"/>
+    <function name="MplPanelClutterClass" link="MplPanelClutter.html#MplPanelClutterClass"/>
+    <function name="mpl_panel_clutter_new ()" link="MplPanelClutter.html#mpl-panel-clutter-new"/>
+    <function name="mpl_panel_clutter_get_stage ()" link="MplPanelClutter.html#mpl-panel-clutter-get-stage"/>
+    <function name="mpl_panel_clutter_track_actor_height ()" link="MplPanelClutter.html#mpl-panel-clutter-track-actor-height"/>
+    <function name="mpl_panel_clutter_load_base_style ()" link="MplPanelClutter.html#mpl-panel-clutter-load-base-style"/>
+    <function name="mpl_panel_clutter_init_lib ()" link="MplPanelClutter.html#mpl-panel-clutter-init-lib"/>
+    <function name="mpl_panel_clutter_init_with_gtk ()" link="MplPanelClutter.html#mpl-panel-clutter-init-with-gtk"/>
+    <function name="mpl_panel_clutter_setup_events_with_gtk ()" link="MplPanelClutter.html#mpl-panel-clutter-setup-events-with-gtk"/>
+    <function name="mpl_panel_clutter_setup_events_with_gtk_for_xid ()" link="MplPanelClutter.html#mpl-panel-clutter-setup-events-with-gtk-for-xid"/>
+    <function name="mpl_panel_clutter_set_child ()" link="MplPanelClutter.html#mpl-panel-clutter-set-child"/>
+    <function name="MplPanelGtk" link="MplPanelGtk.html#MplPanelGtk-struct"/>
+    <function name="MplPanelGtkClass" link="MplPanelGtk.html#MplPanelGtkClass"/>
+    <function name="MPL_PANEL_GTK_INIT" link="MplPanelGtk.html#MPL-PANEL-GTK-INIT:CAPS"/>
+    <function name="mpl_panel_gtk_new ()" link="MplPanelGtk.html#mpl-panel-gtk-new"/>
+    <function name="mpl_panel_gtk_get_window ()" link="MplPanelGtk.html#mpl-panel-gtk-get-window"/>
+    <function name="mpl_panel_gtk_set_child ()" link="MplPanelGtk.html#mpl-panel-gtk-set-child"/>
+    <function name="MplPanelWindowless" link="MplPanelWindowless.html#MplPanelWindowless-struct"/>
+    <function name="MplPanelWindowlessClass" link="MplPanelWindowless.html#MplPanelWindowlessClass"/>
+    <function name="mpl_panel_windowless_new ()" link="MplPanelWindowless.html#mpl-panel-windowless-new"/>
+    <function name="MplAppBookmarkManager" link="MplAppBookmarkManager.html#MplAppBookmarkManager-struct"/>
+    <function name="MplAppBookmarkManagerClass" link="MplAppBookmarkManager.html#MplAppBookmarkManagerClass"/>
+    <function name="mpl_app_bookmark_manager_get_default ()" link="MplAppBookmarkManager.html#mpl-app-bookmark-manager-get-default"/>
+    <function name="mpl_app_bookmark_manager_add_uri ()" link="MplAppBookmarkManager.html#mpl-app-bookmark-manager-add-uri"/>
+    <function name="mpl_app_bookmark_manager_remove_uri ()" link="MplAppBookmarkManager.html#mpl-app-bookmark-manager-remove-uri"/>
+    <function name="mpl_app_bookmark_manager_save ()" link="MplAppBookmarkManager.html#mpl-app-bookmark-manager-save"/>
+    <function name="mpl_app_bookmark_manager_get_bookmarks ()" link="MplAppBookmarkManager.html#mpl-app-bookmark-manager-get-bookmarks"/>
+    <function name="The &quot;bookmarks-changed&quot; signal" link="MplAppBookmarkManager.html#MplAppBookmarkManager-bookmarks-changed"/>
+    <function name="MplContentPane" link="MplContentPane.html#MplContentPane-struct"/>
+    <function name="MplContentPaneClass" link="MplContentPane.html#MplContentPaneClass"/>
+    <function name="mpl_content_pane_new ()" link="MplContentPane.html#mpl-content-pane-new"/>
+    <function name="mpl_content_pane_get_title ()" link="MplContentPane.html#mpl-content-pane-get-title"/>
+    <function name="mpl_content_pane_set_title ()" link="MplContentPane.html#mpl-content-pane-set-title"/>
+    <function name="mpl_content_pane_get_header_actor ()" link="MplContentPane.html#mpl-content-pane-get-header-actor"/>
+    <function name="mpl_content_pane_set_header_actor ()" link="MplContentPane.html#mpl-content-pane-set-header-actor"/>
+    <function name="mpl_content_pane_get_child ()" link="MplContentPane.html#mpl-content-pane-get-child"/>
+    <function name="mpl_content_pane_set_child ()" link="MplContentPane.html#mpl-content-pane-set-child"/>
+    <function name="The &quot;child&quot; property" link="MplContentPane.html#MplContentPane--child"/>
+    <function name="The &quot;header-actor&quot; property" link="MplContentPane.html#MplContentPane--header-actor"/>
+    <function name="The &quot;title&quot; property" link="MplContentPane.html#MplContentPane--title"/>
+    <function name="MplEntry" link="MplEntry.html#MplEntry-struct"/>
+    <function name="MplEntryClass" link="MplEntry.html#MplEntryClass"/>
+    <function name="mpl_entry_new ()" link="MplEntry.html#mpl-entry-new"/>
+    <function name="mpl_entry_get_label ()" link="MplEntry.html#mpl-entry-get-label"/>
+    <function name="mpl_entry_set_label ()" link="MplEntry.html#mpl-entry-set-label"/>
+    <function name="mpl_entry_get_text ()" link="MplEntry.html#mpl-entry-get-text"/>
+    <function name="mpl_entry_set_text ()" link="MplEntry.html#mpl-entry-set-text"/>
+    <function name="mpl_entry_get_mx_entry ()" link="MplEntry.html#mpl-entry-get-mx-entry"/>
+    <function name="The &quot;label&quot; property" link="MplEntry.html#MplEntry--label"/>
+    <function name="The &quot;text&quot; property" link="MplEntry.html#MplEntry--text"/>
+    <function name="The &quot;button-clicked&quot; signal" link="MplEntry.html#MplEntry-button-clicked"/>
+    <function name="The &quot;text-changed&quot; signal" link="MplEntry.html#MplEntry-text-changed"/>
+    <function name="mpl_icon_theme_lookup_icon_file ()" link="meego-panel-Utility-Functions-and-Macros.html#mpl-icon-theme-lookup-icon-file"/>
+    <function name="mpl_utils_get_thumbnail_path ()" link="meego-panel-Utility-Functions-and-Macros.html#mpl-utils-get-thumbnail-path"/>
+    <function name="MEEGO_PANEL_CHECK_VERSION()" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-CHECK-VERSION:CAPS"/>
+    <function name="MEEGO_PANEL_MAJOR_VERSION" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MAJOR-VERSION:CAPS"/>
+    <function name="MEEGO_PANEL_MINOR_VERSION" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MINOR-VERSION:CAPS"/>
+    <function name="MEEGO_PANEL_MICRO_VERSION" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MICRO-VERSION:CAPS"/>
+    <function name="MEEGO_PANEL_VERSION" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION:CAPS"/>
+    <function name="MEEGO_PANEL_VERSION_S" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION-S:CAPS"/>
+    <function name="MEEGO_PANEL_VERSION_HEX" link="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION-HEX:CAPS"/>
+  </functions>
+</book>

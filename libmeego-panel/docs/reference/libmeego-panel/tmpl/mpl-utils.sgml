@@ -1,0 +1,96 @@
+<!-- ##### SECTION Title ##### -->
+mpl-utils
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### SECTION Image ##### -->
+
+
+<!-- ##### FUNCTION mpl_icon_theme_lookup_icon_file ##### -->
+<para>
+
+</para>
+
+@theme: 
+@icon_name: 
+@icon_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION mpl_utils_get_thumbnail_path ##### -->
+<para>
+
+</para>
+
+@uri: 
+@Returns: 
+
+
+<!-- ##### MACRO MEEGO_PANEL_CHECK_VERSION ##### -->
+<para>
+
+</para>
+
+@major: 
+@minor: 
+@micro: 
+
+
+<!-- ##### MACRO MEEGO_PANEL_MAJOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MEEGO_PANEL_MINOR_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MEEGO_PANEL_MICRO_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MEEGO_PANEL_VERSION ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MEEGO_PANEL_VERSION_S ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO MEEGO_PANEL_VERSION_HEX ##### -->
+<para>
+
+</para>
+
+
+

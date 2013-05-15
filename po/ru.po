@@ -1,0 +1,159 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Alexander Mineev <alexander.g.mineev@intel.com>, 2009.
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-07-03 11:52+0000\n"
+"PO-Revision-Date: 2010-07-01 13:32-0800\n"
+"Last-Translator: Bogdan Nosach <bogdan.nosach@ptiglobal.net>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n!=1;\n"
+"X-Poedit-Language: Russian\n"
+"X-Poedit-SourceCharset: utf-8\n"
+
+#: ../capplet/data/meego-toolbar-properties.desktop.in.h:1
+msgid "Set your toolbar preferences"
+msgstr "Настроить параметры панели инструментов"
+
+#: ../capplet/data/meego-toolbar-properties.desktop.in.h:2
+msgid "Toolbar settings"
+msgstr "Настройки панели инструментов"
+
+#: ../capplet/src/mtp-bin.c:362
+msgid "Save toolbar"
+msgstr "Сохранить панель инструментов"
+
+#: ../capplet/src/mtp-bin.c:367
+msgid "Sorry, you'll have to remove a panel before you can add a new one."
+msgstr "Перед добавлением новой панели инструментов удалите старую."
+
+#: ../capplet/src/mtp-bin.c:369
+msgid "You can add, remove, and reorder many of the panels in your toolbar."
+msgstr "Вы можете добавить, удалить или изменить положение многих панелей на своей панели инструментов."
+
+#: ../capplet/src/mtp-jar.c:110
+msgid "Available panels"
+msgstr "Доступные панели"
+
+#. translators: translate this to a suitable 24 hourt time format for
+#. * your locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#. 
+#: ../capplet/src/mtp-clock.c:217 ../src/mnb-toolbar-clock.c:125
+msgid "%H:%M"
+msgstr "%H:%M"
+
+#. translators: translate this to a suitable time format for your
+#. * locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#. 
+#. translators: translate this to a suitable default time format for
+#. * your locale showing only hours and minutes. For available format
+#. * specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#. 
+#: ../capplet/src/mtp-clock.c:227 ../src/mnb-toolbar-clock.c:134
+msgid "%l:%M %P"
+msgstr "%l:%M %P"
+
+#. translators: translate this to a suitable date format for your locale.
+#. * For availabe format specifiers see
+#. * http://www.opengroup.org/onlinepubs/007908799/xsh/strftime.html
+#. 
+#: ../capplet/src/mtp-clock.c:249 ../src/mnb-toolbar-clock.c:155
+msgid "%B %e, %Y"
+msgstr "%B %e, %Y"
+
+#: ../capplet/src/mtp-cc-panel.c:118
+msgid "Toolbar"
+msgstr "Панель инструментов"
+
+#: ../capplet/data/system-tray-properties.desktop.in.h:1
+msgid "Set your system-tray preferences"
+msgstr "Установить настройки области уведомлений"
+
+#: ../capplet/data/system-tray-properties.desktop.in.h:2
+#: ../capplet/src/syst-cc-panel.c:241
+msgid "System Tray"
+msgstr "Область уведомлений"
+
+#: ../capplet/src/syst-cc-panel.c:174
+msgid "Show system tray"
+msgstr "Показать область уведомлений"
+
+#: ../capplet/src/syst-cc-panel.c:195
+msgid "The system tray is a concept used by some older applications to let you know when something happens or to stay running when you close them."
+msgstr "Область уведомлений используется некоторыми более старыми приложениями для информирования пользователя в случае возникновения какого-то события или продолжения работы после их закрытия."
+
+#: ../data/mutter-meego.schemas.in.h:1
+msgid "Always use small screen mode"
+msgstr "Всегда используйте малое разрешение экрана"
+
+#: ../data/mutter-meego.schemas.in.h:2
+msgid "Determines the order of panels on the toolbar."
+msgstr "Определяет порядок панелей на инструментальной панели."
+
+#: ../data/mutter-meego.schemas.in.h:3
+msgid "Forces small screen mode to be used even if display size would normally imply bigger screen mode."
+msgstr "Принуждает использовать малое разрешение экрана даже тогда, когда размер экрана подразумевает использование большого разрешения."
+
+#: ../data/mutter-meego.schemas.in.h:4
+msgid "Order of panels on toolbar"
+msgstr "Порядок панелей на инструментальной панели"
+
+#: ../src/meego-netbook.c:825
+msgid "Meego Netbook Effects"
+msgstr "Эффекты Meego Netbook"
+
+#: ../src/meego-netbook.c:829
+msgid "Effects for Meego Netbooks"
+msgstr "Эффекты для Meego Netbooks"
+
+#: ../src/mnb-toolbar.c:1007
+#, c-format
+msgid "Sorry, %s is broken"
+msgstr "Извините, %s поврежден"
+
+#: ../src/notifications/ntf-notification.c:224
+msgid "Dismiss"
+msgstr "Пропустить"
+
+#: ../src/notifications/ntf-tray.c:308
+msgid "Dismiss All"
+msgstr "Пропустить"
+
+#: ../src/notifications/ntf-wm.c:103
+msgid "Unknown window"
+msgstr "Неизвестное окно"
+
+#: ../src/notifications/ntf-wm.c:107
+msgid "is asking for your attention."
+msgstr "просит обратить внимание."
+
+#: ../src/notifications/ntf-wm.c:115
+msgid "Activate"
+msgstr "Активировать"
+
+#~ msgid "System tray"
+#~ msgstr "Область уведомлений"
+
+#~ msgid "zones"
+#~ msgstr "зоны"
+
+#~ msgid "No Zones yet"
+#~ msgstr "Нет зон"
+
+#~ msgid "Applications you’re using will show up here. You will be able to switch and organize them to your heart's content."
+#~ msgstr "Программы, которые будут использоваться, появятся здесь.  Вы сможете переключать и упорядочить их."
+
+#~ msgid "No applications on this zone"
+#~ msgstr "Нет программ в этой зоне."

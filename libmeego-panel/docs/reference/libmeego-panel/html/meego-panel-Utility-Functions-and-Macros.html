@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Utility Functions and Macros</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelutility.html" title="Miscellaneous">
+<link rel="prev" href="meegopanelutility.html" title="Miscellaneous">
+<link rel="next" href="meegopaneldesktop.html" title="Panel Desktop File">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2">
+<tr valign="middle">
+<td><a accesskey="p" href="meegopanelutility.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelutility.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="meegopaneldesktop.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr>
+<tr><td colspan="5" class="shortcuts">
+<a href="#meego-panel-Utility-Functions-and-Macros.synopsis" class="shortcut">Top</a>
+                   | 
+                  <a href="#meego-panel-Utility-Functions-and-Macros.description" class="shortcut">Description</a>
+</td></tr>
+</table>
+<div class="refentry" title="Utility Functions and Macros">
+<a name="meego-panel-Utility-Functions-and-Macros"></a><div class="titlepage"></div>
+<div class="refnamediv"><table width="100%"><tr>
+<td valign="top">
+<h2><span class="refentrytitle"><a name="meego-panel-Utility-Functions-and-Macros.top_of_page"></a>Utility Functions and Macros</span></h2>
+<p>Utility Functions and Macros — Various utility functions and macros.</p>
+</td>
+<td valign="top" align="right"></td>
+</tr></table></div>
+<div class="refsynopsisdiv" title="Synopsis">
+<a name="meego-panel-Utility-Functions-and-Macros.synopsis"></a><h2>Synopsis</h2>
+<pre class="synopsis"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#mpl-icon-theme-lookup-icon-file" title="mpl_icon_theme_lookup_icon_file ()">mpl_icon_theme_lookup_icon_file</a>     (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gtk/GtkIconTheme.html"><span class="type">GtkIconTheme</span></a> *theme</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *icon_name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> icon_size</code></em>);
+<a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#mpl-utils-get-thumbnail-path" title="mpl_utils_get_thumbnail_path ()">mpl_utils_get_thumbnail_path</a>        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-CHECK-VERSION:CAPS" title="MEEGO_PANEL_CHECK_VERSION()">MEEGO_PANEL_CHECK_VERSION</a>           (major,
+                                                         minor,
+                                                         micro)
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MAJOR-VERSION:CAPS" title="MEEGO_PANEL_MAJOR_VERSION">MEEGO_PANEL_MAJOR_VERSION</a>
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MINOR-VERSION:CAPS" title="MEEGO_PANEL_MINOR_VERSION">MEEGO_PANEL_MINOR_VERSION</a>
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-MICRO-VERSION:CAPS" title="MEEGO_PANEL_MICRO_VERSION">MEEGO_PANEL_MICRO_VERSION</a>
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION:CAPS" title="MEEGO_PANEL_VERSION">MEEGO_PANEL_VERSION</a>
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION-S:CAPS" title="MEEGO_PANEL_VERSION_S">MEEGO_PANEL_VERSION_S</a>
+#define             <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION-HEX:CAPS" title="MEEGO_PANEL_VERSION_HEX">MEEGO_PANEL_VERSION_HEX</a>
+</pre>
+</div>
+<div class="refsect1" title="Description">
+<a name="meego-panel-Utility-Functions-and-Macros.description"></a><h2>Description</h2>
+<p>
+Miscellaneous utility functions and macros for Panels.
+</p>
+</div>
+<div class="refsect1" title="Details">
+<a name="meego-panel-Utility-Functions-and-Macros.details"></a><h2>Details</h2>
+<div class="refsect2" title="mpl_icon_theme_lookup_icon_file ()">
+<a name="mpl-icon-theme-lookup-icon-file"></a><h3>mpl_icon_theme_lookup_icon_file ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mpl_icon_theme_lookup_icon_file     (<em class="parameter"><code><a href="/usr/share/gtk-doc/html/gtk/GtkIconTheme.html"><span class="type">GtkIconTheme</span></a> *theme</code></em>,
+                                                         <em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *icon_name</code></em>,
+                                                         <em class="parameter"><code><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gint"><span class="type">gint</span></a> icon_size</code></em>);</pre>
+<p>
+Looks up icon of given name and size in the supplied <a href="/usr/share/gtk-doc/html/gtk/GtkIconTheme.html"><span class="type">GtkIconTheme</span></a>,
+prioritizing Meego-specific icons: if an icon exists that matches 'netbook-'
++ icon_name, this is returned instead of an icon for the unprefixed name. If
+the icon_name is an absolute path, no lookup is performed, and a copy of
+icon_name is returned.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>theme</code></em> :</span></p></td>
+<td>
+<a href="/usr/share/gtk-doc/html/gtk/GtkIconTheme.html"><span class="type">GtkIconTheme</span></a>
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icon_name</code></em> :</span></p></td>
+<td>name of the icon
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>icon_size</code></em> :</span></p></td>
+<td>size of the icon
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> path to the icon, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if suitable icon was not found in
+the theme. The returned string must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> when no longer
+needed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="mpl_utils_get_thumbnail_path ()">
+<a name="mpl-utils-get-thumbnail-path"></a><h3>mpl_utils_get_thumbnail_path ()</h3>
+<pre class="programlisting"><a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="returnvalue">gchar</span></a> *             mpl_utils_get_thumbnail_path        (<em class="parameter"><code>const <a href="http://library.gnome.org/devel/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *uri</code></em>);</pre>
+<p>
+Retrieves the path to thumbnail for an image identified by uri. The
+thumbnails are searched for in ~/.bk-thumbnails, ~/thumbnails/large and
+~/thumbnails/normal, in that order.
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>uri</code></em> :</span></p></td>
+<td>image uri
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></p></td>
+<td> path to the thumbnail, or <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a> if thumbnail does not exist.
+The retured string must be freed with <a href="http://library.gnome.org/devel/glib/unstable/glib-Memory-Allocation.html#g-free"><code class="function">g_free()</code></a> when no longer needed.
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_CHECK_VERSION()">
+<a name="MEEGO-PANEL-CHECK-VERSION:CAPS"></a><h3>MEEGO_PANEL_CHECK_VERSION()</h3>
+<pre class="programlisting">#define             MEEGO_PANEL_CHECK_VERSION(major,minor,micro)</pre>
+<p>
+Evaluates to <a href="http://library.gnome.org/devel/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the version of the meego-panel library is greater
+than <em class="parameter"><code>major</code></em>, <em class="parameter"><code>minor</code></em> and <em class="parameter"><code>micro</code></em>
+</p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>major</code></em> :</span></p></td>
+<td>major version, like 1 in 1.2.3
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>minor</code></em> :</span></p></td>
+<td>minor version, like 2 in 1.2.3
+</td>
+</tr>
+<tr>
+<td><p><span class="term"><em class="parameter"><code>micro</code></em> :</span></p></td>
+<td>micro version, like 3 in 1.2.3
+</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_MAJOR_VERSION">
+<a name="MEEGO-PANEL-MAJOR-VERSION:CAPS"></a><h3>MEEGO_PANEL_MAJOR_VERSION</h3>
+<pre class="programlisting">#define MEEGO_PANEL_MAJOR_VERSION   (0)
+</pre>
+<p>
+The major version of the meego-panel library (1, if <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION:CAPS" title="MEEGO_PANEL_VERSION"><code class="literal">MEEGO_PANEL_VERSION</code></a> is 1.2.3)
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_MINOR_VERSION">
+<a name="MEEGO-PANEL-MINOR-VERSION:CAPS"></a><h3>MEEGO_PANEL_MINOR_VERSION</h3>
+<pre class="programlisting">#define MEEGO_PANEL_MINOR_VERSION   (76)
+</pre>
+<p>
+The minor version of the meego-panel library (2, if <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION:CAPS" title="MEEGO_PANEL_VERSION"><code class="literal">MEEGO_PANEL_VERSION</code></a> is 1.2.3)
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_MICRO_VERSION">
+<a name="MEEGO-PANEL-MICRO-VERSION:CAPS"></a><h3>MEEGO_PANEL_MICRO_VERSION</h3>
+<pre class="programlisting">#define MEEGO_PANEL_MICRO_VERSION   (2)
+</pre>
+<p>
+The micro version of the meego-panel library (3, if <a class="link" href="meego-panel-Utility-Functions-and-Macros.html#MEEGO-PANEL-VERSION:CAPS" title="MEEGO_PANEL_VERSION"><code class="literal">MEEGO_PANEL_VERSION</code></a> is 1.2.3)
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_VERSION">
+<a name="MEEGO-PANEL-VERSION:CAPS"></a><h3>MEEGO_PANEL_VERSION</h3>
+<pre class="programlisting">#define MEEGO_PANEL_VERSION         0.76.2
+</pre>
+<p>
+The full version of the meego-panel library, like 1.2.3
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_VERSION_S">
+<a name="MEEGO-PANEL-VERSION-S:CAPS"></a><h3>MEEGO_PANEL_VERSION_S</h3>
+<pre class="programlisting">#define MEEGO_PANEL_VERSION_S       "0.76.2"
+</pre>
+<p>
+The full version of the meego-panel library, in string form (suited for
+string concatenation)
+</p>
+</div>
+<hr>
+<div class="refsect2" title="MEEGO_PANEL_VERSION_HEX">
+<a name="MEEGO-PANEL-VERSION-HEX:CAPS"></a><h3>MEEGO_PANEL_VERSION_HEX</h3>
+<pre class="programlisting">#define             MEEGO_PANEL_VERSION_HEX</pre>
+<p>
+Numerically encoded version of the meego-panel library, like 0x010203
+</p>
+</div>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>

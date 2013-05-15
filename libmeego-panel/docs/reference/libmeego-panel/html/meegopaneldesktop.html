@@ -1,0 +1,125 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Panel Desktop File</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.75.2">
+<link rel="home" href="index.html" title="Meego Panel Reference Manual">
+<link rel="up" href="meegopanelreference.html" title="Part II. Reference">
+<link rel="prev" href="meego-panel-Utility-Functions-and-Macros.html" title="Utility Functions and Macros">
+<link rel="next" href="meegopanelcss.html" title="Panel Button Stylesheet">
+<meta name="generator" content="GTK-Doc V1.15 (XML mode)">
+<link rel="stylesheet" href="style.css" type="text/css">
+</head>
+<body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+<table class="navigation" id="top" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle">
+<td><a accesskey="p" href="meego-panel-Utility-Functions-and-Macros.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td>
+<td><a accesskey="u" href="meegopanelreference.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td>
+<td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td>
+<th width="100%" align="center">Meego Panel Reference Manual</th>
+<td><a accesskey="n" href="meegopanelcss.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td>
+</tr></table>
+<div class="chapter" title="Panel Desktop File">
+<div class="titlepage"><div><div><h2 class="title">
+<a name="meegopaneldesktop"></a>Panel Desktop File</h2></div></div></div>
+<div class="toc"><dl><dt><span class="section"><a href="meegopaneldesktop.html#id512889"></a></span></dt></dl></div>
+<div class="section">
+<div class="titlepage"></div>
+<p>
+    Each panel needs to provide a desktop file, containing information needed
+    by the Toolbar to construct the Panel button and to start the Panel process
+    when required:
+  </p>
+<p>
+    </p>
+<div class="variablelist"><table border="0">
+<col align="left" valign="top">
+<tbody>
+<tr>
+<td><p><span class="term">Name</span></p></td>
+<td><p>
+	    The standard name field will be used as initial button tooltip,
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Service</span></p></td>
+<td><p>
+	    The D-Bus service provided by this panel, e.g.,
+	    <span class="emphasis"><em>org.meego.UX.Shell.Panels.myzone</em></span>,
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Panel‑Type</span></p></td>
+<td><p>
+	    Type of the panel; can be 'normal' for main
+	    panels or 'applet' for applets (such as the Network or BT panels);
+	    default value is 'normal',
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Panel‑Windowless</span></p></td>
+<td><p>
+	    If set to <span class="emphasis"><em>true</em></span>
+	    indicates that the Panel application does not provide an drop-down
+	    panel, only a button. The button will have a tooltip, but will not
+	    respond to user clicks. Defaults to <span class="emphasis"><em>false</em></span>,
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Panel‑Stylesheet</span></p></td>
+<td><p>
+	    The stylesheet to be use for styling the
+	    Toolbar button,
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Panel‑Button‑Style</span></p></td>
+<td><p>
+	    The css style id to use for the inital
+	    styling of the Toolbar button,
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Panel‑Optional</span></p></td>
+<td><p>
+	    If set to <span class="emphasis"><em>false</em></span> the panel cannot be removed by
+	    the Toolbar settings application; defaults to
+	    <span class="emphasis"><em>true</em></span>.
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑GNOME‑Autostart‑enable</span></p></td>
+<td><p>
+	    Panels are normally only started on demand;
+	    if the panel application needs to be running immediately, this field
+	    should be set to <span class="emphasis"><em>true</em></span>, and the deskotp file
+	    installed into the system autostard directory.
+	  </p></td>
+</tr>
+<tr>
+<td><p><span class="term">X‑Meego‑Priority</span></p></td>
+<td><p>
+	    This field can be used by panels that are being autostarted to
+	    control how soon into the boot process this happens; panels that
+	    need to be started early should set this to 'High' (the 'High' value
+	    should be used with care only when strictly necessary as loading a
+	    panel early will impact on the overall boot time).
+	  </p></td>
+</tr>
+</tbody>
+</table></div>
+<p>
+  </p>
+<p>
+     The desktop file needs to be installed into the mutter-meego panel
+     directory; this can be obtained from pkg-config via the
+     <code class="varname">meego_panel_panels_dir</code> variable, e.g., `pkg-config
+     --variable=meego_panel_panels_dir meego-panel`.
+  </p>
+</div>
+</div>
+<div class="footer">
+<hr>
+          Generated by GTK-Doc V1.15</div>
+</body>
+</html>
