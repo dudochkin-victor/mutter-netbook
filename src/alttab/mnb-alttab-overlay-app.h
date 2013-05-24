@@ -60,13 +60,13 @@ struct _MnbAlttabOverlayAppClass
 
 GType mnb_alttab_overlay_app_get_type (void);
 
-MnbAlttabOverlayApp *mnb_alttab_overlay_app_new (MutterWindow   *mw,
+MnbAlttabOverlayApp *mnb_alttab_overlay_app_new (MetaWindow   *mw,
                                                  ClutterActor   *background);
 
 void          mnb_alttab_overlay_app_set_active (MnbAlttabOverlayApp *app,
                                                  gboolean             active);
 gboolean      mnb_alttab_overlay_app_get_active (MnbAlttabOverlayApp *app);
-MutterWindow *mnb_alttab_overlay_app_get_mcw    (MnbAlttabOverlayApp *app);
+MetaWindowActor *mnb_alttab_overlay_app_get_mcw    (MnbAlttabOverlayApp *app);
 
 G_END_DECLS
 

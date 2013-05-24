@@ -45,7 +45,7 @@
 #include "../meego-netbook.h"
 #include "../mnb-toolbar.h"
 
-#include <display.h>
+#include <meta/display.h>
 
 /*
  * Establishes an active kbd grab for us via the Meta API.
@@ -100,11 +100,11 @@ void
 end_kbd_grab (MnbAlttabOverlay *overlay)
 {
   MnbAlttabOverlayPrivate *priv   = overlay->priv;
-  MutterPlugin            *plugin = meego_netbook_get_plugin_singleton ();
+  MetaPlugin            *plugin = meego_netbook_get_plugin_singleton ();
 
   if (priv->in_alt_grab)
     {
-      MetaScreen  *screen  = mutter_plugin_get_screen (plugin);
+      MetaScreen  *screen  = meta_plugin_get_screen (plugin);
       MetaDisplay *display = meta_screen_get_display (screen);
       guint        timestamp;
 
@@ -146,9 +146,9 @@ alt_tab_initial_timeout_cb (gpointer data)
   ClutterActor              *stage;
   Window                     xwin;
   MnbAlttabOverlayPrivate   *priv = alt_data->overlay->priv;
-  MutterPlugin              *plugin = meego_netbook_get_plugin_singleton ();
+  MetaPlugin              *plugin = meego_netbook_get_plugin_singleton ();
 
-  stage = mutter_get_stage_for_screen (alt_data->screen);
+  stage = meta_get_stage_for_screen (alt_data->screen);
   xwin  = clutter_x11_get_stage_window (CLUTTER_STAGE (stage));
 
   priv->waiting_for_timeout = FALSE;
@@ -202,8 +202,8 @@ alt_tab_initial_timeout_cb (gpointer data)
 static gboolean
 applications_present (void)
 {
-  MutterPlugin               *plugin = meego_netbook_get_plugin_singleton ();
-  MetaScreen                 *screen = mutter_plugin_get_screen (plugin);
+  MetaPlugin               *plugin = meego_netbook_get_plugin_singleton ();
+  MetaScreen                 *screen = meta_plugin_get_screen (plugin);
   gint                        count  = 0;
   GList                      *l;
 
@@ -211,21 +211,21 @@ applications_present (void)
    * Check for running applications; we do this by checking if any
    * application-type windows are present.
    */
-  l = mutter_get_windows (screen);
+  l = meta_get_window_actors (screen);
 
   while (l)
     {
-      MutterWindow       *m    = l->data;
-      MetaCompWindowType  type = mutter_window_get_window_type (m);
+      MetaWindow       *m    = l->data;
+      MetaWindowType  type = meta_window_get_window_type (m);
 
       /*
        * Ignore desktop, docs, and panel windows
        *
        * (Panel windows are currently of type META_COMP_WINDOW_OVERRIDE_OTHER)
        */
-      if (!(type == META_COMP_WINDOW_DESKTOP        ||
-            type == META_COMP_WINDOW_DOCK           ||
-            type == META_COMP_WINDOW_OVERRIDE_OTHER))
+      if (!(type == META_WINDOW_DESKTOP        ||
+            type == META_WINDOW_DOCK           ||
+            type == META_WINDOW_OVERRIDE_OTHER))
         {
           if (++count >= 2)
             break;
@@ -247,15 +247,15 @@ void
 mnb_alttab_overlay_alt_tab_key_handler (MetaDisplay    *display,
                                         MetaScreen     *screen,
                                         MetaWindow     *window,
-                                        XEvent         *event,
+                                        XIDeviceEvent         *event,
                                         MetaKeyBinding *binding,
                                         gpointer        data)
 {
   MnbAlttabOverlay           *overlay = MNB_ALTTAB_OVERLAY (data);
   MnbAlttabOverlayPrivate    *priv    = overlay->priv;
-  MutterPlugin               *plugin  = meego_netbook_get_plugin_singleton ();
+  MetaPlugin               *plugin  = meego_netbook_get_plugin_singleton ();
   MetaWindow                 *focus;
-
+  XEvent *e = (XEvent*)event;
   if (meego_netbook_urgent_notification_present (plugin))
     {
       /*
@@ -313,7 +313,7 @@ mnb_alttab_overlay_alt_tab_key_handler (MetaDisplay    *display,
         {
           mnb_alttab_overlay_activate_window (overlay,
                                               l->next->data,
-                                              event->xkey.time);
+                                              e->xkey.time);
         }
 
       /* This should never happen, right ? */
@@ -333,8 +333,8 @@ mnb_alttab_overlay_alt_tab_key_handler (MetaDisplay    *display,
         return;
 
       if (!mnb_alttab_overlay_establish_keyboard_grab (overlay, display, screen,
-                                                       binding->mask,
-                                                       event->xkey.time))
+    		  	  	  	  	  	  	  	  	  	  meta_key_binding_get_mask(binding),
+                                                       e->xkey.time))
         {
           /*
            * We failed to grab keyboard, see for example MB#9735, just exit,
@@ -439,7 +439,7 @@ mnb_alttab_overlay_alt_tab_key_handler (MetaDisplay    *display,
         g_timeout_add (100,
                        alt_tab_slow_down_timeout_cb, overlay);
 
-      if (event->xkey.state & ShiftMask)
+      if (e->xkey.state & ShiftMask)
         backward = !backward;
 
       mnb_alttab_reset_autoscroll (overlay, backward);
@@ -451,13 +451,13 @@ void
 mnb_alttab_overlay_alt_tab_select_handler (MetaDisplay    *display,
                                            MetaScreen     *screen,
                                            MetaWindow     *window,
-                                           XEvent         *event,
+                                           XIDeviceEvent         *event,
                                            MetaKeyBinding *binding,
                                            gpointer        data)
 {
   MnbAlttabOverlay           *overlay = MNB_ALTTAB_OVERLAY (data);
   MnbAlttabOverlayPrivate    *priv    = overlay->priv;
-  MutterPlugin               *plugin  = meego_netbook_get_plugin_singleton ();
+  MetaPlugin               *plugin  = meego_netbook_get_plugin_singleton ();
 
   end_kbd_grab (overlay);
 
@@ -473,14 +473,17 @@ mnb_alttab_overlay_alt_tab_select_handler (MetaDisplay    *display,
     }
 
   if (!overlay->priv->waiting_for_timeout)
-    mnb_alttab_overlay_activate_selection (overlay, event->xkey.time);
+  {
+	  XEvent *e = (XEvent*)event;
+    mnb_alttab_overlay_activate_selection (overlay, e->xkey.time);
+  }
 }
 
 void
 mnb_alttab_overlay_alt_tab_cancel_handler (MetaDisplay    *display,
                                            MetaScreen     *screen,
                                            MetaWindow     *window,
-                                           XEvent         *event,
+                                           XIDeviceEvent         *event,
                                            MetaKeyBinding *binding,
                                            gpointer        data)
 {

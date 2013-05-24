@@ -264,7 +264,7 @@ mtp_clock_init (MtpClock *self)
   /* create time and date labels */
   priv->time = mx_label_new ();
   clutter_actor_set_name (priv->time, "time-label");
-  clutter_actor_set_parent (priv->time, (ClutterActor*)self);
+  clutter_actor_add_child((ClutterActor*)self, priv->time);
 
   mtp_clock_update_time_date (self);
 }

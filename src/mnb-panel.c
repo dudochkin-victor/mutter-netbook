@@ -455,7 +455,7 @@ mnb_panel_ensure_size (MnbPanel *panel)
   MetaPlugin  *plugin = meego_netbook_get_plugin_singleton ();
   gboolean       netbook_mode = meego_netbook_use_netbook_mode (plugin);
 
-  screen    = mutter_plugin_get_screen (plugin);
+  screen    = meta_plugin_get_screen (plugin);
   workspace = meta_screen_get_active_workspace (screen);
 
   if (workspace)

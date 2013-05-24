@@ -703,11 +703,11 @@ mnb_panel_oop_init_panel_oop_reply_cb (DBusGProxy *proxy,
       MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
       MetaDisplay *display;
 
-      display = meta_screen_get_display (mutter_plugin_get_screen (plugin));
+      display = meta_screen_get_display (meta_plugin_get_screen (plugin));
 
       meta_error_trap_push (display);
 
-      if (Success == XGetWindowProperty (gdk_display_get_default (), xid, XA_WM_CLASS,
+      if (Success == XGetWindowProperty (gdk_x11_display_get_xdisplay(gdk_display_get_default ()), xid, XA_WM_CLASS,
                                          0, 8192,
                                          False, XA_STRING,
                                          &r_type, &r_fmt, &n_items, &r_after,
@@ -731,7 +731,7 @@ mnb_panel_oop_init_panel_oop_reply_cb (DBusGProxy *proxy,
             }
         }
 
-      meta_error_trap_pop (display, TRUE);
+      meta_error_trap_pop (display);
     }
 
   priv->dead = FALSE;
@@ -1124,12 +1124,12 @@ mnb_panel_oop_owns_window (MnbPanelOop *panel, MetaWindowActor *mcw)
   if (!mcw)
     return FALSE;
 
-  xid = mutter_window_get_x_window (mcw);
+  xid = meta_window_get_xwindow (meta_window_actor_get_meta_window(mcw));
 
   if (xid == priv->xid)
     return TRUE;
 
-  wclass = meta_window_get_wm_class (mutter_window_get_meta_window (mcw));
+  wclass = meta_window_get_wm_class (meta_window_actor_get_meta_window (mcw));
 
   if (priv->child_class && wclass && !strcmp (priv->child_class, wclass))
     return TRUE;
@@ -1155,8 +1155,8 @@ mnb_panel_oop_is_ancestor_of_transient (MnbPanelOop *panel, MetaWindowActor *mcw
   if (!pcw || pcw == mcw)
     return FALSE;
 
-  pmw = mutter_window_get_meta_window (pcw);
-  mw  = mutter_window_get_meta_window (mcw);
+  pmw = meta_window_actor_get_meta_window (pcw);
+  mw  = meta_window_actor_get_meta_window (mcw);
 
   return meta_window_is_ancestor_of_transient (pmw, mw);
 }
@@ -1434,7 +1434,7 @@ mnb_panel_oop_hide_completed_cb (ClutterAnimation *anim, MnbPanelOop *panel)
   priv->in_hide_animation = FALSE;
   g_signal_emit_by_name (panel, "hide-completed");
 
-  mutter_plugin_destroy_completed (plugin, priv->mcw);
+  meta_plugin_destroy_completed (plugin, priv->mcw);
 }
 
 void

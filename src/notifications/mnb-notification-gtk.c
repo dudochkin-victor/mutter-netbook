@@ -23,8 +23,8 @@
 
 #include <gtk/gtk.h>
 #include <gdk-pixbuf/gdk-pixbuf.h>
-#include <display.h>
-#include <mutter-plugin.h>
+#include <meta/display.h>
+#include <meta/meta-plugin.h>
 
 #include "../meego-netbook.h"
 #include "mnb-notification-gtk.h"
@@ -40,8 +40,8 @@ mnb_notification_gtk_click_cb (GtkWidget      *widget,
                                GdkEventButton *event,
                                gpointer        data)
 {
-  MutterPlugin *plugin  = meego_netbook_get_plugin_singleton ();
-  MetaScreen   *screen  = mutter_plugin_get_screen (plugin);
+  MetaPlugin *plugin  = meego_netbook_get_plugin_singleton ();
+  MetaScreen   *screen  = meta_plugin_get_screen (plugin);
   MetaDisplay  *display = meta_screen_get_display (screen);
   MetaWindow   *mw = NULL;
   gboolean      fullscreen = FALSE;
@@ -127,7 +127,8 @@ mnb_notification_gtk_create ()
 
   if (pixbuf)
     {
-      gint width, height, rowstride, channels;
+#if 0
+	  gint width, height, rowstride, channels;
       guchar *pixels;
       gint x, y;
 
@@ -166,6 +167,7 @@ mnb_notification_gtk_create ()
       g_object_unref (mask);
       g_object_unref (pixbuf);
       g_object_unref (gc);
+#endif //DV
     }
 
   gtk_window_set_decorated (window, FALSE);
@@ -219,11 +221,10 @@ mnb_notification_gtk_show (void)
 
   if (notification)
     {
-      MutterPlugin *plugin = meego_netbook_get_plugin_singleton ();
+      MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
       gint          width, height, screen_width, screen_height;
       GtkWindow    *window = GTK_WINDOW (notification);
-
-      mutter_plugin_query_screen_size (plugin, &screen_width, &screen_height);
+      meta_screen_get_size (meta_plugin_get_screen(plugin), &screen_width, &screen_height);
       gtk_window_get_size (window, &width, &height);
 
       gtk_window_move (window,

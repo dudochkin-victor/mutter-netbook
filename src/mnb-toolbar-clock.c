@@ -232,14 +232,10 @@ mnb_toolbar_clock_constructed (GObject *self)
   if (G_OBJECT_CLASS (mnb_toolbar_clock_parent_class)->constructed)
     G_OBJECT_CLASS (mnb_toolbar_clock_parent_class)->constructed (self);
 
-  clutter_actor_push_internal (actor);
-
   /* create time and date labels */
   priv->time = mx_label_new ();
   clutter_actor_set_name (priv->time, "time-label");
-  clutter_actor_set_parent (priv->time, actor);
-
-  clutter_actor_pop_internal (actor);
+  clutter_actor_add_child(actor, priv->time);
 
   mnb_toolbar_clock_update_time_date (MNB_TOOLBAR_CLOCK (self));
 

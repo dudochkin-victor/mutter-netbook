@@ -288,7 +288,7 @@ ntf_notification_constructed (GObject *object)
   if (priv->dismiss_button)
     {
       /* add the dismiss button to the button box */
-      clutter_container_add_actor (CLUTTER_CONTAINER (priv->button_box),
+	  clutter_actor_add_child (CLUTTER_ACTOR (priv->button_box),
                                    CLUTTER_ACTOR (priv->dismiss_button));
     }
 
@@ -486,7 +486,7 @@ ntf_notification_add_button (NtfNotification *ntf,
 
   priv = ntf->priv;
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (priv->button_box),
+  clutter_actor_add_child (CLUTTER_ACTOR (priv->button_box),
                                CLUTTER_ACTOR (button));
 
   if (keysym)
@@ -512,7 +512,7 @@ ntf_notification_remove_button (NtfNotification *ntf, ClutterActor *button)
 
   priv = ntf->priv;
 
-  clutter_container_remove_actor (CLUTTER_CONTAINER (priv->button_box),
+  clutter_actor_remove_child (CLUTTER_ACTOR (priv->button_box),
                                   CLUTTER_ACTOR (button));
 }
 
@@ -533,17 +533,17 @@ ntf_notification_remove_all_buttons (NtfNotification *ntf)
   if (priv->dismiss_button)
     g_object_ref (priv->dismiss_button);
 
-  for (l = clutter_container_get_children(CLUTTER_CONTAINER (priv->button_box));
+  for (l = clutter_actor_get_children(CLUTTER_ACTOR (priv->button_box));
        l;
        l = g_list_delete_link (l, l))
     {
-      clutter_container_remove_actor (CLUTTER_CONTAINER (priv->button_box),
+	  clutter_actor_remove_child (CLUTTER_ACTOR (priv->button_box),
                                       CLUTTER_ACTOR (l->data));
     }
 
   if (priv->dismiss_button)
     {
-      clutter_container_add_actor (CLUTTER_CONTAINER (priv->button_box),
+	  clutter_actor_add_child (CLUTTER_ACTOR (priv->button_box),
                                    priv->dismiss_button);
 
       g_object_unref (priv->dismiss_button);
@@ -723,7 +723,7 @@ ntf_notification_handle_key_event (NtfNotification *ntf,
 
   priv = ntf->priv;
 
-  l = clutter_container_get_children (CLUTTER_CONTAINER (priv->button_box));
+  l = clutter_actor_get_children (CLUTTER_ACTOR (priv->button_box));
 
   for (; l; l = l->next)
     {

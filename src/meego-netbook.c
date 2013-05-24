@@ -402,7 +402,7 @@ meego_netbook_panel_window_show_cb (MetaWindowActor *mcw, MetaPlugin *plugin)
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
   MnbToolbar                 *toolbar = MNB_TOOLBAR (priv->toolbar);
   MnbPanel                   *panel;
-  Window                      xwin = mutter_window_get_x_window (mcw);
+  Window                      xwin = meta_window_get_xwindow (meta_window_actor_get_meta_window (mcw));
 
   if ((panel = mnb_toolbar_find_panel_for_xid (toolbar, xwin)))
     mnb_panel_oop_show_mutter_window (MNB_PANEL_OOP (panel), mcw);
@@ -427,15 +427,15 @@ meego_netbook_display_window_created_cb (MetaDisplay  *display,
 
   g_return_if_fail (mcw);
 
-  type = mutter_window_get_window_type (mcw);
+  type = meta_window_get_window_type (meta_window_actor_get_meta_window (mcw));
 
   if (type == META_WINDOW_DOCK)
     {
       MnbPanel    *panel;
-      Window       xwin = mutter_window_get_x_window (mcw);
+      Window       xwin = meta_window_get_xwindow (meta_window_actor_get_meta_window(mcw));
       const gchar *wm_class;
 
-#if 0 //DV
+
       if ((panel = mnb_toolbar_find_panel_for_xid (toolbar, xwin)))
         {
           /*
@@ -444,7 +444,7 @@ meego_netbook_display_window_created_cb (MetaDisplay  *display,
            * effect completes, we have to first let the compositor to do its
            * thing, and only then impose our will on it.
            */
-          g_object_set (mcw, "shadow-type", MUTTER_SHADOW_ALWAYS, NULL);
+          //g_object_set (mcw, "shadow-type", MUTTER_SHADOW_ALWAYS, NULL); //DV
 
           g_signal_connect (mcw, "show",
                             G_CALLBACK (meego_netbook_panel_window_show_cb),
@@ -453,12 +453,11 @@ meego_netbook_display_window_created_cb (MetaDisplay  *display,
       else if ((wm_class = meta_window_get_wm_class (win)) &&
                !strcmp (wm_class, "Matchbox-panel"))
         {
-          g_object_set (mcw, "shadow-type", MUTTER_SHADOW_ALWAYS, NULL);
+          //g_object_set (mcw, "shadow-type", MUTTER_SHADOW_ALWAYS, NULL);
         }
-#endif //DV
     }
 
-  if (mutter_window_is_override_redirect (mcw))
+  if (meta_window_is_override_redirect (meta_window_actor_get_meta_window(mcw)))
     {
       const gchar *wm_class = meta_window_get_wm_class (win);
 
@@ -496,7 +495,7 @@ meego_netbook_display_focus_window_notify_cb (MetaDisplay  *display,
       Window              xwin;
 
       mcw  = (MetaWindowActor*) meta_window_get_compositor_private (mw);
-      type = mutter_window_get_window_type (mcw);
+      type = meta_window_get_window_type (meta_window_actor_get_meta_window(mcw));
       xwin = meta_window_get_xwindow (mw);
 
       /*
@@ -531,10 +530,10 @@ meego_netbook_handle_screen_size (MetaPlugin *plugin,
   MeegoNetbookPluginPrivate *priv   = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
 
   MnbToolbar   *toolbar   = (MnbToolbar*)priv->toolbar;
-  MetaScreen   *screen    = mutter_plugin_get_screen (MUTTER_PLUGIN (plugin));
+  MetaScreen   *screen    = meta_plugin_get_screen (META_PLUGIN (plugin));
   MetaDisplay  *display   = meta_screen_get_display (screen);
   Display      *xdpy      = meta_display_get_xdisplay (display);
-  ClutterActor *stage     = mutter_get_stage_for_screen (screen);
+  ClutterActor *stage     = meta_get_stage_for_screen (screen);
   guint         screen_no = meta_screen_get_screen_number (screen);
   gint          screen_width_mm  = XDisplayWidthMM (xdpy, screen_no);
   gint          screen_height_mm = XDisplayHeightMM (xdpy, screen_no);
@@ -553,7 +552,7 @@ meego_netbook_handle_screen_size (MetaPlugin *plugin,
    * and the second time if/when the Toolbar adusts it's struts. So do a check
    * here that the 'new' state is different from the old one.
    */
-  mutter_plugin_query_screen_size (plugin, screen_width, screen_height);
+  meta_screen_get_size (meta_plugin_get_screen(plugin), screen_width, screen_height);
 
   if (old_screen_width == *screen_width && old_screen_height == *screen_height)
     return;
@@ -600,7 +599,7 @@ meego_netbook_handle_screen_size (MetaPlugin *plugin,
                    XA_STRING,
                    8, PropModeReplace,
                    (unsigned char*)meego_session, strlen (meego_session));
-  meta_error_trap_pop (display, FALSE);
+  meta_error_trap_pop (display);
 
   g_free (meego_session);
 
@@ -644,7 +643,7 @@ meego_netbook_handle_screen_size (MetaPlugin *plugin,
             mnb_toolbar_hide (toolbar, MNB_SHOW_HIDE_POLICY);
         }
 
-      meta_error_trap_pop (display, FALSE);
+      meta_error_trap_pop (display);
     }
 }
 
@@ -654,17 +653,17 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
 
   ClutterActor *overlay;
-  ClutterActor *toolbar;
   ClutterActor *switcher_overlay;
   ClutterActor *message_overlay;
   gint          screen_width, screen_height;
   GError       *err = NULL;
 
-  MetaScreen   *screen    = mutter_plugin_get_screen (plugin);
+  MetaScreen   *screen    = meta_plugin_get_screen (plugin);
   MetaDisplay  *display   = meta_screen_get_display (screen);
-  ClutterActor *stage     = mutter_get_stage_for_screen (screen);
+  ClutterActor *stage     = meta_get_stage_for_screen (screen);
   GConfClient  *gconf_client;
 
+  clutter_init(NULL, NULL);
   plugin_singleton = plugin;
 
   gconf_client = priv->gconf_client = gconf_client_get_default ();
@@ -688,8 +687,12 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
   if (!(compositor_options & MNB_OPTION_DISABLE_WS_CLAMP))
     meta_prefs_set_num_workspaces (1);
 
-  mx_texture_cache_load_cache (mx_texture_cache_get_default (),
-                                 THEMEDIR "/mx.cache");
+  mx_texture_cache_get_texture (mx_texture_cache_get_default (),
+  			 THEMEDIR
+  			 "/panel/panel-shadow.png");
+  g_warning ("LOAD CACHE %s", THEMEDIR "/mx.cache");
+//  mx_texture_cache_load_cache (mx_texture_cache_get_default (),
+//                                 THEMEDIR "/mx.cache");
   mx_style_load_from_file (mx_style_get_default (),
                              THEMEDIR "/mutter-meego.css",
                              &err);
@@ -724,7 +727,7 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
                     G_CALLBACK (meego_netbook_display_focus_window_notify_cb),
                     plugin);
 
-  overlay = mutter_plugin_get_overlay_group (plugin);
+  overlay = meta_get_overlay_group_for_screen(meta_plugin_get_screen (plugin));
 
   mnb_input_manager_create (plugin);
 
@@ -734,12 +737,12 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
   /*
    * This also creates the launcher.
    */
-  toolbar = priv->toolbar = CLUTTER_ACTOR (mnb_toolbar_new (plugin));
+  priv->toolbar = CLUTTER_ACTOR (mnb_toolbar_new (plugin));
 
   switcher_overlay = priv->switcher_overlay =
     CLUTTER_ACTOR (mnb_alttab_overlay_new ());
 
-  clutter_set_motion_events_enabled (TRUE);
+  clutter_stage_set_motion_events_enabled (CLUTTER_STAGE(stage), TRUE);
 
   desktop_background_init (plugin);
 
@@ -754,14 +757,10 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
    *
    *  - toolbar hint is below the toolbar (i.e., not visible if panel showing.
    */
-  clutter_container_add (CLUTTER_CONTAINER (overlay),
-                         toolbar,
-                         switcher_overlay,
-                         NULL);
+  clutter_actor_add_child (CLUTTER_ACTOR (overlay), priv->toolbar);
+  clutter_actor_add_child (CLUTTER_ACTOR (overlay), switcher_overlay);
 
-  clutter_container_add (CLUTTER_CONTAINER (stage),
-                         message_overlay,
-                         NULL);
+  clutter_actor_add_child (CLUTTER_ACTOR (stage), message_overlay);
 
   clutter_actor_hide (switcher_overlay);
 
@@ -773,7 +772,7 @@ meego_netbook_plugin_start (MetaPlugin *plugin)
 
   /* Keys */
 
-  meta_prefs_override_no_tab_popup (TRUE);
+  //meta_prefs_override_no_tab_popup (TRUE); //DV
 }
 
 /*static MutterShadow *
@@ -781,7 +780,7 @@ meego_netbook_get_shadow (MetaPlugin *plugin, MetaWindowActor *mcw)
 {
   MetaCompWindowType type;
 
-  type = mutter_window_get_window_type (mcw);
+  type = meta_window_get_window_type (mcw);
 
   if (type == META_COMP_WINDOW_DOCK)
     {
@@ -810,7 +809,7 @@ static void
 meego_netbook_plugin_class_init (MeegoNetbookPluginClass *klass)
 {
   GObjectClass      *gobject_class = G_OBJECT_CLASS (klass);
-  MetaPluginClass *plugin_class  = MUTTER_PLUGIN_CLASS (klass);
+  MetaPluginClass *plugin_class  = META_PLUGIN_CLASS (klass);
 
   gobject_class->finalize        = meego_netbook_plugin_finalize;
   gobject_class->dispose         = meego_netbook_plugin_dispose;
@@ -877,7 +876,7 @@ on_minimize_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data
    */
   MetaPlugin *plugin = data->plugin;
   ActorPrivate *apriv;
-  MetaWindowActor *mcw = MUTTER_WINDOW (data->actor);
+  MetaWindowActor *mcw = META_WINDOW (data->actor);
 
   apriv = get_actor_private (mcw);
   apriv->tml_minimize = NULL;
@@ -889,7 +888,7 @@ on_minimize_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data
                                                 CLUTTER_GRAVITY_NORTH_WEST);
 
   /* Now notify the manager that we are done with this effect */
-  mutter_plugin_minimize_completed (plugin, mcw);
+  meta_plugin_minimize_completed (plugin, mcw);
 }
 
 /*
@@ -903,7 +902,7 @@ minimize (MetaPlugin * plugin, MetaWindowActor *mcw)
   MetaWindowType type;
   ClutterActor      *actor  = CLUTTER_ACTOR (mcw);
 
-  type = mutter_window_get_window_type (mcw);
+  type = meta_window_get_window_type (meta_window_actor_get_meta_window(mcw));
 
   if (type == META_WINDOW_NORMAL)
     {
@@ -932,7 +931,7 @@ minimize (MetaPlugin * plugin, MetaWindowActor *mcw)
                         data);
     }
   else
-    mutter_plugin_minimize_completed (plugin, mcw);
+    meta_plugin_minimize_completed (plugin, mcw);
 }
 
 /*
@@ -946,7 +945,7 @@ on_maximize_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data
    * Must reverse the effect of the effect.
    */
   MetaPlugin *plugin = data->plugin;
-  MetaWindowActor *mcw    = MUTTER_WINDOW (data->actor);
+  MetaWindowActor *mcw    = META_WINDOW (data->actor);
   ActorPrivate *apriv  = get_actor_private (mcw);
 
   apriv->tml_maximize = NULL;
@@ -956,7 +955,7 @@ on_maximize_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data
                                                 CLUTTER_GRAVITY_NORTH_WEST);
 
   /* Now notify the manager that we are done with this effect */
-  mutter_plugin_maximize_completed (plugin, mcw);
+  meta_plugin_maximize_completed (plugin, mcw);
 
   g_free (data);
 }
@@ -981,7 +980,7 @@ maximize (MetaPlugin *plugin, MetaWindowActor *mcw,
   gfloat   anchor_x = 0;
   gfloat   anchor_y = 0;
 
-  type = mutter_window_get_window_type (mcw);
+  type = meta_window_get_window_type (meta_window_actor_get_meta_window(mcw));
 
   if (type == META_WINDOW_NORMAL)
     {
@@ -1008,7 +1007,7 @@ maximize (MetaPlugin *plugin, MetaWindowActor *mcw,
       anchor_y = (gfloat)(y - end_y)* height /
         ((gfloat)(end_height - height));
 
-      clutter_actor_move_anchor_point (actor, anchor_x, anchor_y);
+      clutter_actor_set_pivot_point (actor, anchor_x, anchor_y);
 
       animation = clutter_actor_animate (actor,
                                          CLUTTER_EASE_IN_SINE,
@@ -1027,7 +1026,7 @@ maximize (MetaPlugin *plugin, MetaWindowActor *mcw,
       return;
     }
 
-  mutter_plugin_maximize_completed (plugin, mcw);
+  meta_plugin_maximize_completed (plugin, mcw);
 }
 
 /*
@@ -1041,7 +1040,7 @@ unmaximize (MetaPlugin *plugin, MetaWindowActor *mcw,
 {
   MetaWindowType  type;
 
-  type = mutter_window_get_window_type (mcw);
+  type = meta_window_get_window_type (meta_window_actor_get_meta_window(mcw));
 
   if (type == META_WINDOW_NORMAL)
     {
@@ -1051,7 +1050,7 @@ unmaximize (MetaPlugin *plugin, MetaWindowActor *mcw,
     }
 
   /* Do this conditionally, if the effect requires completion callback. */
-  mutter_plugin_unmaximize_completed (plugin, mcw);
+  meta_plugin_unmaximize_completed (plugin, mcw);
 }
 
 static void
@@ -1059,7 +1058,7 @@ meego_netbook_move_window_to_workspace (MetaWindowActor *mcw,
                                          gint          workspace_index,
                                          guint32       timestamp)
 {
-  MetaWindow  *mw      = mutter_window_get_meta_window (mcw);
+  MetaWindow  *mw      = meta_window_actor_get_meta_window (mcw);
   MetaScreen  *screen  = meta_window_get_screen (mw);
 
   g_return_if_fail (mw && workspace_index > -2);
@@ -1105,7 +1104,7 @@ meego_netbook_move_window_to_its_workspace (MetaPlugin *plugin,
                                              MetaWindowActor *mcw,
                                              guint32       timestamp)
 {
-  MetaScreen *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen *screen = meta_plugin_get_screen (plugin);
   gint index;
   gint n_workspaces;
   gboolean append = TRUE;
@@ -1121,18 +1120,18 @@ meego_netbook_move_window_to_its_workspace (MetaPlugin *plugin,
        * Mutter now treats all OR windows as sticky, and the -1 will trigger
        * false workspace switch.
        */
-      l = mutter_get_windows (screen);
+      l = meta_get_window_actors (screen);
 
       while (l)
         {
           MetaWindowActor       *m    = l->data;
-          MetaWindow         *mw   = mutter_window_get_meta_window (m);
-          MetaWindowType  type = mutter_window_get_window_type (m);
+          MetaWindow         *mw   = meta_window_actor_get_meta_window (m);
+          MetaWindowType  type = meta_window_get_window_type (mw);
 
           if (m != mcw &&
               (type == META_WINDOW_NORMAL) &&
               !meta_window_is_hidden (mw) &&
-              !mutter_window_is_override_redirect (m) &&
+              !meta_window_is_override_redirect (mw) &&
               !meta_window_is_on_all_workspaces (mw))
             {
               workspace_empty = FALSE;
@@ -1179,7 +1178,7 @@ on_map_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data)
    * Must reverse the effect of the effect.
    */
   MetaPlugin *plugin = data->plugin;
-  MetaWindowActor *mcw    = MUTTER_WINDOW (data->actor);
+  MetaWindowActor *mcw    = META_WINDOW_ACTOR (data->actor);
   ActorPrivate *apriv  = get_actor_private (mcw);
 
   apriv->tml_map = NULL;
@@ -1190,7 +1189,7 @@ on_map_effect_complete (ClutterTimeline *timeline, EffectCompleteData *data)
   g_free (data);
 
   /* Now notify the manager that we are done with this effect */
-  mutter_plugin_map_completed (plugin, mcw);
+  meta_plugin_map_completed (plugin, mcw);
 }
 
 /*
@@ -1203,7 +1202,7 @@ static gboolean
 maybe_show_myzone (MetaPlugin *plugin)
 {
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
-  MetaScreen                 *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen                 *screen = meta_plugin_get_screen (plugin);
   gboolean                    no_apps = TRUE;
   GList                      *l;
 
@@ -1217,12 +1216,12 @@ maybe_show_myzone (MetaPlugin *plugin)
    * Check for running applications; we do this by checking if any
    * application-type windows are present.
    */
-  l = mutter_get_windows (screen);
+  l = meta_get_window_actors (screen);
 
   while (l)
     {
       MetaWindowActor       *m    = l->data;
-      MetaWindowType  type = mutter_window_get_window_type (m);
+      MetaWindowType  type = meta_window_get_window_type (meta_window_actor_get_meta_window(m));
 
       /*
        * Ignore desktop, docs, and panel windows
@@ -1234,7 +1233,7 @@ maybe_show_myzone (MetaPlugin *plugin)
             type == META_WINDOW_OVERRIDE_OTHER))
         {
           /* g_debug ("Found singificant window %s of type %d", */
-          /*          mutter_window_get_description (m), type); */
+          /*          meta_window_get_description (m), type); */
 
           no_apps = FALSE;
           break;
@@ -1256,7 +1255,7 @@ check_for_empty_workspace (MetaPlugin *plugin,
                            gint workspace, MetaWindow *ignore,
                            gboolean win_destroyed)
 {
-  MetaScreen *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen *screen = meta_plugin_get_screen (plugin);
   gboolean    workspace_empty = TRUE;
   GList      *l;
   Window      xwin = None;
@@ -1271,12 +1270,12 @@ check_for_empty_workspace (MetaPlugin *plugin,
   if (ignore)
     xwin = meta_window_get_xwindow (ignore);
 
-  l = mutter_get_windows (screen);
+  l = meta_get_window_actors (screen);
 
   while (l)
     {
       MetaWindowActor *m  = l->data;
-      MetaWindow   *mw = mutter_window_get_meta_window (m);
+      MetaWindow   *mw = meta_window_actor_get_meta_window (m);
       Window        xt = meta_window_get_transient_for_as_xid (mw);
 
       /*
@@ -1305,9 +1304,9 @@ check_for_empty_workspace (MetaPlugin *plugin,
                                                                      mw))))
         {
           /* g_debug ("querying workspace for [%s]", */
-          /*          mutter_window_get_description (m)); */
+          /*          meta_window_get_description (m)); */
 
-          gint w = mutter_window_get_workspace (m);
+          gint w = meta_window_get_workspace (meta_window_actor_get_meta_window(m));
 
           if (w == workspace)
             {
@@ -1380,13 +1379,13 @@ check_for_windows_of_wm_class_and_name (MetaPlugin *plugin,
                                         const gchar  *wm_name,
                                         MetaWindowActor *ignore)
 {
-  MetaScreen *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen *screen = meta_plugin_get_screen (plugin);
   GList      *l;
 
   if (!wm_class)
     return FALSE;
 
-  l = mutter_get_windows (screen);
+  l = meta_get_window_actors (screen);
 
   while (l)
     {
@@ -1398,7 +1397,7 @@ check_for_windows_of_wm_class_and_name (MetaPlugin *plugin,
           const gchar *klass;
           const gchar *name;
 
-          win   = mutter_window_get_meta_window (m);
+          win   = meta_window_actor_get_meta_window (m);
           klass = meta_window_get_wm_class (win);
           name  = meta_window_get_title (win);
 
@@ -1422,9 +1421,9 @@ handle_window_destruction (MetaWindowActor *mcw, MetaPlugin *plugin)
   const gchar                *wm_class;
   const gchar                *wm_name;
 
-  type      = mutter_window_get_window_type (mcw);
-  workspace = mutter_window_get_workspace (mcw);
-  meta_win  = mutter_window_get_meta_window (mcw);
+  meta_win  = meta_window_actor_get_meta_window (mcw);
+  type      = meta_window_get_window_type (meta_win);
+  workspace = meta_window_get_workspace (meta_win);
   wm_class  = meta_window_get_wm_class (meta_win);
   wm_name   = meta_window_get_title (meta_win);
 
@@ -1526,7 +1525,7 @@ meta_window_workspace_changed_cb (MetaWindow *mw,
                                   gint        old_workspace,
                                   gpointer    data)
 {
-  MetaPlugin *plugin = MUTTER_PLUGIN (data);
+  MetaPlugin *plugin = META_PLUGIN (data);
 
 #if 0
   /*
@@ -1589,7 +1588,7 @@ fullscreen_app_removed (MetaPlugin *plugin, MetaWindow *mw)
 gboolean
 meego_netbook_fullscreen_apps_present (MetaPlugin *plugin)
 {
-  MetaScreen *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen *screen = meta_plugin_get_screen (plugin);
   gint        active;
 
   active = meta_screen_get_active_workspace_index (screen);
@@ -1600,7 +1599,7 @@ meego_netbook_fullscreen_apps_present (MetaPlugin *plugin)
 static void
 meego_netbook_detach_mutter_windows (MetaScreen *screen)
 {
-  GList* l = mutter_get_windows (screen);
+  GList* l = meta_get_window_actors (screen);
 
   while (l)
     {
@@ -1608,7 +1607,7 @@ meego_netbook_detach_mutter_windows (MetaScreen *screen)
       if (m)
         {
           /* we need to repair the window pixmap here */
-          mutter_window_detach (m);
+          //mutter_window_detach (m); //DV
         }
 
       l = l->next;
@@ -1630,10 +1629,10 @@ meego_netbook_toggle_compositor (MetaPlugin *plugin, gboolean on)
   if ((priv->compositor_disabled && !on) || (!priv->compositor_disabled && on))
     return;
 
-  screen  = mutter_plugin_get_screen (plugin);
-  xdpy    = mutter_plugin_get_xdisplay (plugin);
+  screen  = meta_plugin_get_screen (plugin);
+  xdpy    = meta_display_get_xdisplay(meta_screen_get_display (screen));
   xroot   = meta_screen_get_xroot (screen);
-  overlay = mutter_get_overlay_window (screen);
+  overlay = meta_get_overlay_window (screen);
 
   if (!on)
     {
@@ -1743,7 +1742,7 @@ meego_netbook_window_is_modal_for_panel (MnbPanelOop *panel,
     }
 
   mcw = mnb_panel_oop_get_mutter_window (panel);
-  mw  = mutter_window_get_meta_window (mcw);
+  mw  = meta_window_actor_get_meta_window (mcw);
 
   if (trans_for == mw)
     return TRUE;
@@ -1791,9 +1790,9 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
   gboolean                    move_window = FALSE;
 
   active_panel = (MnbPanelOop*) mnb_toolbar_get_active_panel (toolbar);
-  type         = mutter_window_get_window_type (mcw);
-  xwin         = mutter_window_get_x_window (mcw);
-  mw           = mutter_window_get_meta_window (mcw);
+  mw           = meta_window_actor_get_meta_window (mcw);
+  type         = meta_window_get_window_type (mw);
+  xwin         = meta_window_get_xwindow (mw);
 
   if (active_panel &&
       meego_netbook_window_is_modal_for_panel (active_panel, mw))
@@ -1826,11 +1825,11 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
    * windows are both override redirect, but also have a _NET_WM_WINDOW_TYPE set
    * to NORMAL
    */
-  if (mutter_window_is_override_redirect (mcw))
+  if (meta_window_is_override_redirect (mw))
     {
       const gchar *wm_class = meta_window_get_wm_class (mw);
 
-      mutter_plugin_map_completed (plugin, mcw);
+      meta_plugin_map_completed (plugin, mcw);
 
       /*
        * If this is a SCIM window, ensure we have an input region for it on the
@@ -1875,17 +1874,17 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
                * effect completes, we have to first let the compositor to do its
                * thing, and only then impose our will on it.
                */
-              mutter_plugin_map_completed (plugin, mcw);
+        	  meta_plugin_map_completed (plugin, mcw);
               mnb_panel_oop_show_mutter_window (MNB_PANEL_OOP (panel), mcw);
             }
           else
             {
-              mutter_plugin_map_completed (plugin, mcw);
+        	  meta_plugin_map_completed (plugin, mcw);
               mnb_panel_hide (panel);
             }
         }
       else
-        mutter_plugin_map_completed (plugin, mcw);
+    	  meta_plugin_map_completed (plugin, mcw);
     }
   /*
    * Anything that might be associated with startup notification needs to be
@@ -1898,7 +1897,7 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
     {
       ClutterAnimation   *animation;
       ActorPrivate       *apriv = get_actor_private (mcw);
-      MetaScreen        *screen = mutter_plugin_get_screen (plugin);
+      MetaScreen        *screen = meta_plugin_get_screen (plugin);
       gint               screen_width, screen_height;
       gfloat             actor_width, actor_height;
 
@@ -1966,7 +1965,7 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
           type == META_WINDOW_MODAL_DIALOG ||
           fullscreen)
         {
-          mutter_plugin_map_completed (plugin, mcw);
+    	  meta_plugin_map_completed (plugin, mcw);
           return;
         }
 
@@ -1980,7 +1979,7 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
        * Only animate windows that are smaller than the screen size
        * (see MB#5273)
        */
-      mutter_plugin_query_screen_size (plugin, &screen_width, &screen_height);
+      meta_screen_get_size (meta_plugin_get_screen(plugin), &screen_width, &screen_height);
       clutter_actor_get_size (actor, &actor_width, &actor_height);
 
       if ((gint)actor_width  < screen_width ||
@@ -2009,7 +2008,7 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
                             data);
         }
       else
-        mutter_plugin_map_completed (plugin, mcw);
+    	  meta_plugin_map_completed (plugin, mcw);
     }
   else
     {
@@ -2020,7 +2019,7 @@ map (MetaPlugin *plugin, MetaWindowActor *mcw)
                         G_CALLBACK (window_destroyed_cb),
                         plugin);
 
-      mutter_plugin_map_completed (plugin, mcw);
+      meta_plugin_map_completed (plugin, mcw);
     }
 }
 
@@ -2031,8 +2030,8 @@ destroy (MetaPlugin *plugin, MetaWindowActor *mcw)
   MetaWindowType          type;
   Window                      xwin;
 
-  type = mutter_window_get_window_type (mcw);
-  xwin = mutter_window_get_x_window (mcw);
+  type = meta_window_get_window_type (meta_window_actor_get_meta_window(mcw));
+  xwin = meta_window_get_xwindow (meta_window_actor_get_meta_window(mcw));
 
   if (type == META_WINDOW_DOCK)
     {
@@ -2047,7 +2046,7 @@ destroy (MetaPlugin *plugin, MetaWindowActor *mcw)
     }
 
   handle_window_destruction (mcw, plugin);
-  mutter_plugin_destroy_completed (plugin, mcw);
+  meta_plugin_destroy_completed (plugin, mcw);
 }
 
 static void
@@ -2064,7 +2063,7 @@ switch_workspace (MetaPlugin         *plugin,
    */
   if (mnb_toolbar_get_active_panel (MNB_TOOLBAR (priv->toolbar)))
     {
-      mutter_plugin_switch_workspace_completed (plugin);
+      meta_plugin_switch_workspace_completed (plugin);
     }
   else
     {
@@ -2144,8 +2143,8 @@ xevent_filter (MetaPlugin *plugin, XEvent *xev)
 
       if (xev->type == KeyPress || xev->type == KeyRelease)
         {
-          MetaScreen   *screen = mutter_plugin_get_screen (plugin);
-          ClutterActor *stage  = mutter_get_stage_for_screen (screen);
+          MetaScreen   *screen = meta_plugin_get_screen (plugin);
+          ClutterActor *stage  = meta_get_stage_for_screen (screen);
           Window        xwin;
 
           /*
@@ -2204,9 +2203,10 @@ setup_focus_window (MetaPlugin *plugin)
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
   Window                      xwin;
   XSetWindowAttributes        attr;
-  Display                    *xdpy    = mutter_plugin_get_xdisplay (plugin);
-  MetaScreen                 *screen  = mutter_plugin_get_screen (plugin);
+  MetaScreen                 *screen  = meta_plugin_get_screen (plugin);
+  Display                    *xdpy    = meta_display_get_xdisplay(meta_screen_get_display (screen));
   MetaDisplay                *display = meta_screen_get_display (screen);
+#if 0
   Atom                        type_atom;
 
   type_atom = meta_display_get_atom (display,
@@ -2231,36 +2231,38 @@ setup_focus_window (MetaPlugin *plugin)
                    (unsigned char *) &type_atom,
                    1);
 
+
   XMapWindow (xdpy, xwin);
 
-  meta_error_trap_pop (display, FALSE);
+  meta_error_trap_pop (display);
 
   priv->focus_xwin = xwin;
+#endif //DV
 }
 
 static void
 setup_screen_saver (MetaPlugin *plugin)
 {
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
-  Display                    *xdpy    = mutter_plugin_get_xdisplay (plugin);
-  MetaScreen                 *screen  = mutter_plugin_get_screen (plugin);
+
+  MetaScreen                 *screen  = meta_plugin_get_screen (plugin);
   MetaDisplay                *display = meta_screen_get_display (screen);
+  Display                    *xdpy    = meta_display_get_xdisplay(display);
   Window                      xroot;
 
   xroot = RootWindow (xdpy, meta_screen_get_screen_number (screen));
 
   meta_error_trap_push (display);
-
+#if 0
   if (XScreenSaverQueryExtension (xdpy, &priv->saver_base, &priv->saver_error))
     XScreenSaverSelectInput (xdpy, xroot, ScreenSaverNotifyMask);
-
-  meta_error_trap_pop (display, FALSE);
+#endif
+  meta_error_trap_pop (display);
 }
-
+#if 0
 // GdkRegion *mutter_window_get_obscured_region (MetaWindowActor *cw); //DV
 gboolean   mutter_window_effect_in_progress (MetaWindowActor *self);
 
-#if 0 //DV
 /*
  * Based on the occlusion code in MetaWindowActorGroup
  *
@@ -2274,7 +2276,7 @@ mnb_get_background_visible_region (MetaScreen *screen)
   GdkRegion   *visible_region;
   GdkRectangle screen_rect = { 0 };
 
-  l = mutter_get_windows (screen);
+  l = meta_get_window_actors (screen);
 
   /* Start off with the full screen area (for a multihead setup, we
    * might want to use a more accurate union of the monitors to avoid
@@ -2289,7 +2291,7 @@ mnb_get_background_visible_region (MetaScreen *screen)
       MetaWindowActor *cw;
       ClutterActor *actor;
 
-      if (!MUTTER_IS_WINDOW (l->data) || !CLUTTER_ACTOR_IS_VISIBLE (l->data))
+      if (!META_IS_WINDOW (l->data) || !CLUTTER_ACTOR_IS_VISIBLE (l->data))
         continue;
 
       cw = l->data;
@@ -2360,7 +2362,7 @@ mnb_desktop_texture_paint (ClutterActor *actor,
   ClutterActorBox alloc;
   //GdkRegion *visible_region = NULL;
   gboolean retval = TRUE;
-#if 0 //DV
+#if 0
   if (!complete)
     {
       visible_region = mnb_get_background_visible_region (screen);
@@ -2573,7 +2575,7 @@ desktop_background_paint (ClutterActor *background, MetaPlugin *plugin)
    * Try to paint only parts of the desktop background; however, we are painting
    * on behalf of a clone, force complete paint.
    */
-  screen = mutter_plugin_get_screen (plugin);
+  screen = meta_plugin_get_screen (plugin);
   if (!mnb_desktop_texture_paint (background,
                                   clutter_actor_is_in_clone_paint (background),
                                   screen))
@@ -2593,12 +2595,12 @@ static void
 setup_desktop_background (MetaPlugin *plugin, const gchar *filename)
 {
   MeegoNetbookPluginPrivate *priv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
-  MetaScreen                 *screen = mutter_plugin_get_screen (plugin);
+  MetaScreen                 *screen = meta_plugin_get_screen (plugin);
   gint                        screen_width, screen_height;
   ClutterActor               *new_texture;
   ClutterActor               *old_texture = priv->desktop_tex;
 
-  mutter_plugin_query_screen_size (MUTTER_PLUGIN (plugin),
+  meta_screen_get_size (meta_plugin_get_screen(META_PLUGIN (plugin)),
                                    &screen_width, &screen_height);
 
   g_assert (filename);
@@ -2617,7 +2619,7 @@ setup_desktop_background (MetaPlugin *plugin, const gchar *filename)
     }
   else
     {
-      ClutterActor *stage = mutter_get_stage_for_screen (screen);
+      ClutterActor *stage = meta_get_stage_for_screen (screen);
 
       if (clutter_texture_get_pixel_format (CLUTTER_TEXTURE (new_texture)) &
           COGL_A_BIT)
@@ -2631,7 +2633,7 @@ setup_desktop_background (MetaPlugin *plugin, const gchar *filename)
 
       if (new_texture)
         {
-          clutter_container_add_actor (CLUTTER_CONTAINER (stage), new_texture);
+    	  clutter_actor_add_child (CLUTTER_ACTOR (stage), new_texture);
           clutter_actor_lower_bottom (new_texture);
 
           g_signal_connect (new_texture, "paint",
@@ -2647,7 +2649,7 @@ desktop_background_changed_cb (GConfClient *client,
                                GConfEntry  *entry,
                                gpointer     data)
 {
-  MetaPlugin *plugin = MUTTER_PLUGIN (data);
+  MetaPlugin *plugin = META_PLUGIN (data);
   const gchar  *filename = NULL;
   GConfValue   *value;
   const gchar  *key;
@@ -2677,10 +2679,10 @@ desktop_background_changed_cb (GConfClient *client,
       if (clr_str && *clr_str &&
           clutter_color_from_string (&clr, clr_str))
         {
-          MetaScreen   *screen = mutter_plugin_get_screen (plugin);
-          ClutterActor *stage  = mutter_get_stage_for_screen (screen);
+          MetaScreen   *screen = meta_plugin_get_screen (plugin);
+          ClutterActor *stage  = meta_get_stage_for_screen (screen);
 
-          clutter_stage_set_color (CLUTTER_STAGE (stage), &clr);
+          clutter_actor_set_background_color (CLUTTER_ACTOR (stage), &clr);
         }
     }
 #if 0
@@ -2763,14 +2765,14 @@ focus_xwin (MetaPlugin *plugin, guint xid)
 {
   MetaDisplay *display;
 
-  display = meta_screen_get_display (mutter_plugin_get_screen (plugin));
+  display = meta_screen_get_display (meta_plugin_get_screen (plugin));
 
   meta_error_trap_push (display);
 
   XSetInputFocus (meta_display_get_xdisplay (display), xid,
                   RevertToPointerRoot, CurrentTime);
 
-  meta_error_trap_pop (display, TRUE);
+  meta_error_trap_pop (display);
 }
 
 void
@@ -2788,7 +2790,7 @@ void
 meego_netbook_unstash_window_focus (MetaPlugin *plugin, guint32 timestamp)
 {
   MeegoNetbookPluginPrivate *priv    = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
-  MetaScreen                 *screen  = mutter_plugin_get_screen (plugin);
+  MetaScreen                 *screen  = meta_plugin_get_screen (plugin);
   MetaDisplay                *display = meta_screen_get_display (screen);
   MetaWindow                 *focus;
   MnbPanel                   *panel;
@@ -2817,7 +2819,7 @@ meego_netbook_unstash_window_focus (MetaPlugin *plugin, guint32 timestamp)
    * First, we try the window the WM last requested focus for; if this is
    * not available, we try the last focused window.
    */
-  focus = meta_display_get_expected_focus_window (display);
+  focus = meta_display_get_focus_window (display);
 
   if (!focus)
     focus = priv->last_focused;
@@ -2847,13 +2849,13 @@ meego_netbook_get_plugin_singleton (void)
 gboolean
 meego_netbook_modal_windows_present (MetaPlugin *plugin, gint workspace)
 {
-  MetaScreen *screen = mutter_plugin_get_screen (plugin);
-  GList      *l      = mutter_get_windows (screen);
+  MetaScreen *screen = meta_plugin_get_screen (plugin);
+  GList      *l      = meta_get_window_actors (screen);
 
   while (l)
     {
       MetaWindowActor *m = l->data;
-      MetaWindow   *w = mutter_window_get_meta_window (m);
+      MetaWindow   *w = meta_window_actor_get_meta_window (m);
 
       /*
        * Working out the workspace index in Mutter requires examining a list,
@@ -2868,7 +2870,7 @@ meego_netbook_modal_windows_present (MetaPlugin *plugin, gint workspace)
             }
           else
             {
-              gint s = mutter_window_get_workspace (m);
+              gint s = meta_window_get_workspace (meta_window_actor_get_meta_window(m));
 
               if (s < 0 || s == workspace)
                 return TRUE;
@@ -2936,7 +2938,7 @@ meego_netbook_activate_mutter_window (MetaWindowActor *mcw)
   MetaDisplay    *display;
   guint32         timestamp;
 
-  window           = mutter_window_get_meta_window (mcw);
+  window           = meta_window_actor_get_meta_window (mcw);
   screen           = meta_window_get_screen (window);
   display          = meta_screen_get_display (screen);
   workspace        = meta_window_get_workspace (window);
@@ -2990,10 +2992,11 @@ meego_netbook_set_struts (MetaPlugin *plugin,
                            gint          bottom)
 {
   MeegoNetbookPluginPrivate *ppriv = MEEGO_NETBOOK_PLUGIN (plugin)->priv;
-  MetaScreen        *screen         = mutter_plugin_get_screen (plugin);
+  MetaScreen        *screen         = meta_plugin_get_screen (plugin);
   MetaDisplay       *display        = meta_screen_get_display (screen);
   Display           *xdpy           = meta_display_get_xdisplay (display);
   Window             xwin           = ppriv->focus_xwin;
+#if 0
   Atom               strut_atom     = meta_display_get_atom (display,
                                                       META_ATOM__NET_WM_STRUT);
 
@@ -3027,7 +3030,7 @@ meego_netbook_set_struts (MetaPlugin *plugin,
 
           XDeleteProperty (xdpy, xwin, strut_atom);
 
-          meta_error_trap_pop (display, FALSE);
+          meta_error_trap_pop (display);
         }
       else
         {
@@ -3052,7 +3055,8 @@ meego_netbook_set_struts (MetaPlugin *plugin,
                            XA_CARDINAL, 32, PropModeReplace,
                            (unsigned char *) &new_struts, 4);
 
-          meta_error_trap_pop (display, FALSE);
+          meta_error_trap_pop (display);
         }
     }
+#endif //DV
 }

@@ -652,7 +652,7 @@ mtp_toolbar_button_init (MtpToolbarButton *self)
   clutter_actor_set_reactive ((ClutterActor*)self, TRUE);
 
   priv->real_button = g_object_new (MNB_TYPE_TOOLBAR_BUTTON, NULL);
-  clutter_actor_set_parent (priv->real_button, (ClutterActor*)self);
+  clutter_actor_add_child((ClutterActor*)self, priv->real_button);
   clutter_actor_set_reactive (priv->real_button, TRUE);
 }
 
@@ -677,7 +677,7 @@ mtp_toolbar_button_set_child (MtpToolbarButton *button, ClutterActor *child)
   if (child)
     {
       priv->real_button = child;
-      clutter_actor_set_parent (child, (ClutterActor*) button);
+      clutter_actor_add_child((ClutterActor*) button, child);
     }
 }
 
@@ -730,7 +730,7 @@ mtp_toolbar_apply_name (MtpToolbarButton *button, const gchar *name)
 
           clutter_actor_set_name ((ClutterActor*)cbutton, "close-button");
 
-          clutter_actor_set_parent (cbutton, (ClutterActor*)button);
+          clutter_actor_add_child((ClutterActor*)button, cbutton);
 
           g_signal_connect (cbutton, "clicked",
                             G_CALLBACK (mtp_toolbar_button_cbutton_clicked_cb),
@@ -841,8 +841,7 @@ mtp_toolbar_apply_name (MtpToolbarButton *button, const gchar *name)
               priv->label = label;
 
               clutter_actor_set_name (label, "button-label");
-              clutter_actor_set_parent (label, (ClutterActor*)button);
-
+              clutter_actor_add_child((ClutterActor*)button, label)
               mx_widget_set_tooltip_text (MX_WIDGET (button), priv->tooltip);
             }
         }

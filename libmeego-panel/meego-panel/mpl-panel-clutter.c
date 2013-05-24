@@ -334,7 +334,7 @@ mpl_panel_clutter_constructed (GObject *self)
   if (G_OBJECT_CLASS (mpl_panel_clutter_parent_class)->constructed)
     G_OBJECT_CLASS (mpl_panel_clutter_parent_class)->constructed (self);
 
-  stage = clutter_stage_get_default ();
+  stage = clutter_stage_new ();
 
   priv->stage = stage;
 
@@ -342,7 +342,7 @@ mpl_panel_clutter_constructed (GObject *self)
   mpl_panel_clutter_load_base_style ();
 
   background = (ClutterActor*)mpl_panel_background_new ();
-  clutter_container_add_actor (CLUTTER_CONTAINER (stage), background);
+  clutter_actor_add_child (CLUTTER_ACTOR (stage), background);
 
   clutter_actor_hide (stage);
 }
@@ -574,7 +574,7 @@ mpl_panel_clutter_setup_events_with_gtk_for_xid (Window xid)
       }
   };
 
-  XSelectInput (gdk_display_get_default(), xid,
+  XSelectInput (gdk_x11_display_get_xdisplay(gdk_display_get_default()), xid,
                 StructureNotifyMask |
                 ButtonPressMask | ButtonReleaseMask | PointerMotionMask |
                 FocusChangeMask |
@@ -627,5 +627,5 @@ mpl_panel_clutter_set_child (MplPanelClutter *panel, ClutterActor *child)
 {
   MplPanelClutterPrivate *priv = panel->priv;
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (priv->stage), child);
+  clutter_actor_add_child (CLUTTER_ACTOR (priv->stage), child);
 }

@@ -55,8 +55,6 @@ main (int     argc,
   GError          *error = NULL;
   int              ret = EXIT_SUCCESS;
 
-  g_type_init ();
-
   context = g_option_context_new ("- MeeGo launch tool");
   g_option_context_add_main_entries (context, _options, NULL);
   g_option_context_add_group (context, gtk_get_option_group (true));

@@ -76,7 +76,7 @@ main (int argc, char **argv)
 
   bin = mtp_bin_new ();
 
-  stage = clutter_stage_get_default ();
+  stage = clutter_stage_new ();
 
   clutter_actor_set_size (stage, 1024.0, 400.0);
 
@@ -85,7 +85,7 @@ main (int argc, char **argv)
                     bin);
 
   clutter_stage_set_color (CLUTTER_STAGE (stage), &clr);
-  clutter_container_add_actor (CLUTTER_CONTAINER (stage), bin);
+  clutter_actor_add_child (CLUTTER_ACTOR (stage), bin);
 
   mtp_bin_load_contents ((MtpBin *)bin);
 

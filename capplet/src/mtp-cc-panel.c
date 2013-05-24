@@ -88,7 +88,7 @@ mtp_cc_panel_make_contents (MtpCcPanel *panel)
                     G_CALLBACK (embed_size_allocate_cb),
                     bin);
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (stage), bin);
+  clutter_actor_add_child (CLUTTER_ACTOR (stage), bin);
 
   priv->frame = embed;
 }

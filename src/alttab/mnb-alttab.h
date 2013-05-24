@@ -36,7 +36,7 @@ void
 mnb_alttab_overlay_alt_tab_key_handler (MetaDisplay    *display,
                                         MetaScreen     *screen,
                                         MetaWindow     *window,
-                                        XEvent         *event,
+                                        XIDeviceEvent         *event,
                                         MetaKeyBinding *binding,
                                         gpointer        data);
 
@@ -44,7 +44,7 @@ void
 mnb_alttab_overlay_alt_tab_select_handler (MetaDisplay    *display,
                                            MetaScreen     *screen,
                                            MetaWindow     *window,
-                                           XEvent         *event,
+                                           XIDeviceEvent         *event,
                                            MetaKeyBinding *binding,
                                            gpointer        data);
 
@@ -53,7 +53,7 @@ void
 mnb_alttab_overlay_alt_tab_cancel_handler (MetaDisplay    *display,
                                            MetaScreen     *screen,
                                            MetaWindow     *window,
-                                           XEvent         *event,
+                                           XIDeviceEvent         *event,
                                            MetaKeyBinding *binding,
                                            gpointer        data);
 

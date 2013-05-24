@@ -87,8 +87,6 @@ main (int     argc,
   MplAppLaunchesStore *store;
   GError              *error = NULL;
 
-  g_type_init ();
-
   context = g_option_context_new ("- Test app launches database");
   g_option_context_add_main_entries (context, _options, NULL);
   if (!g_option_context_parse (context, &argc, &argv, &error))

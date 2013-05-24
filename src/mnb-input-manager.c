@@ -111,11 +111,10 @@ mnb_input_manager_destroy ()
 {
   GList   *l, *o;
   gint     i;
-  Display *xdpy;
 
   g_assert (mgr_singleton);
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  Display *xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   for (i = 0; i <= MNB_INPUT_LAYER_TOP; ++i)
     {
@@ -173,7 +172,7 @@ mnb_input_manager_push_region (gint          x,
 
   g_assert (mgr_singleton && layer >= 0 && layer <= MNB_INPUT_LAYER_TOP);
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   rect.x       = x;
   rect.y       = y;
@@ -223,7 +222,7 @@ mnb_input_manager_remove_region_without_update (MnbInputRegion *mir)
 
   g_assert (mgr_singleton);
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   if (mir->region)
     XFixesDestroyRegion (xdpy, mir->region);
@@ -249,7 +248,7 @@ mnb_input_manager_apply_stack (void)
 
   g_assert (mgr_singleton);
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   if (mgr_singleton->current_region)
     XFixesDestroyRegion (xdpy, mgr_singleton->current_region);
@@ -276,13 +275,13 @@ mnb_input_manager_apply_stack (void)
         }
     }
 
-  mutter_plugin_set_stage_input_region (mgr_singleton->plugin, result);
+  meta_set_stage_input_region (meta_plugin_get_screen(mgr_singleton->plugin), result);
 }
 
 static void
 actor_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
 {
-  ClutterGeometry  geom;
+	ClutterActorBox  box;
   MnbInputRegion  *mir = g_object_get_qdata (G_OBJECT (actor), quark_mir);
   XserverRegion    rgn;
   XRectangle       rect;
@@ -293,16 +292,16 @@ actor_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
   if (!mir)
     return;
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   rgn = mir->region;
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
-  rect.x      = geom.x;
-  rect.y      = geom.y;
-  rect.width  = geom.width;
-  rect.height = geom.height;
+  rect.x      = box.x1;
+  rect.y      = box.y1;
+  rect.width  = box.x2 - box.x1;
+  rect.height = box.y2 - box.y1;
 
   XFixesSetRegion (xdpy, mir->region, &rect, 1);
 
@@ -312,7 +311,7 @@ actor_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
 static void
 panel_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
 {
-  ClutterGeometry  geom;
+	ClutterActorBox  box;
   MnbInputRegion  *mir = g_object_get_qdata (G_OBJECT (actor), quark_mir);
   XserverRegion    rgn;
   XRectangle       rect;
@@ -326,10 +325,10 @@ panel_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
   if (!mir)
     return;
 
-  screen    = mutter_plugin_get_screen (mgr_singleton->plugin);
+  screen    = meta_plugin_get_screen (mgr_singleton->plugin);
   workspace = meta_screen_get_active_workspace (screen);
 
-  mutter_plugin_query_screen_size (mgr_singleton->plugin,
+  meta_screen_get_size (meta_plugin_get_screen(mgr_singleton->plugin),
                                    &screen_width, &screen_height);
 
   if (workspace)
@@ -341,14 +340,14 @@ panel_allocation_cb (ClutterActor *actor, GParamSpec *pspec, gpointer data)
       screen_height = r.y + r.height;
     }
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
   rgn = mir->region;
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
   rect.x      = 0;
-  rect.y      = MIN ((geom.y + geom.height), screen_height);
+  rect.y      = MIN (box.y2, screen_height);
   rect.width  = screen_width;
   rect.height = screen_height - rect.y;
 
@@ -373,21 +372,20 @@ actor_hide_cb (ClutterActor *actor, gpointer data)
 static void
 actor_show_cb (ClutterActor *actor, MnbInputLayer layer)
 {
-  ClutterGeometry  geom;
+	ClutterActorBox  box;
   MnbInputRegion  *mir  = g_object_get_qdata (G_OBJECT (actor), quark_mir);
-  Display         *xdpy;
 
   g_assert (mgr_singleton);
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  Display *xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
   if (!mir)
     {
-      mir = mnb_input_manager_push_region (geom.x, geom.y,
-                                           geom.width, geom.height,
-                                           MUTTER_IS_WINDOW (actor), layer);
+      mir = mnb_input_manager_push_region (box.x1, box.y1,
+                                           box.x2 - box.x1, box.y2 - box.y1,
+                                           META_IS_WINDOW (actor), layer);
 
       g_object_set_qdata (G_OBJECT (actor), quark_mir, mir);
     }
@@ -398,10 +396,10 @@ actor_show_cb (ClutterActor *actor, MnbInputLayer layer)
 
       rgn = mir->region;
 
-      rect.x      = geom.x;
-      rect.y      = geom.y;
-      rect.width  = geom.width;
-      rect.height = geom.height;
+      rect.x      = box.x1;
+      rect.y      = box.y1;
+      rect.width  = box.x2 - box.x1;
+      rect.height = box.y2 - box.y1;
 
       XFixesSetRegion (xdpy, mir->region, &rect, 1);
 
@@ -412,19 +410,18 @@ actor_show_cb (ClutterActor *actor, MnbInputLayer layer)
 static void
 panel_show_cb (ClutterActor *actor, MnbInputLayer layer)
 {
-  ClutterGeometry  geom;
+	ClutterActorBox  box;
   MnbInputRegion  *mir  = g_object_get_qdata (G_OBJECT (actor), quark_mir);
-  Display         *xdpy;
   gint             screen_width, screen_height;
   MetaScreen      *screen;
   MetaWorkspace   *workspace;
 
   g_assert (mgr_singleton);
 
-  screen    = mutter_plugin_get_screen (mgr_singleton->plugin);
+  screen    = meta_plugin_get_screen (mgr_singleton->plugin);
   workspace = meta_screen_get_active_workspace (screen);
 
-  mutter_plugin_query_screen_size (mgr_singleton->plugin,
+  meta_screen_get_size (meta_plugin_get_screen(mgr_singleton->plugin),
                                    &screen_width, &screen_height);
 
   if (workspace)
@@ -436,13 +433,13 @@ panel_show_cb (ClutterActor *actor, MnbInputLayer layer)
       screen_height = r.y + r.height;
     }
 
-  xdpy = mutter_plugin_get_xdisplay (mgr_singleton->plugin);
+  Display *xdpy = meta_display_get_xdisplay(meta_screen_get_display (meta_plugin_get_screen(mgr_singleton->plugin)));
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
   if (!mir)
     {
-      mir = mnb_input_manager_push_region (0, geom.y + geom.height,
+      mir = mnb_input_manager_push_region (0, box.y2,
                                            screen_width, screen_height,
                                            FALSE, layer);
 
@@ -456,7 +453,7 @@ panel_show_cb (ClutterActor *actor, MnbInputLayer layer)
       rgn = mir->region;
 
       rect.x      = 0;
-      rect.y      = geom.y + geom.height;
+      rect.y      = box.y2;
       rect.width  = screen_width;
       rect.height = screen_height;
 
@@ -484,7 +481,7 @@ mnb_input_manager_setup_actor (ClutterActor *actor,
                                MnbInputLayer layer,
                                gboolean      inverse)
 {
-  ClutterGeometry  geom;
+	ClutterActorBox  box;
   MnbInputRegion  *mir;
 
   g_assert (mgr_singleton);
@@ -494,9 +491,9 @@ mnb_input_manager_setup_actor (ClutterActor *actor,
   if (mir)
     mnb_input_manager_remove_region_without_update (mir);
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
-  mir = mnb_input_manager_push_region (geom.x, geom.y, geom.width, geom.height,
+  mir = mnb_input_manager_push_region (box.x1, box.y1, box.x2 - box.x1, box.y2 - box.y1,
                                        inverse, layer);
 
   g_object_set_qdata (G_OBJECT (actor), quark_mir, mir);
@@ -544,7 +541,7 @@ void
 mnb_input_manager_push_oop_panel (MetaWindowActor *mcw)
 {
   ClutterActor    *actor = (ClutterActor*)mcw;
-  ClutterGeometry  geom;
+  ClutterActorBox  box;
   MnbInputRegion  *mir;
   gint             screen_width, screen_height;
   gint             y;
@@ -553,10 +550,10 @@ mnb_input_manager_push_oop_panel (MetaWindowActor *mcw)
 
   g_assert (mgr_singleton);
 
-  screen    = mutter_plugin_get_screen (mgr_singleton->plugin);
+  screen    = meta_plugin_get_screen (mgr_singleton->plugin);
   workspace = meta_screen_get_active_workspace (screen);
 
-  mutter_plugin_query_screen_size (mgr_singleton->plugin,
+  meta_screen_get_size (meta_plugin_get_screen(mgr_singleton->plugin),
                                    &screen_width, &screen_height);
 
   if (workspace)
@@ -573,9 +570,9 @@ mnb_input_manager_push_oop_panel (MetaWindowActor *mcw)
   if (mir)
     mnb_input_manager_remove_region_without_update (mir);
 
-  clutter_actor_get_geometry (actor, &geom);
+  clutter_actor_get_allocation_box (actor, &box);
 
-  y = MIN ((geom.y + geom.height), screen_height);
+  y = MIN (box.y2, screen_height);
 
   mir = mnb_input_manager_push_region (0, y,
                                        screen_width,

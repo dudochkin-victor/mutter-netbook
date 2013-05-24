@@ -30,7 +30,7 @@ static ClutterActor *zones_preview = NULL;
 static gint          running = 0;
 
 static void
-mnb_switch_zones_completed_cb (MnbZonesPreview *preview, MutterPlugin *plugin)
+mnb_switch_zones_completed_cb (MnbZonesPreview *preview, MetaPlugin *plugin)
 {
   clutter_actor_destroy (zones_preview);
   zones_preview = NULL;
@@ -41,14 +41,14 @@ mnb_switch_zones_completed_cb (MnbZonesPreview *preview, MutterPlugin *plugin)
       running = 0;
     }
 
-  mutter_plugin_switch_workspace_completed (plugin);
+  meta_plugin_switch_workspace_completed (plugin);
 }
 
 /*
  * This is the Metacity entry point for the effect.
  */
 void
-mnb_switch_zones_effect (MutterPlugin         *plugin,
+mnb_switch_zones_effect (MetaPlugin         *plugin,
                          gint                  from,
                          gint                  to,
                          MetaMotionDirection   direction)
@@ -72,7 +72,7 @@ mnb_switch_zones_effect (MutterPlugin         *plugin,
           running = 0;
         }
 
-      mutter_plugin_switch_workspace_completed (plugin);
+      meta_plugin_switch_workspace_completed (plugin);
     }
 
   if ((from == to) && !zones_preview)
@@ -83,12 +83,12 @@ mnb_switch_zones_effect (MutterPlugin         *plugin,
           running = 0;
         }
 
-      mutter_plugin_switch_workspace_completed (plugin);
+      meta_plugin_switch_workspace_completed (plugin);
 
       return;
     }
 
-  screen = mutter_plugin_get_screen (plugin);
+  screen = meta_plugin_get_screen (plugin);
 
   if (!zones_preview)
     {
@@ -101,15 +101,15 @@ mnb_switch_zones_effect (MutterPlugin         *plugin,
                     NULL);
 
       /* Add it to the stage */
-      stage = mutter_get_stage_for_screen (screen);
-      clutter_container_add_actor (CLUTTER_CONTAINER (stage), zones_preview);
+      stage = meta_get_stage_for_screen (screen);
+      clutter_actor_add_child (CLUTTER_ACTOR (stage), zones_preview);
 
       /* Attach to completed signal */
       g_signal_connect (zones_preview, "switch-completed",
                         G_CALLBACK (mnb_switch_zones_completed_cb), plugin);
     }
 
-  mutter_plugin_query_screen_size (plugin, &width, &height);
+  meta_screen_get_size (meta_plugin_get_screen(plugin), &width, &height);
   g_object_set (G_OBJECT (zones_preview),
                 "workspace-width", (guint)width,
                 "workspace-height", (guint)height,
@@ -121,11 +121,11 @@ mnb_switch_zones_effect (MutterPlugin         *plugin,
                                       meta_screen_get_n_workspaces (screen));
 
   /* Add windows to zone preview actor */
-  for (w = mutter_plugin_get_windows (plugin); w; w = w->next)
+  for (w = meta_get_window_actors(meta_plugin_get_screen(plugin)); w; w = w->next)
     {
-      MutterWindow *window = w->data;
-      gint workspace = mutter_window_get_workspace (window);
-      MetaCompWindowType type = mutter_window_get_window_type (window);
+      MetaWindow *window = w->data;
+      MetaWorkspace *workspace = meta_window_get_workspace (window);
+      MetaWindowType type = meta_window_get_window_type (window);
 
       /*
        * Only show regular windows that are not sticky (getting stacking order
@@ -134,15 +134,15 @@ mnb_switch_zones_effect (MutterPlugin         *plugin,
        * it is).
        */
       if ((workspace < 0) ||
-          mutter_window_is_override_redirect (window) ||
-          (type != META_COMP_WINDOW_NORMAL))
+    		  meta_window_is_override_redirect (window) ||
+          (type != META_WINDOW_NORMAL))
         continue;
 
       mnb_zones_preview_add_window (MNB_ZONES_PREVIEW (zones_preview), window);
     }
 
   /* Make sure it's on top */
-  window_group = mutter_plugin_get_window_group (plugin);
+  window_group = meta_get_overlay_group_for_screen(meta_plugin_get_screen (plugin));
   clutter_actor_raise (zones_preview, window_group);
 
   /* Initiate animation */

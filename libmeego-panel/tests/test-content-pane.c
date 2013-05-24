@@ -36,17 +36,17 @@ main (int     argc,
   mx_style_load_from_file (mx_style_get_default (),
                            THEMEDIR "/theme.css", NULL);
 
-  stage = clutter_stage_get_default ();
+  stage = clutter_stage_new ();
 
   pane = mpl_content_pane_new ("Foo");
   clutter_actor_set_size (pane, 480, 320);
-  clutter_container_add_actor (CLUTTER_CONTAINER (stage), pane);
+  clutter_actor_add_child (CLUTTER_ACTOR (stage), pane);
 
   button = mx_button_new_with_label ("Bar");
   mpl_content_pane_set_header_actor (MPL_CONTENT_PANE (pane), button);
 
   button = mx_button_new_with_label ("Baz");
-  clutter_container_add_actor (CLUTTER_CONTAINER (pane), button);
+  clutter_actor_add_child (CLUTTER_ACTOR (pane), button);
 
   clutter_actor_show_all (stage);
   clutter_main ();

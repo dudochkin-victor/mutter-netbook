@@ -40,7 +40,7 @@ static void mnb_alttab_overlay_app_origin_weak_notify (gpointer, GObject *);
 
 struct _MnbAlttabOverlayAppPrivate
 {
-  MutterWindow *mcw;     /* MutterWindow we represent */
+  MetaWindowActor *mcw;     /* MutterWindow we represent */
   ClutterActor *child;
   ClutterActor *icon;
   ClutterActor *text;
@@ -189,7 +189,7 @@ mnb_alttab_overlay_app_constructed (GObject *self)
 {
   ClutterActor          *actor     = CLUTTER_ACTOR (self);
   MnbAlttabOverlayAppPrivate *priv = MNB_ALTTAB_OVERLAY_APP (self)->priv;
-  MetaWindow            *meta_win  = mutter_window_get_meta_window (priv->mcw);
+  MetaWindow            *meta_win  = meta_window_actor_get_meta_window (priv->mcw);
   const gchar           *title     = meta_window_get_title (meta_win);
   ClutterActor          *texture, *c_tx;
   GdkPixbuf             *pixbuf = NULL;
@@ -211,7 +211,7 @@ mnb_alttab_overlay_app_constructed (GObject *self)
                                          gdk_pixbuf_get_has_alpha (pixbuf) ? 4 : 3,
                                          0, NULL);
 
-      clutter_actor_set_parent (icon, actor);
+      clutter_actor_add_child(actor, icon);
       clutter_actor_show (icon);
 
       priv->icon = icon;
@@ -220,25 +220,25 @@ mnb_alttab_overlay_app_constructed (GObject *self)
   /*
    * Clone the glx texture in the MutterWindow, and insert it into ourselves.
    */
-  texture = mutter_window_get_texture (priv->mcw);
+  texture = meta_window_actor_get_texture (priv->mcw);
   g_object_set (texture, "keep-aspect-ratio", TRUE, NULL);
 
   c_tx = priv->child = clutter_clone_new (texture);
-  clutter_actor_set_parent (c_tx, actor);
+  clutter_actor_add_child(actor, c_tx);
   clutter_actor_set_reactive (actor, TRUE);
 
   /*
    * Use the window title for tooltip
    */
   priv->text = clutter_text_new ();
-  clutter_actor_set_parent (priv->text, actor);
+  clutter_actor_add_child(actor, priv->text);
   clutter_text_set_ellipsize (CLUTTER_TEXT (priv->text), PANGO_ELLIPSIZE_END);
 
   if (title)
     clutter_text_set_text (CLUTTER_TEXT (priv->text), title);
 
   if (priv->background)
-    clutter_actor_set_parent (priv->background, actor);
+	  clutter_actor_add_child(actor, priv->background);
 
   g_object_weak_ref (G_OBJECT (priv->mcw),
                      mnb_alttab_overlay_app_origin_weak_notify, self);
@@ -564,7 +564,7 @@ mnb_alttab_overlay_app_class_init (MnbAlttabOverlayAppClass *klass)
                                    g_param_spec_object ("mutter-window",
                                                         "Mutter Window",
                                                         "Mutter Window",
-                                                        MUTTER_TYPE_COMP_WINDOW,
+                                                        META_WINDOW_NORMAL,
                                                         G_PARAM_READWRITE |
                                                        G_PARAM_CONSTRUCT_ONLY));
 
@@ -587,7 +587,7 @@ mnb_alttab_overlay_app_init (MnbAlttabOverlayApp *self)
 }
 
 MnbAlttabOverlayApp *
-mnb_alttab_overlay_app_new (MutterWindow *mw,
+mnb_alttab_overlay_app_new (MetaWindow *mw,
                             ClutterActor *background)
 {
   return g_object_new (MNB_TYPE_ALTTAB_OVERLAY_APP,
@@ -624,7 +624,7 @@ mnb_alttab_overlay_app_get_active (MnbAlttabOverlayApp *app)
   return priv->active;
 }
 
-MutterWindow *
+MetaWindowActor *
 mnb_alttab_overlay_app_get_mcw (MnbAlttabOverlayApp *app)
 {
   MnbAlttabOverlayAppPrivate *priv = MNB_ALTTAB_OVERLAY_APP (app)->priv;

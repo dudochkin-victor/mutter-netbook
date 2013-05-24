@@ -36,7 +36,7 @@ static void
 mnb_alttab_nop_key_handler (MetaDisplay    *display,
                             MetaScreen     *screen,
                             MetaWindow     *window,
-                            XEvent         *event,
+                            XIDeviceEvent         *event,
                             MetaKeyBinding *binding,
                             gpointer        data)
 {

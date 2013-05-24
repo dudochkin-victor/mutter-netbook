@@ -16,8 +16,8 @@
 #include <dbus/dbus-glib-lowlevel.h>
 #include <dbus/dbus.h>
 #include <string.h>
-#include "../marshal.h"
-#include "../meego-netbook.h"
+#include "marshal.h"
+#include "meego-netbook.h"
 
 G_DEFINE_TYPE (MeegoNetbookNotifyStore, meego_netbook_notify_store, G_TYPE_OBJECT);
 
@@ -239,29 +239,29 @@ notification_manager_notify (MeegoNetbookNotifyStore  *notify,
       val = g_hash_table_lookup (hints, "icon_data");
       if (val && G_VALUE_HOLDS (val, G_TYPE_VALUE_ARRAY))
         {
-          GValueArray *array = g_value_get_boxed (val);
+    	  GArray *array = g_value_get_boxed (val);
           GdkPixbuf   *pixbuf;
           gint width, height, rowstride, bits_per_sample;
           gboolean has_alpha;
           GArray *data_array;
           GValue *v;
 
-          v = g_value_array_get_nth (array, 0);
+          v = &g_array_index (array, GValue, 0);
           width = g_value_get_int (v);
 
-          v = g_value_array_get_nth (array, 1);
+          v = &g_array_index (array, GValue, 1);
           height = g_value_get_int (v);
 
-          v = g_value_array_get_nth (array, 2);
+          v = &g_array_index (array, GValue, 2);
           rowstride = g_value_get_int (v);
 
-          v = g_value_array_get_nth (array, 3);
+          v = &g_array_index (array, GValue, 3);
           has_alpha = g_value_get_boolean (v);
 
-          v = g_value_array_get_nth (array, 4);
+          v = &g_array_index (array, GValue, 4);
           bits_per_sample = g_value_get_int (v);
 
-          v = g_value_array_get_nth (array, 6);
+          v = &g_array_index (array, GValue, 6);
           data_array = g_value_get_boxed (v);
 
           pixbuf = gdk_pixbuf_new_from_data ((const guchar*) data_array->data,

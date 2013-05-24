@@ -20,7 +20,7 @@
  *
  */
 
-#include "config.h"
+//#include "config.h"
 
 #include <time.h>
 #include <string.h>
@@ -256,8 +256,8 @@ init_xsync (GSIdleMonitor *monitor)
         int                 i;
         int                 ncounters;
         XSyncSystemCounter *counters;
-
-        res = XSyncQueryExtension (GDK_DISPLAY (),
+#if 0
+        res = XSyncQueryExtension (gdk_display_get_default (),
                                    &monitor->priv->sync_event_base,
                                    &sync_error_base);
         if (! res) {
@@ -265,13 +265,13 @@ init_xsync (GSIdleMonitor *monitor)
                 return FALSE;
         }
 
-        res = XSyncInitialize (GDK_DISPLAY (), &major, &minor);
+        res = XSyncInitialize (gdk_display_get_default (), &major, &minor);
         if (! res) {
                 g_warning ("GSIdleMonitor: Unable to initialize Sync extension");
                 return FALSE;
         }
 
-        counters = XSyncListSystemCounters (GDK_DISPLAY (), &ncounters);
+        counters = XSyncListSystemCounters (gdk_display_get_default (), &ncounters);
         for (i = 0; i < ncounters; i++) {
                 if (counters[i].name != NULL
                     && strcmp (counters[i].name, "IDLETIME") == 0) {
@@ -285,7 +285,7 @@ init_xsync (GSIdleMonitor *monitor)
                 g_warning ("GSIdleMonitor: IDLETIME counter not found");
                 return FALSE;
         }
-
+#endif //DV
         gdk_window_add_filter (NULL, (GdkFilterFunc)xevent_filter, monitor);
 
         return TRUE;
@@ -298,15 +298,15 @@ _init_xtest (GSIdleMonitor *monitor)
         int a, b, c, d;
 
         XLockDisplay (GDK_DISPLAY());
-        monitor->priv->have_xtest = (XTestQueryExtension (GDK_DISPLAY(), &a, &b, &c, &d) == True);
+        monitor->priv->have_xtest = (XTestQueryExtension (gdk_display_get_default(), &a, &b, &c, &d) == True);
         if (monitor->priv->have_xtest) {
-                monitor->priv->keycode1 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_L);
+                monitor->priv->keycode1 = XKeysymToKeycode (gdk_display_get_default(), XK_Alt_L);
                 if (monitor->priv->keycode1 == 0) {
                         g_warning ("keycode1 not existant");
                 }
-                monitor->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_R);
+                monitor->priv->keycode2 = XKeysymToKeycode (gdk_display_get_default(), XK_Alt_R);
                 if (monitor->priv->keycode2 == 0) {
-                        monitor->priv->keycode2 = XKeysymToKeycode (GDK_DISPLAY(), XK_Alt_L);
+                        monitor->priv->keycode2 = XKeysymToKeycode (gdk_display_get_default(), XK_Alt_L);
                         if (monitor->priv->keycode2 == 0) {
                                 g_warning ("keycode2 not existant");
                         }
@@ -387,10 +387,10 @@ idle_monitor_watch_free (GSIdleMonitorWatch *watch)
                 return;
         }
         if (watch->xalarm_positive != None) {
-                XSyncDestroyAlarm (GDK_DISPLAY (), watch->xalarm_positive);
+                XSyncDestroyAlarm (gdk_x11_display_get_xdisplay( gdk_display_get_default ()), watch->xalarm_positive);
         }
         if (watch->xalarm_negative != None) {
-                XSyncDestroyAlarm (GDK_DISPLAY (), watch->xalarm_negative);
+                XSyncDestroyAlarm (gdk_x11_display_get_xdisplay(gdk_display_get_default ()), watch->xalarm_negative);
         }
         g_slice_free (GSIdleMonitorWatch, watch);
 }
@@ -457,14 +457,15 @@ _xsync_alarm_set (GSIdleMonitor      *monitor,
         attr.events = TRUE;
 
         attr.trigger.test_type = XSyncPositiveTransition;
+#if 0
         if (watch->xalarm_positive != None) {
                 g_debug ("GSIdleMonitor: updating alarm for positive transition wait=%lld",
                          _xsyncvalue_to_int64 (attr.trigger.wait_value));
-                XSyncChangeAlarm (GDK_DISPLAY (), watch->xalarm_positive, flags, &attr);
+                XSyncChangeAlarm (gdk_display_get_default (), watch->xalarm_positive, flags, &attr);
         } else {
                 g_debug ("GSIdleMonitor: creating new alarm for positive transition wait=%lld",
                          _xsyncvalue_to_int64 (attr.trigger.wait_value));
-                watch->xalarm_positive = XSyncCreateAlarm (GDK_DISPLAY (), flags, &attr);
+                watch->xalarm_positive = XSyncCreateAlarm (gdk_display_get_default (), flags, &attr);
                 g_debug ("created alarm %ld", watch->xalarm_positive);
         }
 
@@ -472,14 +473,14 @@ _xsync_alarm_set (GSIdleMonitor      *monitor,
         if (watch->xalarm_negative != None) {
                 g_debug ("GSIdleMonitor: updating alarm for negative transition wait=%lld",
                          _xsyncvalue_to_int64 (attr.trigger.wait_value));
-                XSyncChangeAlarm (GDK_DISPLAY (), watch->xalarm_negative, flags, &attr);
+                XSyncChangeAlarm (gdk_display_get_default (), watch->xalarm_negative, flags, &attr);
         } else {
                 g_debug ("GSIdleMonitor: creating new alarm for negative transition wait=%lld",
                          _xsyncvalue_to_int64 (attr.trigger.wait_value));
-                watch->xalarm_negative = XSyncCreateAlarm (GDK_DISPLAY (), flags, &attr);
+                watch->xalarm_negative = XSyncCreateAlarm (gdk_display_get_default (), flags, &attr);
                 g_debug ("created alarm %ld", watch->xalarm_negative);
         }
-
+#endif //DV
         return TRUE;
 }
 

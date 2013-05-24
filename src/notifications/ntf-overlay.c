@@ -218,11 +218,11 @@ ntf_overlay_get_preferred_width (ClutterActor *actor,
                                  gfloat       *min_width,
                                  gfloat       *natural_width)
 {
-  MutterPlugin *plugin = meego_netbook_get_plugin_singleton ();
+  MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
   gint          screen_width;
   gint          screen_height;
 
-  mutter_plugin_query_screen_size (plugin, &screen_width, &screen_height);
+  meta_screen_get_size (meta_plugin_get_screen(plugin), &screen_width, &screen_height);
 
   *min_width     = screen_width;
   *natural_width = screen_width;
@@ -234,11 +234,11 @@ ntf_overlay_get_preferred_height (ClutterActor *actor,
                                gfloat       *min_height,
                                gfloat       *natural_height)
 {
-  MutterPlugin *plugin = meego_netbook_get_plugin_singleton ();
+  MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
   gint          screen_width;
   gint          screen_height;
 
-  mutter_plugin_query_screen_size (plugin, &screen_width, &screen_height);
+  meta_screen_get_size (meta_plugin_get_screen(plugin), &screen_width, &screen_height);
 
   *min_height     = screen_height;
   *natural_height = screen_height;
@@ -419,13 +419,13 @@ ntf_overlay_constructed (GObject *object)
     G_OBJECT_CLASS (ntf_overlay_parent_class)->constructed (object);
 
   priv->tray_normal = ntf_tray_new ();
-  clutter_actor_set_parent (CLUTTER_ACTOR (priv->tray_normal), actor);
+  clutter_actor_add_child(actor, CLUTTER_ACTOR (priv->tray_normal));
 
   priv->tray_urgent = ntf_tray_new ();
-  clutter_actor_set_parent (CLUTTER_ACTOR (priv->tray_urgent), actor);
+  clutter_actor_add_child(actor, CLUTTER_ACTOR (priv->tray_urgent));
 
   priv->lowlight = clutter_rectangle_new_with_color (&low_clr);
-  clutter_actor_set_parent (CLUTTER_ACTOR (priv->lowlight), actor);
+  clutter_actor_add_child(actor, CLUTTER_ACTOR (priv->lowlight));
   mnb_input_manager_push_actor (priv->lowlight, MNB_INPUT_LAYER_TOP);
   clutter_actor_hide (priv->lowlight);
 

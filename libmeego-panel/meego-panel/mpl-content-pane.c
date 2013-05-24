@@ -305,7 +305,7 @@ mpl_content_pane_set_child (MplContentPane  *self,
 {
   g_return_if_fail (MPL_IS_CONTENT_PANE (self));
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (self), child);
+  clutter_actor_add_child (CLUTTER_ACTOR (self), child);
 
   g_object_notify ((GObject *) self, "child");
 }
@@ -355,7 +355,7 @@ mpl_content_pane_set_header_actor (MplContentPane *self,
 
     if (actor)
     {
-      clutter_container_add_actor (CLUTTER_CONTAINER (priv->header), actor);
+    	clutter_actor_add_child (CLUTTER_ACTOR (priv->header), actor);
       clutter_container_child_set (CLUTTER_CONTAINER (priv->header), actor,
                                    "expand", FALSE,
                                    "x-align", MX_ALIGN_END,

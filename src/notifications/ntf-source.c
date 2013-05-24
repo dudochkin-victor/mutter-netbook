@@ -366,8 +366,8 @@ ntf_source_new_for_window (MetaWindow *window)
 NtfSource *
 ntf_source_new_for_pid (const gchar *machine, gint pid)
 {
-  MutterPlugin *plugin = meego_netbook_get_plugin_singleton ();
-  MetaScreen   *screen = mutter_plugin_get_screen (plugin);
+  MetaPlugin *plugin = meego_netbook_get_plugin_singleton ();
+  MetaScreen   *screen = meta_plugin_get_screen (plugin);
   gchar        *id;
   NtfSource    *src;
   MetaWindow   *window = NULL;
@@ -376,10 +376,10 @@ ntf_source_new_for_pid (const gchar *machine, gint pid)
   g_return_val_if_fail (pid, NULL);
 
 
-  for (l = mutter_get_windows (screen); l; l = l->next)
+  for (l = meta_get_window_actors (screen); l; l = l->next)
     {
-      MutterWindow *m = l->data;
-      MetaWindow   *w = mutter_window_get_meta_window (m);
+	  MetaWindowActor *m = l->data;
+      MetaWindow   *w = meta_window_actor_get_meta_window (m);
       const gchar  *c = meta_window_get_client_machine (w);
       gint          p = meta_window_get_pid (w);
 
@@ -456,9 +456,9 @@ ntf_source_get_icon (NtfSource *src)
     {
       priv->icon = icon;
 
-      clutter_container_add_actor (CLUTTER_CONTAINER (
-                                   clutter_stage_get_default ()),
-                                   icon);
+      clutter_actor_add_child (CLUTTER_ACTOR (
+    		  clutter_stage_new ()),
+              icon);
       clutter_actor_hide (icon);
     }
 

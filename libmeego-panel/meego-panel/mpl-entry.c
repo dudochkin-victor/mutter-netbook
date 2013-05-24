@@ -451,7 +451,7 @@ mpl_entry_init (MplEntry *self)
                     G_CALLBACK (mpl_entry_style_changed), NULL);
 
   priv->entry = mx_entry_new ();
-  clutter_actor_set_parent (priv->entry, CLUTTER_ACTOR (self));
+  clutter_actor_add_child(CLUTTER_ACTOR (self), priv->entry);
   mx_stylable_set_style_class (MX_STYLABLE (priv->entry),
                                "MplEntryEntry");
   text = mx_entry_get_clutter_text (MX_ENTRY (priv->entry));
@@ -461,7 +461,7 @@ mpl_entry_init (MplEntry *self)
                     self);
 
   priv->table = CLUTTER_ACTOR (mx_table_new ());
-  clutter_actor_set_parent (priv->table, CLUTTER_ACTOR (self));
+  clutter_actor_add_child(CLUTTER_ACTOR (self), priv->table);
 
   priv->clear_button = CLUTTER_ACTOR (mx_button_new ());
   clutter_actor_hide (priv->clear_button);

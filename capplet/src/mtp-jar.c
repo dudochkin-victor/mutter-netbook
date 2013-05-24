@@ -113,21 +113,21 @@ mtp_jar_constructed (GObject *self)
   bin = mx_frame_new ();
   mx_bin_set_alignment (MX_BIN (bin), MX_ALIGN_START, MX_ALIGN_MIDDLE);
   clutter_actor_set_name (bin, "content-header");
-  clutter_container_add_actor (CLUTTER_CONTAINER (bin), priv->label);
+  clutter_actor_add_child (CLUTTER_ACTOR (bin), priv->label);
 
   priv->panel_area  = mx_grid_new ();
   clutter_actor_set_name (priv->panel_area, "jar-panel-area");
   mx_grid_set_column_spacing (MX_GRID (priv->panel_area), 2);
   mx_grid_set_row_spacing (MX_GRID (priv->panel_area), 2);
   scroll1 = mx_scroll_view_new ();
-  clutter_container_add_actor (CLUTTER_CONTAINER (scroll1), priv->panel_area);
+  clutter_actor_add_child (CLUTTER_ACTOR (scroll1), priv->panel_area);
 
   priv->applet_area  = mx_grid_new ();
   clutter_actor_set_name (priv->panel_area, "jar-applet-area");
   mx_grid_set_column_spacing (MX_GRID (priv->applet_area), 2);
   mx_grid_set_row_spacing (MX_GRID (priv->applet_area), 2);
   scroll2 = mx_scroll_view_new ();
-  clutter_container_add_actor (CLUTTER_CONTAINER (scroll2), priv->applet_area);
+  clutter_actor_add_child (CLUTTER_ACTOR (scroll2), priv->applet_area);
 
   clutter_container_add (CLUTTER_CONTAINER (self),
                          bin, scroll1, scroll2, NULL);
@@ -196,14 +196,14 @@ mtp_jar_over_in (MxDroppable *droppable, MxDraggable *draggable)
   if (parent)
     {
       g_warning (G_STRLOC " Should not have parent here ...");
-      clutter_container_remove_actor (CLUTTER_CONTAINER (parent), priv->space);
+      clutter_actor_remove_child (CLUTTER_ACTOR (parent), priv->space);
     }
 
   if (mtp_toolbar_button_is_applet (button))
-    clutter_container_add_actor (CLUTTER_CONTAINER (priv->applet_area),
+	  clutter_actor_add_child (CLUTTER_ACTOR (priv->applet_area),
                                  priv->space);
   else
-    clutter_container_add_actor (CLUTTER_CONTAINER (priv->panel_area),
+	  clutter_actor_add_child (CLUTTER_ACTOR (priv->panel_area),
                                  priv->space);
 }
 
@@ -220,7 +220,7 @@ mtp_jar_over_out (MxDroppable *droppable, MxDraggable *draggable)
 
   if (parent)
     {
-      clutter_container_remove_actor (CLUTTER_CONTAINER (parent), priv->space);
+	  clutter_actor_remove_child (CLUTTER_ACTOR (parent), priv->space);
     }
 }
 
@@ -254,7 +254,7 @@ mtp_jar_drop (MxDroppable       *droppable,
 
   if (parent)
     {
-      clutter_container_remove_actor (CLUTTER_CONTAINER (parent), priv->space);
+	  clutter_actor_remove_child (CLUTTER_ACTOR (parent), priv->space);
     }
 
   clutter_actor_set_size (actor, -1.0, -1.0);
@@ -325,7 +325,7 @@ mtp_jar_add_button (MtpJar *jar, ClutterActor *button)
       if (has_parent)
         clutter_actor_reparent (button, priv->applet_area);
       else
-        clutter_container_add_actor (CLUTTER_CONTAINER (priv->applet_area),
+    	  clutter_actor_add_child (CLUTTER_ACTOR (priv->applet_area),
                                      CLUTTER_ACTOR (button));
     }
   else
@@ -333,7 +333,7 @@ mtp_jar_add_button (MtpJar *jar, ClutterActor *button)
       if (has_parent)
         clutter_actor_reparent (button, priv->panel_area);
       else
-        clutter_container_add_actor (CLUTTER_CONTAINER (priv->panel_area),
+    	  clutter_actor_add_child (CLUTTER_ACTOR (priv->panel_area),
                                      CLUTTER_ACTOR (button));
     }
 }
@@ -351,10 +351,10 @@ mtp_jar_remove_button (MtpJar *jar, ClutterActor *button)
     }
 
   if (mtp_toolbar_button_is_applet ((MtpToolbarButton*)button))
-    clutter_container_remove_actor (CLUTTER_CONTAINER (priv->applet_area),
+	  clutter_actor_remove_child (CLUTTER_ACTOR (priv->applet_area),
                                     CLUTTER_ACTOR (button));
   else
-    clutter_container_remove_actor (CLUTTER_CONTAINER (priv->panel_area),
+	  clutter_actor_remove_child (CLUTTER_ACTOR (priv->panel_area),
                                     CLUTTER_ACTOR (button));
 }
 

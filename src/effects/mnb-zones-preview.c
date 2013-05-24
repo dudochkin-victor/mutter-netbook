@@ -447,11 +447,13 @@ mnb_zones_preview_completed_cb (ClutterAnimation *animation,
       /* Start zooming out */
       priv->anim_phase = MNB_ZP_ZOOM_OUT;
       mnb_zones_preview_enable_fanciness (preview, TRUE);
-      clutter_actor_animate (CLUTTER_ACTOR (preview),
-                             CLUTTER_EASE_IN_SINE,
-                             220,
-                             "zoom", 0.3,
-                             NULL);
+
+	  clutter_actor_save_easing_state (CLUTTER_ACTOR(preview));
+	  clutter_actor_set_easing_duration (CLUTTER_ACTOR(preview), 220);
+	  clutter_actor_set_easing_mode(CLUTTER_ACTOR(preview), CLUTTER_EASE_IN_SINE);
+	  clutter_actor_set_scale(CLUTTER_ACTOR(preview), 0.3f, 0.3f);
+      clutter_actor_restore_easing_state (CLUTTER_ACTOR(preview));
+
       break;
 
     case MNB_ZP_ZOOM_OUT:
@@ -462,11 +464,13 @@ mnb_zones_preview_completed_cb (ClutterAnimation *animation,
         if (duration)
           {
             priv->anim_phase = MNB_ZP_PAN;
-            clutter_actor_animate (CLUTTER_ACTOR (preview),
-                                   CLUTTER_LINEAR,
-                                   duration,
-                                   "workspace", (gdouble)priv->dest_workspace,
-                                   NULL);
+
+			clutter_actor_save_easing_state (CLUTTER_ACTOR(preview));
+			clutter_actor_set_easing_duration (CLUTTER_ACTOR(preview), duration);
+			clutter_actor_set_easing_mode(CLUTTER_ACTOR(preview), CLUTTER_LINEAR);
+			clutter_actor_set_scale(CLUTTER_ACTOR(preview), (gdouble)priv->dest_workspace, (gdouble)priv->dest_workspace);
+			clutter_actor_restore_easing_state (CLUTTER_ACTOR(preview));
+
             break;
           }
         /* If duration == 0, fall through here to the next phase*/
@@ -475,11 +479,11 @@ mnb_zones_preview_completed_cb (ClutterAnimation *animation,
       /* Start zooming in */
       mnb_zones_preview_enable_fanciness (preview, FALSE);
       priv->anim_phase = MNB_ZP_ZOOM_IN;
-      clutter_actor_animate (CLUTTER_ACTOR (preview),
-                             CLUTTER_EASE_OUT_CUBIC,
-                             250,
-                             "zoom", 1.0,
-                             NULL);
+      clutter_actor_save_easing_state (CLUTTER_ACTOR(preview));
+	  clutter_actor_set_easing_duration (CLUTTER_ACTOR(preview), 250);
+	  clutter_actor_set_easing_mode(CLUTTER_ACTOR(preview), CLUTTER_EASE_OUT_CUBIC);
+	  clutter_actor_set_scale(CLUTTER_ACTOR(preview), 1.0f, 1.0f);
+	  clutter_actor_restore_easing_state (CLUTTER_ACTOR(preview));
       break;
 
     case MNB_ZP_ZOOM_IN:
@@ -598,20 +602,20 @@ mnb_zones_preview_get_workspace_group (MnbZonesPreview *preview,
 
       /* Create a workspace clone */
       bin = mnb_fancy_bin_new ();
-      group = clutter_group_new ();
+      group = clutter_actor_new ();
 
       /* Add background if it's set */
       if (priv->workspace_bg)
         {
           ClutterActor *bg = clutter_clone_new (priv->workspace_bg);
           clutter_actor_set_size (bg, priv->width, priv->height);
-          clutter_container_add_actor (CLUTTER_CONTAINER (group), bg);
+          clutter_actor_add_child (CLUTTER_ACTOR (group), bg);
         }
 
       clutter_actor_set_clip (group, 0, 0, priv->width, priv->height);
       mnb_fancy_bin_set_child (MNB_FANCY_BIN (bin), group);
 
-      clutter_actor_set_parent (bin, CLUTTER_ACTOR (preview));
+      clutter_actor_add_child(CLUTTER_ACTOR (preview), bin);
 
       /* This is a bit of a hack, depending on the fact that GList
        * doesn't change the beginning of the list when appending
@@ -678,12 +682,12 @@ mnb_zones_preview_clone_destroy_cb (ClutterActor *clone, ClutterActor *mcw)
 
 void
 mnb_zones_preview_add_window (MnbZonesPreview *preview,
-                              MutterWindow    *window)
+                              MetaWindow    *window)
 {
   ClutterActor *clone;
   ClutterActor *group;
   MetaRectangle rect;
-  gint workspace;
+  MetaWorkspace *workspace;
 
   /* TODO: Determine if we need to add a weak reference on the window
    *       in case it gets destroyed during the animation.
@@ -694,10 +698,10 @@ mnb_zones_preview_add_window (MnbZonesPreview *preview,
    * it is not enough to make it possible to map the clone once the texture
    * has been unparented.
    */
-  workspace = mutter_window_get_workspace (window);
-  group = mnb_zones_preview_get_workspace_group (preview, workspace);
+  workspace = meta_window_get_workspace (window);
+  group = mnb_zones_preview_get_workspace_group (preview, meta_workspace_index(workspace));
 
-  clone = clutter_clone_new (mutter_window_get_texture (window));
+  clone = clutter_clone_new (CLUTTER_ACTOR(window));
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (mnb_zones_preview_mcw_destroy_cb),
@@ -706,10 +710,10 @@ mnb_zones_preview_add_window (MnbZonesPreview *preview,
                     G_CALLBACK (mnb_zones_preview_clone_destroy_cb),
                     window);
 
-  meta_window_get_outer_rect (mutter_window_get_meta_window (window), &rect);
+  meta_window_get_outer_rect (window, &rect);
   clutter_actor_set_position (clone, rect.x, rect.y);
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (group), clone);
+  clutter_actor_add_child (CLUTTER_ACTOR (group), clone);
 }
 
 void

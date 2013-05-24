@@ -223,7 +223,7 @@ ntf_tray_key_press_event (ClutterActor *actor, ClutterKeyEvent *event)
         GList *last;
 
         notifiers =
-          clutter_container_get_children (CLUTTER_CONTAINER (priv->notifiers));
+        		clutter_actor_get_children (CLUTTER_ACTOR (priv->notifiers));
 
         last = g_list_last (notifiers);
 
@@ -294,30 +294,29 @@ ntf_tray_constructed (GObject *object)
   if (G_OBJECT_CLASS (ntf_tray_parent_class)->constructed)
     G_OBJECT_CLASS (ntf_tray_parent_class)->constructed (object);
 
-  priv->notifiers = clutter_group_new ();
+  priv->notifiers = clutter_actor_new ();
 
-  clutter_actor_set_parent (priv->notifiers, actor);
-
+  clutter_actor_add_child(actor, priv->notifiers);
   /* 'Overflow' control */
   priv->control = mx_table_new ();
 
   mx_stylable_set_style_class (MX_STYLABLE (priv->control),
                                "notification-control");
-
+#if 0
   button = mx_button_new ();
   mx_button_set_label (MX_BUTTON (button), _("Dismiss All"));
   mx_table_add_actor (MX_TABLE (priv->control), button, 0, 1);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (ntf_tray_dismiss_all_cb), self);
-
+#endif //DV
   priv->control_text = mx_label_new ();
   mx_table_add_actor (MX_TABLE (priv->control),
                         CLUTTER_ACTOR (priv->control_text), 0, 0);
 
   clutter_actor_set_width (priv->control, CLUSTER_WIDTH);
 
-  clutter_actor_set_parent (priv->control, actor);
+  clutter_actor_add_child(actor, priv->control);
 
   clutter_actor_hide (priv->control);
 
@@ -418,18 +417,20 @@ ntf_tray_notification_closed_cb (NtfNotification *ntf, NtfTray *tray)
       prev_height = clutter_actor_get_height (ntfa);
 
       priv->active_notifier =
-        clutter_group_get_nth_child (CLUTTER_GROUP (priv->notifiers),
+    		  clutter_actor_get_child_at_index (CLUTTER_ACTOR (priv->notifiers),
                                      1); /* Next, not 0 */
 
       if (priv->active_notifier)
         {
           clutter_actor_set_opacity (priv->active_notifier, 0);
           clutter_actor_show (CLUTTER_ACTOR (priv->active_notifier));
-          clutter_actor_animate (CLUTTER_ACTOR (priv->active_notifier),
-                                 CLUTTER_EASE_IN_SINE,
-                                 FADE_DURATION,
-                                 "opacity", 0xff,
-                                 NULL);
+
+  		clutter_actor_save_easing_state (priv->active_notifier);
+  		clutter_actor_set_easing_duration (priv->active_notifier, FADE_DURATION);
+  		clutter_actor_set_easing_mode(priv->active_notifier, CLUTTER_EASE_IN_SINE);
+  		clutter_actor_set_opacity(priv->active_notifier, 0xff);
+  		clutter_actor_restore_easing_state (priv->active_notifier);
+
 
           new_height = clutter_actor_get_height (priv->active_notifier);
 
@@ -440,11 +441,11 @@ ntf_tray_notification_closed_cb (NtfNotification *ntf, NtfTray *tray)
               new_y = clutter_actor_get_y (priv->control)
                 - (prev_height - new_height);
 
-              clutter_actor_animate (priv->control,
-                                     CLUTTER_EASE_IN_SINE,
-                                     FADE_DURATION,
-                                     "y", new_y,
-                                     NULL);
+				clutter_actor_save_easing_state (priv->control);
+				clutter_actor_set_easing_duration (priv->control, FADE_DURATION);
+				clutter_actor_set_easing_mode(priv->control, CLUTTER_EASE_IN_SINE);
+				clutter_actor_set_y(priv->control, new_y);
+				clutter_actor_restore_easing_state (priv->control);
             }
         }
     }
@@ -490,7 +491,7 @@ ntf_tray_add_notification (NtfTray *tray, NtfNotification *ntf)
   NtfTrayPrivate   *priv;
   ClutterActor     *ntfa;
   ClutterAnimation *anim;
-  MutterPlugin     *plugin;
+  MetaPlugin     *plugin;
 
   g_return_if_fail (NTF_IS_TRAY (tray) && NTF_IS_NOTIFICATION (ntf));
 
@@ -507,7 +508,7 @@ ntf_tray_add_notification (NtfTray *tray, NtfNotification *ntf)
                     G_CALLBACK (ntf_tray_notification_closed_cb),
                     tray);
 
-  clutter_container_add_actor (CLUTTER_CONTAINER (priv->notifiers), ntfa);
+  clutter_actor_add_child (CLUTTER_ACTOR (priv->notifiers), ntfa);
 
   clutter_actor_set_width (ntfa, CLUSTER_WIDTH);
 
@@ -522,11 +523,12 @@ ntf_tray_add_notification (NtfTray *tray, NtfNotification *ntf)
       priv->active_notifier = ntfa;
       clutter_actor_set_opacity (ntfa, 0);
 
-      clutter_actor_animate (ntfa,
-                             CLUTTER_EASE_IN_SINE,
-                             FADE_DURATION,
-                             "opacity", 0xff,
-                             NULL);
+		clutter_actor_save_easing_state (ntfa);
+		clutter_actor_set_easing_duration (ntfa, FADE_DURATION);
+		clutter_actor_set_easing_mode(ntfa, CLUTTER_EASE_IN_SINE);
+		clutter_actor_set_y(ntfa, 0xff);
+		clutter_actor_restore_easing_state (ntfa);
+
      }
   else if (priv->n_notifiers == 2)
     {
@@ -574,7 +576,7 @@ ntf_tray_find_notification (NtfTray *tray, gint subsystem, gint id)
   priv = tray->priv;
 
   notifiers =
-    clutter_container_get_children (CLUTTER_CONTAINER (priv->notifiers));
+		  clutter_actor_get_children (CLUTTER_ACTOR (priv->notifiers));
 
   for (l = notifiers; l; l = l->next)
     {

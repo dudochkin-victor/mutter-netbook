@@ -84,26 +84,24 @@ mnb_toolbar_button_transition (MnbToolbarButton *button)
   if (!pseudo_class)
     {
       if (icon)
-        clutter_actor_animate (icon, CLUTTER_LINEAR,
-                               150,
-                               "scale-x", 1.0,
-                               "scale-y", 1.0,
-                               NULL);
-
+		clutter_actor_save_easing_state (icon);
+		clutter_actor_set_easing_duration (icon, 150);
+		clutter_actor_set_easing_mode(icon, CLUTTER_LINEAR);
+		clutter_actor_set_scale(icon, 1.0, 1.0);
+		clutter_actor_restore_easing_state (icon);
     }
   else if (mx_stylable_style_pseudo_class_contains (MX_STYLABLE (button),
                                                     "hover"))
     {
       if (icon)
         {
-          clutter_actor_set_scale_with_gravity (icon, 0.5, 0.5,
-                                                CLUTTER_GRAVITY_CENTER);
-
-          clutter_actor_animate (icon, CLUTTER_EASE_OUT_ELASTIC,
-                                 TRANSITION_DURATION * 1.5,
-                                 "scale-x", 1.0,
-                                 "scale-y", 1.0,
-                                 NULL);
+          clutter_actor_set_scale(icon, 0.5, 0.5);
+          clutter_actor_set_pivot_point(icon, 0.5, 0.5);
+			clutter_actor_save_easing_state (icon);
+			clutter_actor_set_easing_duration (icon, TRANSITION_DURATION * 1.5);
+			clutter_actor_set_easing_mode(icon, CLUTTER_EASE_OUT_ELASTIC);
+			clutter_actor_set_scale(icon, 1.0, 1.0);
+			clutter_actor_restore_easing_state (icon);
         }
     }
   else if (mx_stylable_style_pseudo_class_contains (MX_STYLABLE (button),
@@ -112,13 +110,13 @@ mnb_toolbar_button_transition (MnbToolbarButton *button)
       /* shrink the background and the icon */
       if (icon)
         {
-          clutter_actor_set_scale_with_gravity (icon, 1.0, 1.0,
-                                                CLUTTER_GRAVITY_CENTER);
-          clutter_actor_animate (icon, CLUTTER_LINEAR,
-                                 150,
-                                 "scale-x", 0.7,
-                                 "scale-y", 0.7,
-                                 NULL);
+          clutter_actor_set_scale (icon, 1.0, 1.0);
+          clutter_actor_set_pivot_point(icon, 0.5, 0.5);
+			clutter_actor_save_easing_state (icon);
+			clutter_actor_set_easing_duration (icon, 150);
+			clutter_actor_set_easing_mode(icon, CLUTTER_LINEAR);
+			clutter_actor_set_scale(icon, 0.7, 0.7);
+			clutter_actor_restore_easing_state (icon);
         }
     }
   /*
