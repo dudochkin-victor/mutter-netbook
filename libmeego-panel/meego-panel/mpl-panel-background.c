@@ -184,6 +184,7 @@ mpl_panel_background_allocate (ClutterActor          *actor,
                                ClutterAllocationFlags flags)
 {
   MplPanelBackgroundPrivate *priv = MPL_PANEL_BACKGROUND (actor)->priv;
+#if 0
   ClutterActor              *border;
 
   border = mx_widget_get_border_image (MX_WIDGET (actor));
@@ -209,7 +210,7 @@ mpl_panel_background_allocate (ClutterActor          *actor,
        */
       if (!priv->base_geom_known && !name)
         {
-          mx_texture_frame_get_border_values (MX_TEXTURE_FRAME (border),
+          mx_texture_frame_get_border_values (/*MX_TEXTURE_FRAME*/ (border),
                                               &priv->base_t,
                                               &priv->base_r,
                                               &priv->base_b,
@@ -233,11 +234,12 @@ mpl_panel_background_allocate (ClutterActor          *actor,
           clutter_actor_set_name (actor, NULL);
         }
     }
-
+#endif //DV
   CLUTTER_ACTOR_CLASS (
              mpl_panel_background_parent_class)->allocate (actor, box, flags);
 }
 
+#if 0
 /*
  * Paints the provided texture frame trimming to the area indicated by padding.
  *
@@ -246,7 +248,7 @@ mpl_panel_background_allocate (ClutterActor          *actor,
  * latter, while the border is painted by the compositor as the window shadow.)
  */
 static void
-mpl_panel_background_paint_border_image (MxTextureFrame *frame,
+mpl_panel_background_paint_border_image (CoglHandle *frame,
                                          MxPadding      *padding)
 {
   CoglHandle cogl_texture = COGL_INVALID_HANDLE;
@@ -256,13 +258,12 @@ mpl_panel_background_paint_border_image (MxTextureFrame *frame,
   gfloat tex_width, tex_height;
   gfloat ex, ey;
   gfloat tx1, ty1, tx2, ty2;
-  gfloat left, right, top, bottom;
+  gfloat left = 4, right = 4 , top = 4, bottom =4;
   guint8 opacity;
   ClutterTexture *parent_texture;
   gfloat margin_l, margin_r, margin_t, margin_b;
 
   parent_texture = mx_texture_frame_get_parent_texture (frame);
-
   mx_texture_frame_get_border_values (frame, &top, &right, &bottom, &left);
 
   /* no need to paint stuff if we don't have a texture */
@@ -377,7 +378,9 @@ mpl_panel_background_paint_border_image (MxTextureFrame *frame,
     cogl_rectangles_with_texture_coords (rectangles, 9);
   }
 }
+#endif //DV
 
+#if 0
 /*
  * MxWidget::paint_background vfunction implementation.
  */
@@ -426,6 +429,8 @@ mpl_panel_background_paint_background (MxWidget           *self,
                                              &padding);
 }
 
+#endif //DV
+
 static void
 mpl_panel_background_class_init (MplPanelBackgroundClass *klass)
 {
@@ -443,8 +448,9 @@ mpl_panel_background_class_init (MplPanelBackgroundClass *klass)
   actor_class->get_preferred_width  = mpl_panel_background_get_preferred_width;
   actor_class->get_preferred_height = mpl_panel_background_get_preferred_height;
   actor_class->allocate             = mpl_panel_background_allocate;
-
+#if 0
   widget_class->paint_background    = mpl_panel_background_paint_background;
+#endif //DV
 }
 
 static void

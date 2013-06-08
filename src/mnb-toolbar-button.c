@@ -84,11 +84,13 @@ mnb_toolbar_button_transition (MnbToolbarButton *button)
   if (!pseudo_class)
     {
       if (icon)
+      {
 		clutter_actor_save_easing_state (icon);
 		clutter_actor_set_easing_duration (icon, 150);
 		clutter_actor_set_easing_mode(icon, CLUTTER_LINEAR);
 		clutter_actor_set_scale(icon, 1.0, 1.0);
 		clutter_actor_restore_easing_state (icon);
+      }
     }
   else if (mx_stylable_style_pseudo_class_contains (MX_STYLABLE (button),
                                                     "hover"))

@@ -480,7 +480,7 @@ mnb_toolbar_finalize (GObject *object)
 	 MnbToolbarPrivate  *priv = MNB_TOOLBAR (toolbar)->priv;
 	 ClutterActor       *actor = (ClutterActor*)toolbar;
 	 ClutterAnimation   *animation;
-
+	 g_warning("mnb_toolbar_show");
 	 if (priv->in_show_animation)
 	 {
 		 g_signal_stop_emission_by_name (toolbar, "show");
@@ -489,7 +489,7 @@ mnb_toolbar_finalize (GObject *object)
 
 	 if (mnb_toolbar_system_modal_state (toolbar))
 		 return;
-
+	 g_warning("mnb_toolbar_show 2");
 	 priv->reason_for_show = reason;
 
 	 clutter_actor_show (actor);
