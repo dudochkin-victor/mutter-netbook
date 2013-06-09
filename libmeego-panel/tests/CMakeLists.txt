@@ -11,7 +11,12 @@ ADD_DEFINITIONS(-DCSS_DIR=".")
 SET (PROGRAMS test)
 
 SET(PROGRAM_SRCS
-    test-panel-clutter.c
+#    test-panel-clutter.c
+#    test-content-pane.c
+#     test-entry.c //failed
+#     test-icon-theme.c
+#     test-panel-gtk.c
+     test-entry.c
     )
 
 SET(PROGRAM_HEADERS

@@ -163,11 +163,11 @@ mpl_entry_get_preferred_height (ClutterActor *actor,
   gfloat natural_height_entry, natural_height_button;
 
   mx_widget_get_padding (MX_WIDGET (actor), &padding);
-
+#if 0
   clutter_actor_get_preferred_height (priv->entry, for_width,
                                       &min_height_entry,
                                       &natural_height_entry);
-
+#endif //DV
   clutter_actor_get_preferred_height (priv->table, for_width,
                                      &min_height_button,
                                      &natural_height_button);
@@ -213,16 +213,20 @@ mpl_entry_allocate (ClutterActor          *actor,
   button_box.x2 = (int) (MAX (padding.left, button_box.x2));
 
   /* Entry is left-aligned. */
+#if 0
   clutter_actor_get_preferred_size (priv->entry,
                                     NULL, NULL,
                                     &entry_width, &entry_height);
-
+#endif //DV
   entry_box.x1 = (int) (padding.left);
   entry_box.x2 = (int) (button_box.x1);
   entry_box.y1 = (int) (((box->y2 - box->y1) - entry_height) / 2);
   entry_box.y2 = (int) (entry_box.y1 + entry_height);
 
+#if 0
   clutter_actor_allocate (priv->entry, &entry_box, flags);
+#endif //DV
+
   clutter_actor_allocate (priv->table, &button_box, flags);
 }
 
@@ -233,7 +237,9 @@ mpl_entry_paint (ClutterActor *actor)
 
   CLUTTER_ACTOR_CLASS (mpl_entry_parent_class)->paint (actor);
 
+#if 0
   clutter_actor_paint (priv->entry);
+#endif //DV
 
   clutter_actor_paint (priv->table);
 }
@@ -246,8 +252,9 @@ mpl_entry_pick (ClutterActor       *actor,
 
   CLUTTER_ACTOR_CLASS (mpl_entry_parent_class)->pick (actor, pick_color);
 
+#if 0
   clutter_actor_paint (priv->entry);
-
+#endif //DV
   clutter_actor_paint (priv->table);
 }
 
@@ -261,7 +268,9 @@ mpl_entry_style_changed (MxWidget            *widget,
    * the internal children on MplEntry, otherwise the style changes
    * will not reach them
    */
+#if 0
   mx_stylable_style_changed (MX_STYLABLE (priv->entry), flags);
+#endif //DV
   mx_stylable_style_changed (MX_STYLABLE (priv->table), flags);
 }
 
@@ -270,7 +279,9 @@ mpl_entry_finalize (GObject *gobject)
 {
   MplEntryPrivate *priv = MPL_ENTRY (gobject)->priv;
 
+#if 0
   clutter_actor_destroy (priv->entry), priv->entry = NULL;
+#endif //DV
   clutter_actor_destroy (priv->table), priv->table = NULL;
 
   G_OBJECT_CLASS (mpl_entry_parent_class)->finalize (gobject);
@@ -544,8 +555,10 @@ const gchar *
 mpl_entry_get_text (MplEntry *self)
 {
   g_return_val_if_fail (MPL_IS_ENTRY (self), NULL);
-
+#if 0
   return mx_entry_get_text (MX_ENTRY (self->priv->entry));
+#endif //DV
+  return "";
 }
 
 /**
